@@ -19,7 +19,8 @@ KEY = open(key_files[0], encoding="utf-8").read().strip() if key_files else None
 KEY_LOC = BASE + KEY + ".txt" if KEY else None
 
 SLUGS = ["compress","jsonfmt","pdf","qrcode","convert","password",
-         "word-counter","case-converter","url-codec","base64-codec","timestamp","markdown"]
+         "word-counter","case-converter","url-codec","base64-codec","timestamp","markdown",
+         "text-diff","csv-json","uuid","color-hex"]
 
 def all_urls():
     urls = [BASE, BASE + "sitemap.xml", BASE + "atom.xml", BASE + "blog/"]
