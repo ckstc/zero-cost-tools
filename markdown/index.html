@@ -3,13 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>零成本工具箱 — 免费在线工具集合</title>
-<meta name="description" content="免费在线工具集合：图片压缩、JSON格式化、PDF工具、二维码、单位换算、密码生成、字数统计等，全部本地运行，保护隐私。">
-<meta property="og:title" content="零成本工具箱">
-<meta property="og:description" content="免费在线工具集合，本地运行保护隐私">
+<title>Markdown 预览器</title>
+<meta name="description" content="实时 Markdown 渲染预览，离线可用">
+<meta name="keywords" content="markdown预览,md编辑器,markdown">
+<meta property="og:title" content="Markdown 预览器">
+<meta property="og:description" content="实时 Markdown 渲染预览，离线可用">
 <meta property="og:type" content="website">
-<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "零成本工具箱", "description": "免费在线工具集合", "url": "https://ckstc.github.io/zero-cost-tools/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/markdown/">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/markdown/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Markdown 预览器", "description": "实时 Markdown 渲染预览，离线可用", "url": "https://ckstc.github.io/zero-cost-tools/markdown/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
 <style>
 :root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
 *{box-sizing:border-box}
@@ -50,31 +52,48 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
 </style>
 </head>
 <body>
-<header><a class="logo" href="./">零成本工具箱</a><nav><a href="./">全部工具</a></nav></header>
+<header>
+  <a class="logo" href="../">零成本工具箱</a>
+  <nav><a href="../">全部工具</a></nav>
+</header>
 <main>
-<h1>零成本工具箱</h1>
-<p class="lead">12 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
-<div class="cards">
-  <a class="card" href="./compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>
-  <a class="card" href="./jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>
-  <a class="card" href="./pdf/"><h3>PDF 工具箱</h3><p>在线压缩 PDF、PDF 转图片，纯前端处理不泄露文件</p></a>
-  <a class="card" href="./qrcode/"><h3>二维码生成器</h3><p>免费生成网址/文本/ WiFi 二维码，可下载 PNG</p></a>
-  <a class="card" href="./convert/"><h3>单位换算器</h3><p>长度/重量/温度/面积等单位在线换算</p></a>
-  <a class="card" href="./password/"><h3>密码生成器</h3><p>生成高强度随机密码，可自定义长度与字符集</p></a>
-  <a class="card" href="./word-counter/"><h3>字数统计工具</h3><p>实时统计中英文单词、字符、句子、行数</p></a>
-  <a class="card" href="./case-converter/"><h3>大小写转换工具</h3><p>英文大小写、标题化、句首大写一键转换</p></a>
-  <a class="card" href="./url-codec/"><h3>URL 编解码工具</h3><p>在线 URL 编码/解码，处理中文与特殊字符</p></a>
-  <a class="card" href="./base64-codec/"><h3>Base64 编解码</h3><p>文本 Base64 编码/解码，支持中文 UTF-8</p></a>
-  <a class="card" href="./timestamp/"><h3>时间戳转换工具</h3><p>Unix 时间戳与日期互转，支持本地/UTC</p></a>
-  <a class="card" href="./markdown/"><h3>Markdown 预览器</h3><p>实时 Markdown 渲染预览，离线可用</p></a>
+<h1>Markdown 预览器</h1>
+<p class="lead">左侧输入 Markdown，右侧实时渲染。完全离线，内容不离开你的设备。</p>
+
+<div class="md-wrap">
+  <textarea id="md" placeholder="# 标题&#10;输入 **Markdown** 试试…" spellcheck="false"></textarea>
+  <div id="prev" class="md-preview"></div>
 </div>
+
 <div class="support-links">
   <div class="wechat-qr-wrap">
-    <span class="qr-label">💚 微信扫一扫，支持作者持续做免费工具</span>
-    <img src="wechat-qr.png" alt="微信收款码" class="qr-img">
+    <span class="qr-label">💚 微信扫一扫，支持作者</span>
+    <img src="../wechat-qr.png" alt="微信收款码" class="qr-img">
   </div>
 </div>
 </main>
-<footer>© 零成本工具箱 · 免费 · 本地运行 · 隐私优先</footer>
+<footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
+<script>
+const md=document.getElementById('md'),prev=document.getElementById('prev');
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function render(src){
+  let s=esc(src);
+  s=s.replace(/^###### (.*)$/gm,'<h6>$1</h6>')
+     .replace(/^##### (.*)$/gm,'<h5>$1</h5>')
+     .replace(/^#### (.*)$/gm,'<h4>$1</h4>')
+     .replace(/^### (.*)$/gm,'<h3>$1</h3>')
+     .replace(/^## (.*)$/gm,'<h2>$1</h2>')
+     .replace(/^# (.*)$/gm,'<h1>$1</h1>')
+     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+     .replace(/\*(.+?)\*/g,'<em>$1</em>')
+     .replace(/`([^`]+?)`/g,'<code>$1</code>')
+     .replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img alt="$1" src="$2">')
+     .replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s=s.replace(/(?:\r?\n){2,}/g,'</p><p>').replace(/\r?\n/g,'<br>');
+  prev.innerHTML='<p>'+s+'</p>';
+}
+md.addEventListener('input',()=>render(md.value));
+render('# 欢迎\n输入 **Markdown** 实时预览。\n\n- 列表项一\n- 列表项二\n\n> 引用示例');
+</script>
 </body>
 </html>

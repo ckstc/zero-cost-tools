@@ -3,13 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>零成本工具箱 — 免费在线工具集合</title>
-<meta name="description" content="免费在线工具集合：图片压缩、JSON格式化、PDF工具、二维码、单位换算、密码生成、字数统计等，全部本地运行，保护隐私。">
-<meta property="og:title" content="零成本工具箱">
-<meta property="og:description" content="免费在线工具集合，本地运行保护隐私">
+<title>Base64 编解码</title>
+<meta name="description" content="文本 Base64 编码/解码，支持中文 UTF-8">
+<meta name="keywords" content="base64,base64编码,base64解码">
+<meta property="og:title" content="Base64 编解码">
+<meta property="og:description" content="文本 Base64 编码/解码，支持中文 UTF-8">
 <meta property="og:type" content="website">
-<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "零成本工具箱", "description": "免费在线工具集合", "url": "https://ckstc.github.io/zero-cost-tools/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/base64-codec/">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/base64-codec/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Base64 编解码", "description": "文本 Base64 编码/解码，支持中文 UTF-8", "url": "https://ckstc.github.io/zero-cost-tools/base64-codec/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
 <style>
 :root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
 *{box-sizing:border-box}
@@ -50,31 +52,37 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
 </style>
 </head>
 <body>
-<header><a class="logo" href="./">零成本工具箱</a><nav><a href="./">全部工具</a></nav></header>
+<header>
+  <a class="logo" href="../">零成本工具箱</a>
+  <nav><a href="../">全部工具</a></nav>
+</header>
 <main>
-<h1>零成本工具箱</h1>
-<p class="lead">12 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
-<div class="cards">
-  <a class="card" href="./compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>
-  <a class="card" href="./jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>
-  <a class="card" href="./pdf/"><h3>PDF 工具箱</h3><p>在线压缩 PDF、PDF 转图片，纯前端处理不泄露文件</p></a>
-  <a class="card" href="./qrcode/"><h3>二维码生成器</h3><p>免费生成网址/文本/ WiFi 二维码，可下载 PNG</p></a>
-  <a class="card" href="./convert/"><h3>单位换算器</h3><p>长度/重量/温度/面积等单位在线换算</p></a>
-  <a class="card" href="./password/"><h3>密码生成器</h3><p>生成高强度随机密码，可自定义长度与字符集</p></a>
-  <a class="card" href="./word-counter/"><h3>字数统计工具</h3><p>实时统计中英文单词、字符、句子、行数</p></a>
-  <a class="card" href="./case-converter/"><h3>大小写转换工具</h3><p>英文大小写、标题化、句首大写一键转换</p></a>
-  <a class="card" href="./url-codec/"><h3>URL 编解码工具</h3><p>在线 URL 编码/解码，处理中文与特殊字符</p></a>
-  <a class="card" href="./base64-codec/"><h3>Base64 编解码</h3><p>文本 Base64 编码/解码，支持中文 UTF-8</p></a>
-  <a class="card" href="./timestamp/"><h3>时间戳转换工具</h3><p>Unix 时间戳与日期互转，支持本地/UTC</p></a>
-  <a class="card" href="./markdown/"><h3>Markdown 预览器</h3><p>实时 Markdown 渲染预览，离线可用</p></a>
+<h1>Base64 编解码</h1>
+<p class="lead">文本与 Base64 互转，支持中文 UTF-8。数据不出浏览器。</p>
+
+<textarea id="in" placeholder="输入文本…" spellcheck="false"></textarea>
+<div class="row">
+  <button class="btn" id="enc">编码 →</button>
+  <button class="btn" id="dec">← 解码</button>
 </div>
+<textarea id="out" placeholder="结果…" readonly spellcheck="false"></textarea>
+<button class="btn ghost" id="copy">复制</button>
+
 <div class="support-links">
   <div class="wechat-qr-wrap">
-    <span class="qr-label">💚 微信扫一扫，支持作者持续做免费工具</span>
-    <img src="wechat-qr.png" alt="微信收款码" class="qr-img">
+    <span class="qr-label">💚 微信扫一扫，支持作者</span>
+    <img src="../wechat-qr.png" alt="微信收款码" class="qr-img">
   </div>
 </div>
 </main>
-<footer>© 零成本工具箱 · 免费 · 本地运行 · 隐私优先</footer>
+<footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
+<script>
+const inp=document.getElementById('in'),out=document.getElementById('out');
+function utoa(s){return btoa(unescape(encodeURIComponent(s)));}
+function atou(s){return decodeURIComponent(escape(atob(s)));}
+document.getElementById('enc').onclick=()=>{try{out.value=utoa(inp.value);}catch(e){out.value='编码失败';}};
+document.getElementById('dec').onclick=()=>{try{out.value=atou(inp.value);}catch(e){out.value='解码失败：不是合法 Base64';}};
+document.getElementById('copy').onclick=()=>{out.select();document.execCommand('copy');};
+</script>
 </body>
 </html>
