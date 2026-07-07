@@ -99,3 +99,7 @@ body {
 .support-note { font-size: 12px; margin-top: 14px; }
 
 .footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px 20px 40px; }
+
+.wechat-qr-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.qr-label { font-size: 13px; color: #07c160; font-weight: 600; }
+.qr-img { width: 140px; height: 140px; border-radius: 8px; border: 2px solid #e0e0e0; object-fit: cover; }
