@@ -25,6 +25,10 @@ ALL_TOOLS = [
     ("base64-codec",  "Base64 编解码",        "文本 Base64 编码/解码，支持中文 UTF-8", "base64,base64编码,base64解码"),
     ("timestamp",     "时间戳转换工具",       "Unix 时间戳与日期互转，支持本地/UTC", "时间戳转换,unix时间,时间戳"),
     ("markdown",      "Markdown 预览器",      "实时 Markdown 渲染预览，离线可用", "markdown预览,md编辑器,markdown"),
+    ("text-diff",     "文本对比工具",         "逐行对比两段文本差异，新增删除高亮", "文本对比,diff,代码对比"),
+    ("csv-json",      "CSV JSON 互转",        "CSV 与 JSON 在线互转，首行作表头", "csv转json,json转csv,格式转换"),
+    ("uuid",          "UUID 生成器",          "生成 RFC4122 v4 UUID，支持批量", "uuid生成,uuid,随机id"),
+    ("color-hex",     "颜色值转换",           "HEX/RGB/HSL 互转，取色器", "颜色转换,hex转rgb,取色器"),
 ]
 
 # 新工具：需生成完整页面（body + js）
@@ -195,6 +199,83 @@ function render(src){
 }
 md.addEventListener('input',()=>render(md.value));
 render('# 欢迎\n输入 **Markdown** 实时预览。\n\n- 列表项一\n- 列表项二\n\n> 引用示例');
+'''),
+}
+
+    "text-diff": dict(
+        h1="文本对比工具",
+        lead="粘贴两段文本，逐行对比差异，新增以绿、删除以红高亮。完全本地运行。",
+        body=r'''
+<div class="row">
+  <textarea id="a" placeholder="原始文本…" spellcheck="false"></textarea>
+  <textarea id="b" placeholder="修改后文本…" spellcheck="false"></textarea>
+</div>
+<button class="btn" id="go">对比差异</button>
+<div id="res" class="result" style="white-space:pre-wrap;font-family:monospace;line-height:1.5"></div>
+''',
+        js=r'''
+function diffLines(a,b){const A=a.split('\n'),B=b.split('\n');const n=A.length,m=B.length;
+const dp=Array.from({length:n+1},()=>new Int32Array(m+1));
+for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)dp[i][j]=A[i]===B[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
+let i=0,j=0,out=[];while(i<n&&j<m){if(A[i]===B[j]){out.push(['=',A[i]]);i++;j++;}else if(dp[i+1][j]>=dp[i][j+1]){out.push(['-',A[i]]);i++;}else{out.push(['+',B[j]]);j++;}}
+while(i<n){out.push(['-',A[i]]);i++;}while(j<m){out.push(['+',B[j]]);j++;}return out;}
+document.getElementById('go').onclick=()=>{
+  const R=diffLines(document.getElementById('a').value,document.getElementById('b').value);
+  const res=document.getElementById('res');res.innerHTML='';
+  R.forEach(([t,line])=>{const s=document.createElement('div');s.textContent=(t==='='?'  ':(t==='+'?'+ ':'- '))+line;
+    s.style.background=t==='+'?'#e7f7ec':t==='-'?'#fdeaea':'transparent';res.appendChild(s);});
+};
+'''),
+    "csv-json": dict(
+        h1="CSV 与 JSON 互转",
+        lead="CSV 转 JSON（首行作表头），或 JSON 数组转 CSV。数据不出浏览器。",
+        body=r'''
+<textarea id="in" placeholder="输入 CSV 或 JSON…" spellcheck="false"></textarea>
+<div class="row">
+  <button class="btn" id="c2j">CSV → JSON</button>
+  <button class="btn" id="j2c">JSON → CSV</button>
+</div>
+<textarea id="out" placeholder="结果…" readonly spellcheck="false"></textarea>
+<button class="btn ghost" id="copy">复制</button>
+''',
+        js=r'''
+const inp=document.getElementById('in'),out=document.getElementById('out');
+document.getElementById('c2j').onclick=()=>{try{const lines=inp.value.trim().split(/\r?\n/);if(!lines.length){out.value='';return;}
+  const head=lines[0].split(',').map(s=>s.trim());const arr=lines.slice(1).map(l=>{const c=l.split(',');const o={};head.forEach((h,k)=>o[h]=c[k]!==undefined?c[k].trim():'');return o;});out.value=JSON.stringify(arr,null,2);}catch(e){out.value='转换失败';}};
+document.getElementById('j2c').onclick=()=>{try{const arr=JSON.parse(inp.value);if(!Array.isArray(arr)){out.value='需为 JSON 数组';return;}
+  const keys=Object.keys(arr[0]||{});let csv=keys.join(',')+'\n';arr.forEach(o=>{csv+=keys.map(k=>(o[k]===undefined?'':o[k])).join(',')+'\n';});out.value=csv;}catch(e){out.value='JSON 解析失败';}};
+document.getElementById('copy').onclick=()=>{out.select();document.execCommand('copy');};
+'''),
+    "uuid": dict(
+        h1="UUID 生成器",
+        lead="生成 RFC4122 v4 UUID，支持批量，一键复制。",
+        body=r'''
+<div class="row"><input type="number" id="n" value="1" min="1" max="50" style="max-width:120px"><button class="btn" id="gen">生成</button></div>
+<textarea id="out" placeholder="结果…" readonly spellcheck="false" style="min-height:120px"></textarea>
+<button class="btn ghost" id="copy">复制全部</button>
+''',
+        js=r'''
+function uuid(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;const v=c==='x'?r:(r&0x3|0x8);return v.toString(16);});}
+document.getElementById('gen').onclick=()=>{const n=Math.min(50,Math.max(1,parseInt(document.getElementById('n').value)||1));
+  let s='';for(let i=0;i<n;i++)s+=uuid()+'\n';document.getElementById('out').value=s.trim();};
+document.getElementById('copy').onclick=()=>{const o=document.getElementById('out');o.select();document.execCommand('copy');};
+document.getElementById('gen').click();
+'''),
+    "color-hex": dict(
+        h1="颜色值与 HEX 转换",
+        lead="选择颜色，实时显示 HEX / RGB / HSL，可互相转换。",
+        body=r'''
+<div class="row"><input type="color" id="pick" value="#2f6df6" style="width:64px;height:44px;border:none;background:none"><input type="text" id="hex" value="#2f6df6" style="max-width:160px"></div>
+<div id="res" class="result"></div>
+''',
+        js=r'''
+const pick=document.getElementById('pick'),hex=document.getElementById('hex'),res=document.getElementById('res');
+function h2r(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+function r2hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h,s,l=(mx+mn)/2;if(mx===mn){h=s=0;}else{const d=mx-mn;s=l>0.5?d/(2-mx-mn):d/(mx+mn);switch(mx){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;default:h=(r-g)/d+4;}h*=60;}return [Math.round(h),Math.round(s*100),Math.round(l*100)];}
+function show(h){const [r,g,b]=h2r(h);const [hh,ss,ll]=r2hsl(r,g,b);res.innerHTML='HEX: '+h.toUpperCase()+'<br>RGB: rgb('+r+', '+g+', '+b+')<br>HSL: hsl('+hh+', '+ss+'%, '+ll+'%)';}
+pick.oninput=()=>{hex.value=pick.value;show(pick.value);};
+hex.oninput=()=>{if(/^#[0-9a-fA-F]{6}$/.test(hex.value)){pick.value=hex.value;show(hex.value);}};
+show('#2f6df6');
 '''),
 }
 
