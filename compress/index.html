@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>极速图压 · 免费在线图片压缩与格式转换</title>
+  <meta name="description" content="100% 在浏览器本地运行的免费图片压缩与格式转换工具，不上传服务器，保护隐私，零成本。" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>极速图压</h1>
+      <p class="tagline">免费 · 本地运行 · 隐私安全 · 图片压缩与格式转换</p>
+      <p class="sub">所有处理都在你的浏览器里完成，图片<strong>不会上传到任何服务器</strong>。完全免费，无需注册。</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 广告位 1：部署后替换为你的 Google AdSense 代码 -->
+    <!-- <div class="ad-slot">广告位（AdSense）</div> -->
+
+    <section class="uploader" id="dropZone">
+      <input type="file" id="fileInput" accept="image/*" multiple hidden />
+      <div class="uploader-inner">
+        <div class="upload-icon">🖼️</div>
+        <p class="upload-title">拖拽图片到这里，或点击选择</p>
+        <p class="upload-hint">支持 JPG / PNG / WebP / GIF（首帧）/ BMP，可多选</p>
+        <button class="btn btn-primary" id="pickBtn" type="button">选择图片</button>
+      </div>
+    </section>
+
+    <section class="controls" id="controls" hidden>
+      <div class="control-row">
+        <label>输出格式
+          <select id="format">
+            <option value="auto">保持原格式</option>
+            <option value="image/jpeg">JPEG</option>
+            <option value="image/png">PNG</option>
+            <option value="image/webp">WebP（更小体积）</option>
+          </select>
+        </label>
+        <label>压缩质量 <span id="qualityVal">80</span>
+          <input type="range" id="quality" min="10" max="100" value="80" />
+        </label>
+        <label>最大边长（像素，0=不限制）
+          <input type="number" id="maxSize" min="0" step="50" value="0" />
+        </label>
+      </div>
+      <div class="control-actions">
+        <button class="btn" id="recompressBtn" type="button">重新压缩</button>
+        <button class="btn btn-accent" id="downloadAllBtn" type="button">打包下载全部</button>
+        <button class="btn btn-ghost" id="clearBtn" type="button">清空</button>
+      </div>
+    </section>
+
+    <section class="results" id="results" hidden>
+      <h2>处理结果</h2>
+      <div class="summary" id="summary"></div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <!-- 广告位 2 -->
+    <!-- <div class="ad-slot">广告位（AdSense）</div> -->
+
+    <section class="support">
+      <h2>💛 支持作者，让工具持续免费</h2>
+      <p>这个工具完全免费、无广告干扰、不收集你的数据。如果你觉得好用，可以请我喝杯咖啡 ☕</p>
+      <div class="support-links">
+        <!-- 部署后把下面 href 换成你自己的 Ko-fi / 爱发电 / Buy Me a Coffee 主页 -->
+        <a class="btn btn-kofi" href="https://ko-fi.com/" target="_blank" rel="noopener">☕ Ko-fi 赞助</a>
+        <a class="btn btn-kofi" href="https://afdian.com/" target="_blank" rel="noopener">❤️ 爱发电</a>
+      </div>
+      <p class="support-note">所有赞助直接进入作者账户，由你自愿决定，零强迫。</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>极速图压 · 一个零成本、注重隐私的免费工具 · 由 WorkBuddy 自动构建</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
