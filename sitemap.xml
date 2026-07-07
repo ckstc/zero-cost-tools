@@ -8,4 +8,7 @@
   <url><loc>https://ckstc.github.io/zero-cost-tools/convert/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/password/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/hub/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/pdf-compress-guide.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/qr-generator-guide.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
