@@ -29,6 +29,14 @@ ALL_TOOLS = [
     ("csv-json",      "CSV JSON 互转",        "CSV 与 JSON 在线互转，首行作表头", "csv转json,json转csv,格式转换"),
     ("uuid",          "UUID 生成器",          "生成 RFC4122 v4 UUID，支持批量", "uuid生成,uuid,随机id"),
     ("color-hex",     "颜色值转换",           "HEX/RGB/HSL 互转，取色器", "颜色转换,hex转rgb,取色器"),
+    ("number-base",   "进制转换器",           "二进制/八进制/十进制/十六进制在线互转", "进制转换,二进制,十六进制,十进制"),
+    ("hash",          "文本哈希工具",         "生成 SHA-1/SHA-256/SHA-512 摘要，本地运算不上传", "文本哈希,sha256,sha1,哈希值"),
+    ("regex",         "正则表达式测试",       "在线测试正则，高亮匹配结果，支持语法选项", "正则测试,正则表达式,regex"),
+    ("dedup",         "文本去重工具",         "按行去除重复内容保留顺序，本地处理", "文本去重,去除重复行,去重工具"),
+    ("slug",          "URL 别名生成",         "把标题转换为 SEO 友好的 URL slug（短链接别名）", "url别名,slug,短链接,url生成"),
+    ("lorem",         "占位文本生成器",       "一键生成 Lorem Ipsum 段落，可调数量", "占位文本,lorem ipsum,假文生成"),
+    ("wordfreq",      "词频统计工具",         "统计文本中词语出现频率，导出结果", "词频统计,词语频率,文本分析"),
+    ("randnum",       "随机数生成器",         "生成指定范围与数量的随机整数，可去重", "随机数,随机整数,生成随机数"),
 ]
 
 # 新工具：需生成完整页面（body + js）
@@ -273,19 +281,212 @@ function r2hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(
 function show(h){const [r,g,b]=h2r(h);const [hh,ss,ll]=r2hsl(r,g,b);res.innerHTML='HEX: '+h.toUpperCase()+'<br>RGB: rgb('+r+', '+g+', '+b+')<br>HSL: hsl('+hh+', '+ss+'%, '+ll+'%)';}
 pick.oninput=()=>{hex.value=pick.value;show(pick.value);};
 hex.oninput=()=>{if(/^#[0-9a-fA-F]{6}$/.test(hex.value)){pick.value=hex.value;show(hex.value);}};
-show('#2f6df6');
+        show('#2f6df6');
+'''),
+    "number-base": dict(
+        h1="进制转换器",
+        lead="在二进制、八进制、十进制、十六进制之间在线互转，输入即时换算。",
+        body=r'''
+<div class="row">
+  <input type="text" id="val" placeholder="输入数值，如 255">
+  <select id="from">
+    <option value="2">二进制</option>
+    <option value="8">八进制</option>
+    <option value="10" selected>十进制</option>
+    <option value="16">十六进制</option>
+  </select>
+</div>
+<div class="row">
+  <button class="btn" data-to="2">→ 二进制</button>
+  <button class="btn" data-to="8">→ 八进制</button>
+  <button class="btn" data-to="10">→ 十进制</button>
+  <button class="btn" data-to="16">→ 十六进制</button>
+</div>
+<div id="res" class="result"></div>
+''',
+        js=r'''
+const val=document.getElementById('val'),from=document.getElementById('from'),res=document.getElementById('res');
+const NAMES={2:'二进制',8:'八进制',10:'十进制',16:'十六进制'};
+function conv(to){
+  const n=parseInt(val.value.trim(),parseInt(from.value));
+  if(isNaN(n)){res.textContent='请输入有效数值';return;}
+  const out=to===2?n.toString(2):to===8?n.toString(8):to===10?String(n):n.toString(16).toUpperCase();
+  res.innerHTML='结果（'+NAMES[to]+'）：<b>'+out+'</b>';
+}
+document.querySelectorAll('.btn[data-to]').forEach(b=>b.onclick=()=>conv(parseInt(b.dataset.to)));
+'''),
+    "hash": dict(
+        h1="文本哈希工具",
+        lead="生成 SHA-1 / SHA-256 / SHA-512 摘要，全程浏览器本地运算，文本不上传。",
+        body=r'''
+<textarea id="in" placeholder="输入要哈希的文本…" spellcheck="false"></textarea>
+<div class="row">
+  <button class="btn" data-alg="SHA-1">SHA-1</button>
+  <button class="btn" data-alg="SHA-256">SHA-256</button>
+  <button class="btn" data-alg="SHA-512">SHA-512</button>
+</div>
+<div id="res" class="result"></div>
+''',
+        js=r'''
+const inp=document.getElementById('in'),res=document.getElementById('res');
+async function digest(alg){
+  const text=inp.value;
+  if(!text){res.textContent='请输入文本';return;}
+  const buf=await crypto.subtle.digest(alg,new TextEncoder().encode(text));
+  const hex=[...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  res.innerHTML=alg+'：<br><b style="word-break:break-all">'+hex+'</b>';
+}
+document.querySelectorAll('.btn[data-alg]').forEach(b=>b.onclick=()=>digest(b.dataset.alg));
+'''),
+    "regex": dict(
+        h1="正则表达式测试",
+        lead="在线测试正则表达式，支持全局与忽略大小写，实时显示匹配结果。",
+        body=r'''
+<textarea id="pat" placeholder="正则表达式，如 \d+" spellcheck="false" style="min-height:48px"></textarea>
+<textarea id="in" placeholder="在此输入待测试文本…" spellcheck="false"></textarea>
+<div class="row"><label><input type="checkbox" id="g" checked> 全局(g)</label><label><input type="checkbox" id="i"> 忽略大小写(i)</label></div>
+<button class="btn" id="run">测试匹配</button>
+<div id="res" class="result" style="white-space:pre-wrap"></div>
+''',
+        js=r'''
+const pat=document.getElementById('pat'),inp=document.getElementById('in'),res=document.getElementById('res');
+document.getElementById('run').onclick=()=>{
+  let re;
+  try{const f=(document.getElementById('g').checked?'g':'')+(document.getElementById('i').checked?'i':'');re=new RegExp(pat.value,f);}catch(e){res.textContent='正则语法错误：'+e.message;return;}
+  const m=inp.value.match(re);
+  if(!m){res.textContent='（无匹配）';return;}
+  if(re.global){res.textContent='共 '+m.length+' 处匹配：\n'+m.join('\n');}
+  else{res.textContent='匹配：'+m[0]+'\n位置：'+m.index;}
+};
+'''),
+    "dedup": dict(
+        h1="文本去重工具",
+        lead="按行去除重复内容，保留首次出现顺序，数据不出浏览器。",
+        body=r'''
+<textarea id="in" placeholder="每行一项，自动去除重复行（保留首次出现顺序）…" spellcheck="false"></textarea>
+<div class="row">
+  <button class="btn" id="go">去除重复</button>
+  <button class="btn ghost" id="copy">复制结果</button>
+  <button class="btn ghost" id="dl">下载</button>
+</div>
+<div id="res" class="result"></div>
+''',
+        js=r'''
+const inp=document.getElementById('in'),res=document.getElementById('res');
+document.getElementById('go').onclick=()=>{
+  const seen=new Set(),out=[];
+  inp.value.split(/\r?\n/).forEach(l=>{const k=l.trim();if(k&&!seen.has(k)){seen.add(k);out.push(l);}});
+  res.textContent='已去除重复，剩余 '+out.length+' 行。';
+  inp.value=out.join('\n');
+};
+document.getElementById('copy').onclick=()=>{inp.select();document.execCommand('copy');};
+document.getElementById('dl').onclick=()=>{const b=new Blob([inp.value],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='dedup.txt';a.click();};
+'''),
+    "slug": dict(
+        h1="URL 别名(slug)生成",
+        lead="把文章标题转换为 SEO 友好的 URL slug（短链接别名），一键复制。",
+        body=r'''
+<input type="text" id="in" placeholder="输入标题，如 How To Build A Site">
+<textarea id="out" placeholder="生成的 slug…" readonly spellcheck="false" style="min-height:80px"></textarea>
+<div class="row"><button class="btn" id="go">生成</button><button class="btn ghost" id="copy">复制</button></div>
+''',
+        js=r'''
+const inp=document.getElementById('in'),out=document.getElementById('out');
+document.getElementById('go').onclick=()=>{
+  const s=inp.value.trim().toLowerCase().replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+  out.value=s;
+};
+document.getElementById('copy').onclick=()=>{out.select();document.execCommand('copy');};
+'''),
+    "lorem": dict(
+        h1="占位文本生成器",
+        lead="一键生成 Lorem Ipsum 假文段落，可指定段落数量，用于排版与设计稿。",
+        body=r'''
+<div class="row">
+  <input type="number" id="n" value="3" min="1" max="20" style="max-width:120px">
+  <span>段</span>
+  <button class="btn" id="go">生成</button>
+</div>
+<textarea id="out" readonly spellcheck="false" style="min-height:200px"></textarea>
+<button class="btn ghost" id="copy">复制</button>
+''',
+        js=r'''
+const words=('lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat').split(' ');
+function sentence(){const len=8+Math.floor(Math.random()*7);let s='';for(let i=0;i<len;i++){let w=words[Math.floor(Math.random()*words.length)];if(i===0)w=w.charAt(0).toUpperCase()+w.slice(1);s+=w+' ';}return s.trim()+'.';}
+document.getElementById('go').onclick=()=>{const n=Math.min(20,Math.max(1,parseInt(document.getElementById('n').value)||1));let t='';for(let p=0;p<n;p++){let para='';for(let i=0;i<5;i++)para+=sentence()+' ';t+=para.trim()+'\n\n';}document.getElementById('out').value=t.trim();};
+document.getElementById('copy').onclick=()=>{const o=document.getElementById('out');o.select();document.execCommand('copy');};
+'''),
+    "wordfreq": dict(
+        h1="词频统计工具",
+        lead="统计文本中词语出现频率，按频次排序，帮助快速分析文本热点。",
+        body=r'''
+<textarea id="in" placeholder="粘贴文本，统计词频…" spellcheck="false"></textarea>
+<div class="row"><button class="btn" id="go">统计</button><input type="number" id="top" value="20" min="1" max="100" style="max-width:90px" title="显示前 N"></div>
+<div id="res" class="result"></div>
+''',
+        js=r'''
+const inp=document.getElementById('in'),res=document.getElementById('res');
+document.getElementById('go').onclick=()=>{
+  const txt=inp.value.toLowerCase().replace(/[^\w\u4e00-\u9fa5\s]/g,' ');
+  const m={};txt.split(/\s+/).filter(Boolean).forEach(w=>{m[w]=(m[w]||0)+1;});
+  const arr=Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,Math.max(1,Math.min(100,parseInt(document.getElementById('top').value)||20)));
+  res.innerHTML='共 '+Object.keys(m).length+' 个不同词。<br>'+arr.map(([w,c])=>'<div>'+w+'：'+c+'</div>').join('');
+};
+'''),
+    "randnum": dict(
+        h1="随机数生成器",
+        lead="生成指定范围与数量的随机整数，支持不重复模式，本地生成。",
+        body=r'''
+<div class="row">
+  <input type="number" id="min" value="1" style="max-width:100px" placeholder="最小">
+  <input type="number" id="max" value="100" style="max-width:100px" placeholder="最大">
+  <input type="number" id="cnt" value="5" min="1" max="200" style="max-width:100px" placeholder="数量">
+</div>
+<div class="row"><label><input type="checkbox" id="uniq"> 不重复</label></div>
+<textarea id="out" readonly spellcheck="false" style="min-height:120px"></textarea>
+<div class="row"><button class="btn" id="go">生成</button><button class="btn ghost" id="copy">复制</button></div>
+''',
+        js=r'''
+const min=document.getElementById('min'),max=document.getElementById('max'),cnt=document.getElementById('cnt'),out=document.getElementById('out');
+document.getElementById('go').onclick=()=>{
+  const lo=parseInt(min.value),hi=parseInt(max.value),n=Math.min(200,Math.max(1,parseInt(cnt.value)||1));
+  if(lo>hi){out.value='最小值不能大于最大值';return;}
+  let res=[];
+  if(document.getElementById('uniq').checked){const pool=[];for(let i=lo;i<=hi;i++)pool.push(i);for(let i=0;i<n&&pool.length;i++){res.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);}}
+  else{for(let i=0;i<n;i++)res.push(Math.floor(Math.random()*(hi-lo+1))+lo);}
+  out.value=res.join('\n');
+};
+document.getElementById('copy').onclick=()=>{out.select();document.execCommand('copy');};
 '''),
 }
 
 BLOG_TITLES = {
-    "pdf-compress-guide.html": "PDF 压缩指南：把文件变小又不糊",
-    "qr-generator-guide.html": "二维码生成指南：网址/文本/WiFi 一键生成",
-    "compress-guide.html": "图片压缩指南：体积减半画质不降",
-    "jsonfmt-guide.html": "JSON 格式化指南：一键美化与校验",
-    "password-guide.html": "密码安全指南：如何生成高强度密码",
-    "convert-guide.html": "单位换算指南：公式与在线工具",
-    "csvjson-guide.html": "CSV 转 JSON：在线互转方法",
-    "textdiff-guide.html": "文本对比：找出两段文字的差异",
+    "compress-guide.html": "图片压缩工具使用指南",
+    "jsonfmt-guide.html": "JSON 格式化工具使用指南",
+    "pdf-guide.html": "PDF 工具箱使用指南",
+    "qrcode-guide.html": "二维码生成器使用指南",
+    "convert-guide.html": "单位换算器使用指南",
+    "password-guide.html": "密码生成器使用指南",
+    "word-counter-guide.html": "字数统计工具使用指南",
+    "case-converter-guide.html": "大小写转换工具使用指南",
+    "url-codec-guide.html": "URL 编解码工具使用指南",
+    "base64-codec-guide.html": "Base64 编解码使用指南",
+    "timestamp-guide.html": "时间戳转换工具使用指南",
+    "markdown-guide.html": "Markdown 预览器使用指南",
+    "text-diff-guide.html": "文本对比工具使用指南",
+    "csv-json-guide.html": "CSV JSON 互转使用指南",
+    "uuid-guide.html": "UUID 生成器使用指南",
+    "color-hex-guide.html": "颜色值转换使用指南",
+    "number-base-guide.html": "进制转换器使用指南",
+    "hash-guide.html": "文本哈希工具使用指南",
+    "regex-guide.html": "正则表达式测试使用指南",
+    "dedup-guide.html": "文本去重工具使用指南",
+    "slug-guide.html": "URL 别名生成使用指南",
+    "lorem-guide.html": "占位文本生成器使用指南",
+    "wordfreq-guide.html": "词频统计工具使用指南",
+    "randnum-guide.html": "随机数生成器使用指南",
+    "free-tools-guide.html": "免费在线工具推荐合集",
+    "privacy-guide.html": "如何安全使用在线工具保护隐私",
 }
 
 SHARED_CSS = """
@@ -315,6 +516,7 @@ textarea{min-height:150px}
 .md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
 .md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
 .support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
 .wechat-qr-wrap{display:inline-block}
 .qr-label{display:block;font-weight:600;margin-bottom:8px}
 .qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
@@ -340,6 +542,25 @@ def jsonld(slug, title, desc):
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
     }, ensure_ascii=False)
 
+def jsonld_crumb(slug, title):
+    return json.dumps({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": BASE},
+            {"@type": "ListItem", "position": 2, "name": title, "item": BASE + slug + "/"}
+        ]
+    }, ensure_ascii=False)
+
+def jsonld_website():
+    return json.dumps({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "零成本工具箱",
+        "url": BASE,
+        "description": "免费在线工具集合，全部本地运行保护隐私"
+    }, ensure_ascii=False)
+
 TPL = """<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -352,8 +573,11 @@ TPL = """<!DOCTYPE html>
 <meta property="og:description" content="%%DESC%%">
 <meta property="og:type" content="website">
 <meta property="og:url" content="%%CANONICAL%%">
+<meta property="og:image" content="%%OGIMG%%">
 <link rel="canonical" href="%%CANONICAL%%">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="%%ATOM%%">
 <script type="application/ld+json">%%JSONLD%%</script>
+<script type="application/ld+json">%%CRUMB%%</script>
 <style>%%CSS%%</style>
 </head>
 <body>
@@ -365,6 +589,7 @@ TPL = """<!DOCTYPE html>
 <h1>%%H1%%</h1>
 <p class="lead">%%LEAD%%</p>
 %%BODY%%
+%%RELATED%%
 <div class="support-links">
   <div class="wechat-qr-wrap">
     <span class="qr-label">💚 微信扫一扫，支持作者</span>
@@ -379,6 +604,15 @@ TPL = """<!DOCTYPE html>
 
 def gen_tool(slug, title, desc, keywords, h1, lead, body, js):
     canon = BASE if slug == "" else BASE + slug + "/"
+    # 相关工具内链：按当前工具位置错位取 4 个，使内链权重均匀分布
+    slugs = [s for s, *_ in ALL_TOOLS]
+    idx = slugs.index(slug)
+    n = len(slugs)
+    picks = [(idx + 1 + i) % n for i in range(4)]
+    rel = "".join(
+        f'  <a class="card" href="../{ALL_TOOLS[p][0]}/"><h3>{ALL_TOOLS[p][1]}</h3><p>{ALL_TOOLS[p][2]}</p></a>'
+        for p in picks)
+    related = f'<div class="related"><h2>相关工具</h2><div class="cards">\n{rel}\n</div></div>'
     html = (TPL
             .replace("%%TITLE%%", title)
             .replace("%%DESC%%", desc)
@@ -389,6 +623,10 @@ def gen_tool(slug, title, desc, keywords, h1, lead, body, js):
             .replace("%%BODY%%", body)
             .replace("%%JS%%", js)
             .replace("%%JSONLD%%", jsonld(slug, title, desc))
+            .replace("%%CRUMB%%", jsonld_crumb(slug, title))
+            .replace("%%RELATED%%", related)
+            .replace("%%OGIMG%%", "../og.png")
+            .replace("%%ATOM%%", "../atom.xml")
             .replace("%%CSS%%", SHARED_CSS))
     d = os.path.join(ROOT, slug)
     os.makedirs(d, exist_ok=True)
@@ -416,16 +654,19 @@ hub_html = f"""<!DOCTYPE html>
 <meta name="description" content="免费在线工具集合：图片压缩、JSON格式化、PDF工具、二维码、单位换算、密码生成、字数统计等，全部本地运行，保护隐私。">
 <meta property="og:title" content="零成本工具箱">
 <meta property="og:description" content="免费在线工具集合，本地运行保护隐私">
+<meta property="og:image" content="og.png">
 <meta property="og:type" content="website">
 <link rel="canonical" href="{BASE}">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="atom.xml">
 <script type="application/ld+json">{jsonld("", "零成本工具箱", "免费在线工具集合")}</script>
+<script type="application/ld+json">{jsonld_website()}</script>
 <style>{SHARED_CSS}</style>
 </head>
 <body>
 <header><a class="logo" href="./">零成本工具箱</a><nav><a href="./">全部工具</a></nav></header>
 <main>
 <h1>零成本工具箱</h1>
-<p class="lead">16 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
+<p class="lead">{len(ALL_TOOLS)} 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
 <div class="cards">
 {cards}
 </div>

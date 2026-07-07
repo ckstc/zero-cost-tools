@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-全自动推广脚本（零账号、零成本）：
-  1) IndexNow  —— 把全站 URL 推送给 Bing / Yandex / Naver，秒级收录
-  2) Wayback   —— 逐个存档到 archive.org，触发爬虫 + 反向链接
-  3) 输出报告
-仅用 Python 标准库。由本机定时任务 / WorkBuddy 自动化每日自动运行。
+全自动推广脚本（零账号、零成本）—— 覆盖所有无需登录即可自主提交的渠道：
+  1) IndexNow      —— Bing / Yandex / Naver 秒级收录
+  2) Sitemap Ping  —— Google / Bing / Yandex 主动提交 sitemap
+  3) Ping-O-Matic  —— 向数十个 feed/博客聚合服务广播更新
+  4) 开放提交端点 —— Mojeek / Seznam / Gigablast / Entireweb 等（容错，失败不影响）
+  5) Wayback       —— 逐页存档到 archive.org，触发爬虫 + 反向链接
+仅用 Python 标准库。由定时任务 / WorkBuddy 自动化每日自动运行。
 """
-import os, json, glob, urllib.request, urllib.error, datetime
+import os, json, glob, urllib.request, urllib.parse, urllib.error, datetime
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://ckstc.github.io/zero-cost-tools/"
@@ -20,13 +22,15 @@ KEY_LOC = BASE + KEY + ".txt" if KEY else None
 
 SLUGS = ["compress","jsonfmt","pdf","qrcode","convert","password",
          "word-counter","case-converter","url-codec","base64-codec","timestamp","markdown",
-         "text-diff","csv-json","uuid","color-hex"]
+         "text-diff","csv-json","uuid","color-hex",
+         "number-base","hash","regex","dedup","slug","lorem","wordfreq","randnum"]
+
+UA = {"User-Agent": "Mozilla/5.0 (compatible; zero-cost-tools/1.0)"}
 
 def all_urls():
     urls = [BASE, BASE + "sitemap.xml", BASE + "atom.xml", BASE + "blog/"]
     for s in SLUGS:
         urls.append(BASE + s + "/")
-    # 博客文章
     blog_dir = os.path.join(ROOT, "blog")
     if os.path.isdir(blog_dir):
         for fn in os.listdir(blog_dir):
@@ -34,49 +38,104 @@ def all_urls():
                 urls.append(BASE + "blog/" + fn)
     return urls
 
+def get(url, timeout=20):
+    try:
+        req = urllib.request.Request(url, headers=UA, method="GET")
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.status
+    except urllib.error.HTTPError as e:
+        return e.code
+    except Exception:
+        return -1
+
 def post_json(url, payload):
     req = urllib.request.Request(url, data=json.dumps(payload).encode(),
-                                 headers={"Content-Type":"application/json"}, method="POST")
+                                 headers={"Content-Type": "application/json"}, method="POST")
     try:
         with urllib.request.urlopen(req, timeout=20) as r:
-            return r.status, r.read().decode()[:120]
+            return r.status
     except urllib.error.HTTPError as e:
-        return e.code, e.read().decode()[:200]
-    except Exception as e:
-        return -1, str(e)[:120]
+        return e.code
+    except Exception:
+        return -1
+
+def sitemap_pings(sitemap_url):
+    print("  Sitemap Ping：")
+    for name, ep in [
+        ("Google", "https://www.google.com/ping?sitemap="),
+        ("Bing",   "https://www.bing.com/ping?sitemap="),
+        ("Yandex", "https://webmaster.yandex.com/ping?sitemap="),
+    ]:
+        st = get(ep + urllib.parse.quote(sitemap_url, safe=""))
+        print(f"    [{st}] {name} sitemap ping")
+
+def ping_o_matic():
+    print("  Ping-O-Matic：")
+    params = urllib.parse.urlencode({
+        "title": "零成本工具箱",
+        "website": BASE,
+        "rss": BASE + "atom.xml",
+        "chk_bing": "on", "chk_google": "on", "chk_feedburner": "on",
+        "chk_technorati": "on", "chk_weblogs": "on", "chk_yahoo": "on",
+        "chk_aol": "on", "chk_bloglines": "on", "chk_moreover": "on",
+        "chk_msn": "on", "chk_newsgator": "on", "chk_pubsub": "on",
+        "chk_rojo": "on", "chk_skybuilders": "on", "chk_syndic8": "on",
+        "chk_tailrank": "on",
+    })
+    for proto in ("https", "http"):
+        st = get(f"{proto}://pingomatic.com/ping/?{params}", timeout=25)
+        print(f"    [{st}] pingomatic ({proto})")
+        if st in (200, 301, 302):
+            return
+    print("    (pingomatic 未返回成功，忽略)")
+
+def open_engines():
+    print("  开放提交端点：")
+    smap = urllib.parse.quote(BASE + "sitemap.xml", safe="")
+    endpoints = [
+        ("Mojeek",     f"https://www.mojeek.com/submit?url={smap}"),
+        ("Seznam",     f"https://search.seznam.cz/submit.jsp?url={smap}"),
+        ("Gigablast",  f"https://www.gigablast.com/addurl?url={smap}"),
+        ("Entireweb",  f"https://www.entireweb.com/addurl/?url={smap}"),
+    ]
+    for name, url in endpoints:
+        st = get(url, timeout=18)
+        print(f"    [{st}] {name}")
 
 def wayback_save(url):
     try:
-        req = urllib.request.Request("https://web.archive.org/save/" + url,
-                                     headers={"User-Agent":"Mozilla/5.0"})
+        req = urllib.request.Request("https://web.archive.org/save/" + url, headers=UA)
         with urllib.request.urlopen(req, timeout=25) as r:
             return r.status
-    except Exception as e:
+    except Exception:
         return -1
 
 def main():
     urls = all_urls()
     print(f"[{datetime.datetime.now():%F %T}] 推广开始，共 {len(urls)} 个 URL")
-    ok_idx = bad_idx = 0
     if KEY:
-        st, msg = post_json("https://api.indexnow.org/indexnow", {
+        st = post_json("https://api.indexnow.org/indexnow", {
             "host": "ckstc.github.io",
             "key": KEY,
             "keyLocation": KEY_LOC,
             "urlList": urls,
         })
-        print(f"  IndexNow -> HTTP {st} {msg}")
+        print(f"  IndexNow -> HTTP {st}")
     else:
         print("  IndexNow -> 未找到密钥文件，跳过")
+    sitemap_pings(BASE + "sitemap.xml")
+    ping_o_matic()
+    open_engines()
     print("  Wayback 存档：")
+    ok = bad = 0
     for u in urls:
         code = wayback_save(u)
         if code in (200, 302, 301):
-            ok_idx += 1
+            ok += 1
         else:
-            bad_idx += 1
+            bad += 1
         print(f"    [{code}] {u}")
-    print(f"  Wayback 成功 {ok_idx} / 失败 {bad_idx}")
+    print(f"  Wayback 成功 {ok} / 失败 {bad}")
     print("推广完成。")
 
 if __name__ == "__main__":

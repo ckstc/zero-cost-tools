@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>占位文本生成器</title>
+<meta name="description" content="一键生成 Lorem Ipsum 段落，可调数量">
+<meta name="keywords" content="占位文本,lorem ipsum,假文生成">
+<meta property="og:title" content="占位文本生成器">
+<meta property="og:description" content="一键生成 Lorem Ipsum 段落，可调数量">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/lorem/">
+<meta property="og:image" content="../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/lorem/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "占位文本生成器", "description": "一键生成 Lorem Ipsum 段落，可调数量", "url": "https://ckstc.github.io/zero-cost-tools/lorem/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "占位文本生成器", "item": "https://ckstc.github.io/zero-cost-tools/lorem/"}]}</script>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header .logo{font-weight:700;color:var(--brand);text-decoration:none;font-size:18px}
+header nav a{color:var(--muted);text-decoration:none;font-size:14px}
+header nav a:hover{color:var(--brand)}
+main{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 22px}
+textarea,input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:150px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#eef2ff;color:var(--brand)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
+.stat .lbl{font-size:13px;color:var(--muted)}
+.result{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:15px}
+.md-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.md-preview{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;overflow:auto;min-height:200px}
+.md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
+.md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.wechat-qr-wrap{display:inline-block}
+.qr-label{display:block;font-weight:600;margin-bottom:8px}
+.qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.md-wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../">零成本工具箱</a>
+  <nav><a href="../">全部工具</a></nav>
+</header>
+<main>
+<h1>占位文本生成器</h1>
+<p class="lead">一键生成 Lorem Ipsum 假文段落，可指定段落数量，用于排版与设计稿。</p>
+
+<div class="row">
+  <input type="number" id="n" value="3" min="1" max="20" style="max-width:120px">
+  <span>段</span>
+  <button class="btn" id="go">生成</button>
+</div>
+<textarea id="out" readonly spellcheck="false" style="min-height:200px"></textarea>
+<button class="btn ghost" id="copy">复制</button>
+
+<div class="related"><h2>相关工具</h2><div class="cards">
+  <a class="card" href="../wordfreq/"><h3>词频统计工具</h3><p>统计文本中词语出现频率，导出结果</p></a>  <a class="card" href="../randnum/"><h3>随机数生成器</h3><p>生成指定范围与数量的随机整数，可去重</p></a>  <a class="card" href="../compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>  <a class="card" href="../jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>
+</div></div>
+<div class="support-links">
+  <div class="wechat-qr-wrap">
+    <span class="qr-label">💚 微信扫一扫，支持作者</span>
+    <img src="../wechat-qr.png" alt="微信收款码" class="qr-img">
+  </div>
+</div>
+</main>
+<footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
+<script>
+const words=('lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat').split(' ');
+function sentence(){const len=8+Math.floor(Math.random()*7);let s='';for(let i=0;i<len;i++){let w=words[Math.floor(Math.random()*words.length)];if(i===0)w=w.charAt(0).toUpperCase()+w.slice(1);s+=w+' ';}return s.trim()+'.';}
+document.getElementById('go').onclick=()=>{const n=Math.min(20,Math.max(1,parseInt(document.getElementById('n').value)||1));let t='';for(let p=0;p<n;p++){let para='';for(let i=0;i<5;i++)para+=sentence()+' ';t+=para.trim()+'\n\n';}document.getElementById('out').value=t.trim();};
+document.getElementById('copy').onclick=()=>{const o=document.getElementById('out');o.select();document.execCommand('copy');};
+</script>
+</body>
+</html>

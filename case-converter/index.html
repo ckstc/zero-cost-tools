@@ -10,8 +10,11 @@
 <meta property="og:description" content="英文大小写、标题化、句首大写一键转换">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/case-converter/">
+<meta property="og:image" content="../og.png">
 <link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/case-converter/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "大小写转换工具", "description": "英文大小写、标题化、句首大写一键转换", "url": "https://ckstc.github.io/zero-cost-tools/case-converter/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "大小写转换工具", "item": "https://ckstc.github.io/zero-cost-tools/case-converter/"}]}</script>
 <style>
 :root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
 *{box-sizing:border-box}
@@ -39,6 +42,7 @@ textarea{min-height:150px}
 .md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
 .md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
 .support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
 .wechat-qr-wrap{display:inline-block}
 .qr-label{display:block;font-weight:600;margin-bottom:8px}
 .qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
@@ -72,6 +76,9 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
 <textarea id="out" placeholder="转换结果…" readonly spellcheck="false"></textarea>
 <button class="btn ghost" id="copy">复制结果</button>
 
+<div class="related"><h2>相关工具</h2><div class="cards">
+  <a class="card" href="../url-codec/"><h3>URL 编解码工具</h3><p>在线 URL 编码/解码，处理中文与特殊字符</p></a>  <a class="card" href="../base64-codec/"><h3>Base64 编解码</h3><p>文本 Base64 编码/解码，支持中文 UTF-8</p></a>  <a class="card" href="../timestamp/"><h3>时间戳转换工具</h3><p>Unix 时间戳与日期互转，支持本地/UTC</p></a>  <a class="card" href="../markdown/"><h3>Markdown 预览器</h3><p>实时 Markdown 渲染预览，离线可用</p></a>
+</div></div>
 <div class="support-links">
   <div class="wechat-qr-wrap">
     <span class="qr-label">💚 微信扫一扫，支持作者</span>

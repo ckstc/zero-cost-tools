@@ -17,12 +17,38 @@
   <url><loc>https://ckstc.github.io/zero-cost-tools/csv-json/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/uuid/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/color-hex/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/number-base/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/hash/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/regex/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/dedup/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/slug/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/lorem/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/wordfreq/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/randnum/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/base64-codec-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/case-converter-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/color-hex-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/compress-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/convert-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/csvjson-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/csv-json-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/dedup-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/free-tools-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/hash-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/jsonfmt-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/lorem-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/markdown-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/number-base-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/password-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/pdf-compress-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/qr-generator-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/textdiff-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/pdf-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/privacy-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/qrcode-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/randnum-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/regex-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/slug-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/text-diff-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/timestamp-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/url-codec-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/uuid-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/word-counter-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/wordfreq-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>

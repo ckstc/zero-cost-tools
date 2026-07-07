@@ -7,9 +7,12 @@
 <meta name="description" content="免费在线工具集合：图片压缩、JSON格式化、PDF工具、二维码、单位换算、密码生成、字数统计等，全部本地运行，保护隐私。">
 <meta property="og:title" content="零成本工具箱">
 <meta property="og:description" content="免费在线工具集合，本地运行保护隐私">
+<meta property="og:image" content="og.png">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="atom.xml">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "零成本工具箱", "description": "免费在线工具集合", "url": "https://ckstc.github.io/zero-cost-tools/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "零成本工具箱", "url": "https://ckstc.github.io/zero-cost-tools/", "description": "免费在线工具集合，全部本地运行保护隐私"}</script>
 <style>
 :root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
 *{box-sizing:border-box}
@@ -37,6 +40,7 @@ textarea{min-height:150px}
 .md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
 .md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
 .support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
 .wechat-qr-wrap{display:inline-block}
 .qr-label{display:block;font-weight:600;margin-bottom:8px}
 .qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
@@ -53,7 +57,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
 <header><a class="logo" href="./">零成本工具箱</a><nav><a href="./">全部工具</a></nav></header>
 <main>
 <h1>零成本工具箱</h1>
-<p class="lead">16 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
+<p class="lead">24 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
 <div class="cards">
   <a class="card" href="./compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>
   <a class="card" href="./jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>
@@ -71,17 +75,43 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
   <a class="card" href="./csv-json/"><h3>CSV JSON 互转</h3><p>CSV 与 JSON 在线互转，首行作表头</p></a>
   <a class="card" href="./uuid/"><h3>UUID 生成器</h3><p>生成 RFC4122 v4 UUID，支持批量</p></a>
   <a class="card" href="./color-hex/"><h3>颜色值转换</h3><p>HEX/RGB/HSL 互转，取色器</p></a>
+  <a class="card" href="./number-base/"><h3>进制转换器</h3><p>二进制/八进制/十进制/十六进制在线互转</p></a>
+  <a class="card" href="./hash/"><h3>文本哈希工具</h3><p>生成 SHA-1/SHA-256/SHA-512 摘要，本地运算不上传</p></a>
+  <a class="card" href="./regex/"><h3>正则表达式测试</h3><p>在线测试正则，高亮匹配结果，支持语法选项</p></a>
+  <a class="card" href="./dedup/"><h3>文本去重工具</h3><p>按行去除重复内容保留顺序，本地处理</p></a>
+  <a class="card" href="./slug/"><h3>URL 别名生成</h3><p>把标题转换为 SEO 友好的 URL slug（短链接别名）</p></a>
+  <a class="card" href="./lorem/"><h3>占位文本生成器</h3><p>一键生成 Lorem Ipsum 段落，可调数量</p></a>
+  <a class="card" href="./wordfreq/"><h3>词频统计工具</h3><p>统计文本中词语出现频率，导出结果</p></a>
+  <a class="card" href="./randnum/"><h3>随机数生成器</h3><p>生成指定范围与数量的随机整数，可去重</p></a>
 </div>
 <h2 style="margin-top:34px">📚 使用教程</h2>
 <div class="cards">
-  <a class="card" href="./blog/compress-guide.html"><h3>图片压缩指南：体积减半画质不降</h3><p>使用教程与技巧</p></a>
-  <a class="card" href="./blog/convert-guide.html"><h3>单位换算指南：公式与在线工具</h3><p>使用教程与技巧</p></a>
-  <a class="card" href="./blog/csvjson-guide.html"><h3>CSV 转 JSON：在线互转方法</h3><p>使用教程与技巧</p></a>
-  <a class="card" href="./blog/jsonfmt-guide.html"><h3>JSON 格式化指南：一键美化与校验</h3><p>使用教程与技巧</p></a>
-  <a class="card" href="./blog/password-guide.html"><h3>密码安全指南：如何生成高强度密码</h3><p>使用教程与技巧</p></a>
-  <a class="card" href="./blog/pdf-compress-guide.html"><h3>PDF 压缩指南：把文件变小又不糊</h3><p>使用教程与技巧</p></a>
-  <a class="card" href="./blog/qr-generator-guide.html"><h3>二维码生成指南：网址/文本/WiFi 一键生成</h3><p>使用教程与技巧</p></a>
-  <a class="card" href="./blog/textdiff-guide.html"><h3>文本对比：找出两段文字的差异</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/base64-codec-guide.html"><h3>Base64 编解码使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/case-converter-guide.html"><h3>大小写转换工具使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/color-hex-guide.html"><h3>颜色值转换使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/compress-guide.html"><h3>图片压缩工具使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/convert-guide.html"><h3>单位换算器使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/csv-json-guide.html"><h3>CSV JSON 互转使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/dedup-guide.html"><h3>文本去重工具使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/free-tools-guide.html"><h3>免费在线工具推荐合集</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/hash-guide.html"><h3>文本哈希工具使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/jsonfmt-guide.html"><h3>JSON 格式化工具使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/lorem-guide.html"><h3>占位文本生成器使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/markdown-guide.html"><h3>Markdown 预览器使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/number-base-guide.html"><h3>进制转换器使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/password-guide.html"><h3>密码生成器使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/pdf-guide.html"><h3>PDF 工具箱使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/privacy-guide.html"><h3>如何安全使用在线工具保护隐私</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/qrcode-guide.html"><h3>二维码生成器使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/randnum-guide.html"><h3>随机数生成器使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/regex-guide.html"><h3>正则表达式测试使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/slug-guide.html"><h3>URL 别名生成使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/text-diff-guide.html"><h3>文本对比工具使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/timestamp-guide.html"><h3>时间戳转换工具使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/url-codec-guide.html"><h3>URL 编解码工具使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/uuid-guide.html"><h3>UUID 生成器使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/word-counter-guide.html"><h3>字数统计工具使用指南</h3><p>使用教程与技巧</p></a>
+  <a class="card" href="./blog/wordfreq-guide.html"><h3>词频统计工具使用指南</h3><p>使用教程与技巧</p></a>
 </div>
 <div class="support-links">
   <div class="wechat-qr-wrap">
