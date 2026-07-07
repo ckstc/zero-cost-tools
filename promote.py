@@ -20,11 +20,17 @@ key_files = [f for f in glob.glob(os.path.join(ROOT, "*.txt"))
 KEY = open(key_files[0], encoding="utf-8").read().strip() if key_files else None
 KEY_LOC = BASE + KEY + ".txt" if KEY else None
 
-SLUGS = ["compress","jsonfmt","pdf","qrcode","convert","password",
-         "word-counter","case-converter","url-codec","base64-codec","timestamp","markdown",
-         "text-diff","csv-json","uuid","color-hex",
-         "number-base","hash","regex","dedup","slug","lorem","wordfreq","randnum",
-         "roman-numeral","percent-calc","rmb-upper"]
+# 动态发现所有工具页（任何含 index.html 的子目录），避免硬编码列表与 build.py 脱节
+def discover_slugs():
+    slugs = []
+    for d in os.listdir(ROOT):
+        p = os.path.join(ROOT, d)
+        if os.path.isdir(p) and not d.startswith(".") and d not in ("blog",) \
+           and os.path.isfile(os.path.join(p, "index.html")):
+            slugs.append(d)
+    return sorted(slugs)
+
+SLUGS = discover_slugs()
 
 UA = {"User-Agent": "Mozilla/5.0 (compatible; zero-cost-tools/1.0)"}
 
