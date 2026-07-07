@@ -200,8 +200,6 @@ function render(src){
 md.addEventListener('input',()=>render(md.value));
 render('# 欢迎\n输入 **Markdown** 实时预览。\n\n- 列表项一\n- 列表项二\n\n> 引用示例');
 '''),
-}
-
     "text-diff": dict(
         h1="文本对比工具",
         lead="粘贴两段文本，逐行对比差异，新增以绿、删除以红高亮。完全本地运行。",
