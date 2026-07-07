@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二维码生成器 · 免费在线生成二维码</title>
+<meta name="description" content="免费在线二维码生成器：输入文字或网址，一键生成可下载的 PNG 二维码。纯浏览器运行，不上传数据，隐私安全。">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2933;--muted:#66707a;--primary:#0ca678;--accent:#16a34a;--border:#e3e8ef;--shadow:0 6px 24px rgba(31,41,51,.08)}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.hero{background:linear-gradient(135deg,#0ca678,#1098ad);color:#fff;text-align:center;padding:38px 20px}
+.hero h1{margin:0 0 6px;font-size:32px}
+.hero p{margin:0;opacity:.95;font-size:15px}
+.container{max-width:720px;margin:0 auto;padding:26px 20px 60px}
+.tool{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px}
+textarea,input[type=text]{width:100%;padding:10px;border:1px solid var(--border);border-radius:9px;font-size:14px;font-family:inherit}
+textarea{height:90px;resize:vertical}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.row > div{flex:1;min-width:120px}
+select{padding:8px;border:1px solid var(--border);border-radius:8px;width:100%}
+.preview{margin-top:18px;text-align:center}
+#qrCanvas{width:220px;height:220px;image-rendering:pixelated;border:1px solid var(--border);border-radius:8px;background:#fff;padding:8px}
+.btn{border:1px solid var(--border);background:#fff;color:var(--ink);padding:9px 16px;border-radius:9px;font-size:14px;cursor:pointer}
+.btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.support{margin-top:36px;background:#fff8f0;border:1px solid #ffe0c2;border-radius:14px;padding:22px;text-align:center}
+.support p{color:var(--muted);font-size:14px;margin:6px 0 14px}
+.support-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.wechat-qr-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.qr-label{font-size:13px;color:#07c160;font-weight:600}
+.qr-img{width:140px;height:140px;border-radius:8px;border:2px solid #e0e0e0;object-fit:cover}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>🔳 二维码生成器</h1>
+  <p>输入文字或网址，一键生成可下载的二维码</p>
+</header>
+<main class="container">
+  <div class="tool">
+    <label for="qrText">内容（网址 / 文字 / 微信名片等）</label>
+    <textarea id="qrText" placeholder="https://ckstc.github.io/zero-cost-tools/ 或任意文字">https://ckstc.github.io/zero-cost-tools/</textarea>
+    <div class="row">
+      <div>
+        <label for="qrSize">尺寸</label>
+        <select id="qrSize">
+          <option value="256">256 × 256</option>
+          <option value="512" selected>512 × 512</option>
+          <option value="1024">1024 × 1024</option>
+        </select>
+      </div>
+      <div>
+        <label for="qrLevel">容错等级</label>
+        <select id="qrLevel">
+          <option value="L">L（低）</option>
+          <option value="M" selected>M（中）</option>
+          <option value="Q">Q（较高）</option>
+          <option value="H">H（高）</option>
+        </select>
+      </div>
+    </div>
+    <div class="preview">
+      <canvas id="qrCanvas" width="512" height="512"></canvas>
+      <div style="margin-top:14px">
+        <button class="btn btn-primary" id="downloadBtn">下载 PNG</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="support">
+    <h2>💛 支持作者，让工具持续免费</h2>
+    <p>完全免费、不收集数据。如果好用，可以扫微信请我喝杯咖啡 ☕</p>
+    <div class="support-links">
+      <div class="wechat-qr-wrap">
+        <span class="qr-label">💚 微信扫一扫，请作者喝杯咖啡</span>
+        <img src="wechat-qr.png" alt="微信收款码" class="qr-img">
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer">二维码生成器 · 零成本、注重隐私的免费工具 · 由 WorkBuddy 自动构建</footer>
+
+<script>
+const canvas = document.getElementById('qrCanvas');
+const ctx = canvas.getContext('2d');
+function render(){
+  const text = document.getElementById('qrText').value || ' ';
+  const size = parseInt(document.getElementById('qrSize').value);
+  const level = document.getElementById('qrLevel').value;
+  const qr = qrcode(0, level);
+  qr.addData(text);
+  qr.make();
+  const count = qr.getModuleCount();
+  const scale = size / count;
+  canvas.width = size; canvas.height = size;
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,size,size);
+  ctx.fillStyle = '#000';
+  for (let r=0;r<count;r++){
+    for (let c=0;c<count;c++){
+      if (qr.isDark(r,c)) ctx.fillRect(c*scale, r*scale, Math.ceil(scale), Math.ceil(scale));
+    }
+  }
+}
+['qrText','qrSize','qrLevel'].forEach(id => document.getElementById(id).addEventListener('input', render));
+document.getElementById('downloadBtn').onclick = () => {
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = 'qrcode.png'; a.click();
+};
+render();
+</script>
+</body>
+</html>

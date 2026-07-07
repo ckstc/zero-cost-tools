@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>密码生成器 · 免费生成高强度随机密码</title>
+<meta name="description" content="免费在线强密码生成器：自定义长度与字符类型，本地生成不联网，安全无泄露。适合账号、WiFi、密保使用。">
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2933;--muted:#66707a;--primary:#e8590c;--accent:#16a34a;--border:#e3e8ef;--shadow:0 6px 24px rgba(31,41,51,.08)}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.hero{background:linear-gradient(135deg,#e8590c,#f08c00);color:#fff;text-align:center;padding:38px 20px}
+.hero h1{margin:0 0 6px;font-size:32px}.hero p{margin:0;opacity:.95;font-size:15px}
+.container{max-width:560px;margin:0 auto;padding:26px 20px 60px}
+.tool{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+.out{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:20px;padding:14px;border:1px solid var(--border);border-radius:10px;text-align:center;word-break:break-all;background:#fff;margin-bottom:12px;color:var(--primary)}
+.opts{font-size:14px}
+.opts label{display:flex;align-items:center;gap:8px;margin:8px 0;cursor:pointer}
+input[type=range]{width:100%}
+.lenval{font-weight:700;color:var(--primary)}
+.btn{border:1px solid var(--border);background:#fff;color:var(--ink);padding:9px 16px;border-radius:9px;font-size:14px;cursor:pointer}
+.btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.bar{height:8px;border-radius:4px;background:#eee;margin-top:14px;overflow:hidden}
+.bar > i{display:block;height:100%;width:0;transition:width .2s}
+.support{margin-top:36px;background:#fff8f0;border:1px solid #ffe0c2;border-radius:14px;padding:22px;text-align:center}
+.support p{color:var(--muted);font-size:14px;margin:6px 0 14px}
+.support-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.wechat-qr-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.qr-label{font-size:13px;color:#07c160;font-weight:600}
+.qr-img{width:140px;height:140px;border-radius:8px;border:2px solid #e0e0e0;object-fit:cover}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+</style>
+</head>
+<body>
+<header class="hero"><h1>🔐 密码生成器</h1><p>本地生成高强度随机密码，不联网、不存储</p></header>
+<main class="container">
+  <div class="tool">
+    <div class="out" id="out">点击生成</div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="opts" style="margin-top:14px">
+      <label>长度 <span class="lenval" id="lenVal">16</span>
+        <input type="range" id="len" min="4" max="64" value="16" style="flex:1">
+      </label>
+      <label><input type="checkbox" id="upper" checked> 大写字母 A-Z</label>
+      <label><input type="checkbox" id="lower" checked> 小写字母 a-z</label>
+      <label><input type="checkbox" id="num" checked> 数字 0-9</label>
+      <label><input type="checkbox" id="sym" checked> 符号 !@#$%</label>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:10px">
+      <button class="btn btn-primary" id="gen">生成密码</button>
+      <button class="btn" id="copy">复制</button>
+    </div>
+  </div>
+  <section class="support">
+    <h2>💛 支持作者，让工具持续免费</h2>
+    <p>完全免费、不收集数据。如果好用，可以扫微信请我喝杯咖啡 ☕</p>
+    <div class="support-links">
+      <div class="wechat-qr-wrap">
+        <span class="qr-label">💚 微信扫一扫，请作者喝杯咖啡</span>
+        <img src="wechat-qr.png" alt="微信收款码" class="qr-img">
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer">密码生成器 · 零成本、注重隐私的免费工具 · 由 WorkBuddy 自动构建</footer>
+<script>
+const out=document.getElementById('out'),bar=document.getElementById('bar'),len=document.getElementById('len'),lenVal=document.getElementById('lenVal');
+const upper=document.getElementById('upper'),lower=document.getElementById('lower'),num=document.getElementById('num'),sym=document.getElementById('sym');
+const sets={upper:'ABCDEFGHIJKLMNOPQRSTUVWXYZ',lower:'abcdefghijklmnopqrstuvwxyz',num:'0123456789',sym:'!@#$%^&*()-_=+[]{};:,.<>?'};
+len.oninput=()=>lenVal.textContent=len.value;
+function gen(){
+  const pools=[];let all='';
+  for(const k in sets){if(document.getElementById(k).checked){pools.push(sets[k]);all+=sets[k];}}
+  if(!all){out.textContent='请至少选择一种字符';return;}
+  const n=parseInt(len.value);const arr=new Uint32Array(n);
+  crypto.getRandomValues(arr);
+  let res='';
+  for(let i=0;i<n;i++) res+=all[arr[i]%all.length];
+  // ensure at least one from each selected pool
+  let chars=res.split('');
+  pools.forEach((p,i)=>{chars[i]=p[arr[i]%p.length];});
+  res=chars.join('');
+  out.textContent=res;
+  const strength=Math.min(100,Math.round(n*4*(pools.length/4)*3));
+  bar.style.width=strength+'%';
+  bar.style.background=strength>70?'#16a34a':strength>40?'#f59f00':'#e03131';
+}
+document.getElementById('gen').onclick=gen;
+document.getElementById('copy').onclick=()=>{navigator.clipboard.writeText(out.textContent);document.getElementById('copy').textContent='已复制';setTimeout(()=>document.getElementById('copy').textContent='复制',1200);};
+gen();
+</script>
+</body>
+</html>

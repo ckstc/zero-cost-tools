@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>单位换算器 · 长度/重量/温度/体积免费换算</title>
+<meta name="description" content="免费在线单位换算器：支持长度、重量、温度、体积、面积、时间等常用单位互转。纯浏览器运行，即时计算，零成本。">
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2933;--muted:#66707a;--primary:#4263eb;--accent:#16a34a;--border:#e3e8ef;--shadow:0 6px 24px rgba(31,41,51,.08)}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.hero{background:linear-gradient(135deg,#4263eb,#7048e8);color:#fff;text-align:center;padding:38px 20px}
+.hero h1{margin:0 0 6px;font-size:32px}.hero p{margin:0;opacity:.95;font-size:15px}
+.container{max-width:640px;margin:0 auto;padding:26px 20px 60px}
+.tool{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+select,input{padding:10px;border:1px solid var(--border);border-radius:9px;font-size:15px;width:100%}
+.row{display:flex;gap:10px;align-items:center;margin:10px 0}
+.row > div{flex:1}
+.swap{text-align:center}
+button.swapBtn{border:1px solid var(--border);background:#fff;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:18px}
+.result{margin-top:16px;padding:16px;background:#f1f3ff;border-radius:10px;text-align:center;font-size:22px;font-weight:700;color:var(--primary)}
+.support{margin-top:36px;background:#fff8f0;border:1px solid #ffe0c2;border-radius:14px;padding:22px;text-align:center}
+.support p{color:var(--muted);font-size:14px;margin:6px 0 14px}
+.support-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.wechat-qr-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.qr-label{font-size:13px;color:#07c160;font-weight:600}
+.qr-img{width:140px;height:140px;border-radius:8px;border:2px solid #e0e0e0;object-fit:cover}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+</style>
+</head>
+<body>
+<header class="hero"><h1>🔁 单位换算器</h1><p>长度 · 重量 · 温度 · 体积 · 面积 · 时间</p></header>
+<main class="container">
+  <div class="tool">
+    <select id="cat"></select>
+    <div class="row">
+      <div><input type="number" id="fromVal" value="1" step="any"></div>
+      <div><select id="fromUnit"></select></div>
+    </div>
+    <div class="row swap"><button class="swapBtn" id="swap">⇅</button></div>
+    <div class="row">
+      <div><input type="number" id="toVal" readonly></div>
+      <div><select id="toUnit"></select></div>
+    </div>
+    <div class="result" id="result">—</div>
+  </div>
+  <section class="support">
+    <h2>💛 支持作者，让工具持续免费</h2>
+    <p>完全免费、不收集数据。如果好用，可以扫微信请我喝杯咖啡 ☕</p>
+    <div class="support-links">
+      <div class="wechat-qr-wrap">
+        <span class="qr-label">💚 微信扫一扫，请作者喝杯咖啡</span>
+        <img src="wechat-qr.png" alt="微信收款码" class="qr-img">
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer">单位换算器 · 零成本、注重隐私的免费工具 · 由 WorkBuddy 自动构建</footer>
+<script>
+const units = {
+  length:{name:'长度',base:'m',data:{m:1,km:1000,cm:0.01,mm:0.001,mi:1609.34,yd:0.9144,ft:0.3048,in:0.0254}},
+  weight:{name:'重量',base:'kg',data:{kg:1,g:0.001,mg:1e-6,t:1000,lb:0.453592,oz:0.0283495}},
+  volume:{name:'体积',base:'L',data:{L:1,mL:0.001,m3:1000,gal:3.78541,cup:0.236588}},
+  area:{name:'面积',base:'m2',data:{m2:1,km2:1e6,cm2:0.0001,ft2:0.092903,acre:4046.86}},
+  time:{name:'时间',base:'s',data:{s:1,min:60,h:3600,d:86400}},
+  speed:{name:'速度',base:'m/s',data:{'m/s':1,'km/h':0.277778,'mph':0.44704}}
+};
+const cat=document.getElementById('cat'),fromUnit=document.getElementById('fromUnit'),toUnit=document.getElementById('toUnit');
+const fromVal=document.getElementById('fromVal'),toVal=document.getElementById('toVal'),result=document.getElementById('result');
+for(const k in units){const o=document.createElement('option');o.value=k;o.textContent=units[k].name;cat.appendChild(o);}
+function fillUnits(){
+  const u=units[cat.value].data;fromUnit.innerHTML='';toUnit.innerHTML='';
+  for(const k in u){fromUnit.add(new Option(k,k));toUnit.add(new Option(k,k));}
+  toUnit.selectedIndex=1;
+}
+function convert(){
+  const u=units[cat.value].data;
+  const f=u[fromUnit.value],t=u[toUnit.value];
+  const v=parseFloat(fromVal.value)||0;
+  const out=v*f/t;
+  toVal.value=out;
+  result.textContent=`${v} ${fromUnit.value} = ${out} ${toUnit.value}`;
+}
+cat.onchange=fillUnits;
+[fromUnit,toUnit].forEach(s=>s.onchange=convert);
+fromVal.oninput=convert;
+document.getElementById('swap').onclick=()=>{const a=fromUnit.value;fromUnit.value=toUnit.value;toUnit.value=a;convert();};
+fillUnits();convert();
+</script>
+</body>
+</html>

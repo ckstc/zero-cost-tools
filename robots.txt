@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ckstc.github.io/zero-cost-tools/sitemap.xml
