@@ -277,6 +277,17 @@ show('#2f6df6');
 '''),
 }
 
+BLOG_TITLES = {
+    "pdf-compress-guide.html": "PDF 压缩指南：把文件变小又不糊",
+    "qr-generator-guide.html": "二维码生成指南：网址/文本/WiFi 一键生成",
+    "compress-guide.html": "图片压缩指南：体积减半画质不降",
+    "jsonfmt-guide.html": "JSON 格式化指南：一键美化与校验",
+    "password-guide.html": "密码安全指南：如何生成高强度密码",
+    "convert-guide.html": "单位换算指南：公式与在线工具",
+    "csvjson-guide.html": "CSV 转 JSON：在线互转方法",
+    "textdiff-guide.html": "文本对比：找出两段文字的差异",
+}
+
 SHARED_CSS = """
 :root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
 *{box-sizing:border-box}
@@ -391,6 +402,9 @@ for slug, t in NEW_TOOLS.items():
     gen_tool(slug, meta[1], meta[2], meta[3], t["h1"], t["lead"], t["body"], t["js"])
 
 # 生成 Hub / 根页
+blog_files = sorted(f for f in os.listdir(os.path.join(ROOT, "blog")) if f.endswith(".html") and f != "index.html")
+blog_cards = "\n".join(
+    f'  <a class="card" href="./blog/{f}"><h3>{BLOG_TITLES.get(f, f.replace(".html","").replace("-"," ").title())}</h3><p>使用教程与技巧</p></a>' for f in blog_files)
 cards = "\n".join(
     f'  <a class="card" href="./{s}/"><h3>{t}</h3><p>{d}</p></a>' for s, t, d, k in ALL_TOOLS)
 hub_html = f"""<!DOCTYPE html>
@@ -411,9 +425,13 @@ hub_html = f"""<!DOCTYPE html>
 <header><a class="logo" href="./">零成本工具箱</a><nav><a href="./">全部工具</a></nav></header>
 <main>
 <h1>零成本工具箱</h1>
-<p class="lead">12 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
+<p class="lead">16 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
 <div class="cards">
 {cards}
+</div>
+<h2 style="margin-top:34px">📚 使用教程</h2>
+<div class="cards">
+{blog_cards}
 </div>
 <div class="support-links">
   <div class="wechat-qr-wrap">
@@ -431,7 +449,7 @@ print("generated index.html (hub)")
 
 # sitemap.xml
 now = datetime.datetime.utcnow().strftime("%Y-%m-%d")
-urls = [BASE] + [BASE + s + "/" for s, *_ in ALL_TOOLS]
+urls = [BASE] + [BASE + s + "/" for s, *_ in ALL_TOOLS] + [BASE + "blog/" + f for f in blog_files]
 sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
     sitemap += f"  <url><loc>{u}</loc><lastmod>{now}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n"
@@ -450,6 +468,10 @@ atom = f'''<?xml version="1.0" encoding="utf-8"?>
 '''
 for s, t, d, k in ALL_TOOLS:
     atom += f'''<entry><title>{t}</title><id>{BASE}{s}/</id><updated>{now}T00:00:00Z</updated><link href="{BASE}{s}/"/><summary>{d}</summary></entry>
+'''
+for f in blog_files:
+    bt = BLOG_TITLES.get(f, f.replace(".html", "").replace("-", " ").title())
+    atom += f'''<entry><title>{bt}</title><id>{BASE}blog/{f}</id><updated>{now}T00:00:00Z</updated><link href="{BASE}blog/{f}"/><summary>使用教程</summary></entry>
 '''
 atom += "</feed>\n"
 with open(os.path.join(ROOT, "atom.xml"), "w", encoding="utf-8") as f:
