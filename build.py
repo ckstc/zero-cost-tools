@@ -37,6 +37,9 @@ ALL_TOOLS = [
     ("lorem",         "占位文本生成器",       "一键生成 Lorem Ipsum 段落，可调数量", "占位文本,lorem ipsum,假文生成"),
     ("wordfreq",      "词频统计工具",         "统计文本中词语出现频率，导出结果", "词频统计,词语频率,文本分析"),
     ("randnum",       "随机数生成器",         "生成指定范围与数量的随机整数，可去重", "随机数,随机整数,生成随机数"),
+    ("roman-numeral", "罗马数字转换",         "阿拉伯数字与罗马数字互转，支持 1-3999", "罗马数字,阿拉伯数字,数字转换"),
+    ("percent-calc",  "百分比计算器",         "求百分比、百分比数值、增减百分比", "百分比计算,百分比,增减百分比"),
+    ("rmb-upper",     "金额大写转换",         "数字金额转中文大写，财务开票常用", "金额大写,人民币大写,数字转中文"),
 ]
 
 # 新工具：需生成完整页面（body + js）
@@ -457,6 +460,84 @@ document.getElementById('go').onclick=()=>{
   out.value=res.join('\n');
 };
 document.getElementById('copy').onclick=()=>{out.select();document.execCommand('copy');};
+'''),
+    "roman-numeral": dict(
+        h1="罗马数字与阿拉伯数字互转",
+        lead="在阿拉伯数字（1-3999）与罗马数字之间互转，学习历史纪年或阅读旧文献时很有用。",
+        body=r'''
+<div class="row">
+  <input id="ara" type="number" placeholder="阿拉伯数字，如 2024" style="max-width:200px">
+  <button class="btn" id="atoR">→ 罗马数字</button>
+</div>
+<div class="row">
+  <input id="rom" placeholder="罗马数字，如 MMXXIV" style="max-width:200px">
+  <button class="btn" id="Rtoa">→ 阿拉伯数字</button>
+</div>
+<div id="res" class="result"></div>
+''',
+        js=r'''
+const ara=document.getElementById('ara'),rom=document.getElementById('rom'),res=document.getElementById('res');
+const MAP=[[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+function toRom(n){if(!n||n<1||n>3999)return '仅支持 1-3999';let s='';for(const[v,sym]of MAP){while(n>=v){s+=sym;n-=v;}}return s;}
+function toAra(s){s=(s||'').trim().toUpperCase();if(!/^[IVXLCDM]+$/.test(s))return '请输入合法罗马数字';let total=0,prev=0;const V={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};for(let i=s.length-1;i>=0;i--){const cur=V[s[i]];total+=cur<prev?-cur:cur;prev=cur;}return total;}
+document.getElementById('atoR').onclick=()=>{res.innerHTML='罗马数字：<b>'+toRom(parseInt(ara.value))+'</b>';};
+document.getElementById('Rtoa').onclick=()=>{res.innerHTML='阿拉伯数字：<b>'+toAra(rom.value)+'</b>';};
+'''),
+    "percent-calc": dict(
+        h1="百分比计算器",
+        lead="在线计算百分比、已知基数求百分比数值、以及增减百分比，财务与日常都常用。",
+        body=r'''
+<div class="row">
+  <input id="part" type="number" placeholder="部分值" style="max-width:160px">
+  <input id="whole" type="number" placeholder="整体值" style="max-width:160px">
+  <button class="btn" id="calc">求百分比</button>
+</div>
+<div class="row">
+  <input id="base" type="number" placeholder="基数" style="max-width:160px">
+  <input id="pct" type="number" placeholder="百分比 %" style="max-width:120px">
+  <button class="btn" id="of">求数值</button>
+</div>
+<div class="row">
+  <input id="old" type="number" placeholder="原值" style="max-width:160px">
+  <input id="new" type="number" placeholder="新值" style="max-width:160px">
+  <button class="btn" id="chg">增减百分比</button>
+</div>
+<div id="res" class="result"></div>
+''',
+        js=r'''
+const g=id=>document.getElementById(id),res=g('res');
+g('calc').onclick=()=>{const p=+g('part').value,w=+g('whole').value;if(!w){res.textContent='整体值不能为0';return;}res.innerHTML='结果：<b>'+((p/w)*100).toFixed(2)+'%</b>';};
+g('of').onclick=()=>{const b=+g('base').value,p=+g('pct').value;res.innerHTML='结果：<b>'+(b*p/100)+'</b>';};
+g('chg').onclick=()=>{const o=+g('old').value,n=+g('new').value;if(!o){res.textContent='原值不能为0';return;}res.innerHTML='变化：<b>'+(((n-o)/o)*100).toFixed(2)+'%</b>';};
+'''),
+    "rmb-upper": dict(
+        h1="金额大写转换",
+        lead="把数字金额转换为中文大写（壹贰叁…），开票、填支票、写合同常用，自动处理角分。",
+        body=r'''
+<input id="amt" type="number" placeholder="输入金额，如 1234.56" style="max-width:240px">
+<button class="btn" id="go">转中文大写</button>
+<div id="res" class="result"></div>
+''',
+        js=r'''
+const g=id=>document.getElementById(id),res=g('res');
+function rmbUpper(num){
+  if(isNaN(num))return '请输入有效数字';
+  if(num===0)return '零元整';
+  const neg=num<0;num=Math.abs(num);
+  const d=['零','壹','贰','叁','肆','伍','陆','柒','捌','玖'];
+  const ints=['','拾','佰','仟'];const units=['','万','亿'];
+  let str=Math.floor(num).toString();const groups=[];
+  while(str.length>0){groups.unshift(str.slice(-4));str=str.slice(0,-4);}
+  let s='';
+  groups.forEach((grp,gi)=>{let part='';let zero=false;const len=grp.length;
+    for(let i=0;i<len;i++){const v=+grp[i];const pos=len-1-i;
+      if(v===0){zero=true;}else{part+=(zero&&part?'零':'')+d[v]+ints[pos];zero=false;}}
+    if(part)s+=part+units[groups.length-1-gi];});
+  let dec=Math.round((num-Math.floor(num))*100);const jiao=Math.floor(dec/10),fen=dec%10;
+  let decStr='';if(jiao>0)decStr+=d[jiao]+'角';if(fen>0)decStr+=d[fen]+'分';if(!decStr)decStr='整';
+  return (neg?'负':'')+s+'元'+decStr;
+}
+g('go').onclick=()=>{res.innerHTML='中文大写：<b>'+rmbUpper(parseFloat(g('amt').value))+'</b>';};
 '''),
 }
 

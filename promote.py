@@ -9,7 +9,7 @@
   5) Wayback       —— 逐页存档到 archive.org，触发爬虫 + 反向链接
 仅用 Python 标准库。由定时任务 / WorkBuddy 自动化每日自动运行。
 """
-import os, json, glob, urllib.request, urllib.parse, urllib.error, datetime
+import os, json, glob, urllib.request, urllib.parse, urllib.error, datetime, subprocess, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://ckstc.github.io/zero-cost-tools/"
@@ -23,7 +23,8 @@ KEY_LOC = BASE + KEY + ".txt" if KEY else None
 SLUGS = ["compress","jsonfmt","pdf","qrcode","convert","password",
          "word-counter","case-converter","url-codec","base64-codec","timestamp","markdown",
          "text-diff","csv-json","uuid","color-hex",
-         "number-base","hash","regex","dedup","slug","lorem","wordfreq","randnum"]
+         "number-base","hash","regex","dedup","slug","lorem","wordfreq","randnum",
+         "roman-numeral","percent-calc","rmb-upper"]
 
 UA = {"User-Agent": "Mozilla/5.0 (compatible; zero-cost-tools/1.0)"}
 
@@ -136,7 +137,18 @@ def main():
             bad += 1
         print(f"    [{code}] {u}")
     print(f"  Wayback 成功 {ok} / 失败 {bad}")
+    x_autopost()
     print("推广完成。")
+
+def x_autopost():
+    print("  X 自动发帖：")
+    try:
+        r = subprocess.run([sys.executable, os.path.join(ROOT, "post_x.py")],
+                           capture_output=True, text=True, timeout=160)
+        for line in (r.stdout + r.stderr).strip().splitlines()[:8]:
+            print("    " + line)
+    except Exception as e:
+        print("    X 发帖跳过：" + str(e)[:160])
 
 if __name__ == "__main__":
     main()

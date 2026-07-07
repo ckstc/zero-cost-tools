@@ -25,6 +25,9 @@
   <url><loc>https://ckstc.github.io/zero-cost-tools/lorem/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/wordfreq/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/randnum/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/roman-numeral/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/percent-calc/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/rmb-upper/</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/base64-codec-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/case-converter-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/color-hex-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -40,10 +43,13 @@
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/number-base-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/password-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/pdf-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/percent-calc-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/privacy-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/qrcode-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/randnum-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/regex-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/rmb-upper-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ckstc.github.io/zero-cost-tools/blog/roman-numeral-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/slug-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/text-diff-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ckstc.github.io/zero-cost-tools/blog/timestamp-guide.html</loc><lastmod>2026-07-07</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>

@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>占位文本生成器</title>
-<meta name="description" content="一键生成 Lorem Ipsum 段落，可调数量">
-<meta name="keywords" content="占位文本,lorem ipsum,假文生成">
-<meta property="og:title" content="占位文本生成器">
-<meta property="og:description" content="一键生成 Lorem Ipsum 段落，可调数量">
+<title>罗马数字转换</title>
+<meta name="description" content="阿拉伯数字与罗马数字互转，支持 1-3999">
+<meta name="keywords" content="罗马数字,阿拉伯数字,数字转换">
+<meta property="og:title" content="罗马数字转换">
+<meta property="og:description" content="阿拉伯数字与罗马数字互转，支持 1-3999">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/lorem/">
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/roman-numeral/">
 <meta property="og:image" content="../og.png">
-<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/lorem/">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/roman-numeral/">
 <link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "占位文本生成器", "description": "一键生成 Lorem Ipsum 段落，可调数量", "url": "https://ckstc.github.io/zero-cost-tools/lorem/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "占位文本生成器", "item": "https://ckstc.github.io/zero-cost-tools/lorem/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "罗马数字转换", "description": "阿拉伯数字与罗马数字互转，支持 1-3999", "url": "https://ckstc.github.io/zero-cost-tools/roman-numeral/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "罗马数字转换", "item": "https://ckstc.github.io/zero-cost-tools/roman-numeral/"}]}</script>
 <style>
 :root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
 *{box-sizing:border-box}
@@ -61,19 +61,21 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
   <nav><a href="../">全部工具</a></nav>
 </header>
 <main>
-<h1>占位文本生成器</h1>
-<p class="lead">一键生成 Lorem Ipsum 假文段落，可指定段落数量，用于排版与设计稿。</p>
+<h1>罗马数字与阿拉伯数字互转</h1>
+<p class="lead">在阿拉伯数字（1-3999）与罗马数字之间互转，学习历史纪年或阅读旧文献时很有用。</p>
 
 <div class="row">
-  <input type="number" id="n" value="3" min="1" max="20" style="max-width:120px">
-  <span>段</span>
-  <button class="btn" id="go">生成</button>
+  <input id="ara" type="number" placeholder="阿拉伯数字，如 2024" style="max-width:200px">
+  <button class="btn" id="atoR">→ 罗马数字</button>
 </div>
-<textarea id="out" readonly spellcheck="false" style="min-height:200px"></textarea>
-<button class="btn ghost" id="copy">复制</button>
+<div class="row">
+  <input id="rom" placeholder="罗马数字，如 MMXXIV" style="max-width:200px">
+  <button class="btn" id="Rtoa">→ 阿拉伯数字</button>
+</div>
+<div id="res" class="result"></div>
 
 <div class="related"><h2>相关工具</h2><div class="cards">
-  <a class="card" href="../wordfreq/"><h3>词频统计工具</h3><p>统计文本中词语出现频率，导出结果</p></a>  <a class="card" href="../randnum/"><h3>随机数生成器</h3><p>生成指定范围与数量的随机整数，可去重</p></a>  <a class="card" href="../roman-numeral/"><h3>罗马数字转换</h3><p>阿拉伯数字与罗马数字互转，支持 1-3999</p></a>  <a class="card" href="../percent-calc/"><h3>百分比计算器</h3><p>求百分比、百分比数值、增减百分比</p></a>
+  <a class="card" href="../percent-calc/"><h3>百分比计算器</h3><p>求百分比、百分比数值、增减百分比</p></a>  <a class="card" href="../rmb-upper/"><h3>金额大写转换</h3><p>数字金额转中文大写，财务开票常用</p></a>  <a class="card" href="../compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>  <a class="card" href="../jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>
 </div></div>
 <div class="support-links">
   <div class="wechat-qr-wrap">
@@ -84,10 +86,12 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
 </main>
 <footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
 <script>
-const words=('lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat').split(' ');
-function sentence(){const len=8+Math.floor(Math.random()*7);let s='';for(let i=0;i<len;i++){let w=words[Math.floor(Math.random()*words.length)];if(i===0)w=w.charAt(0).toUpperCase()+w.slice(1);s+=w+' ';}return s.trim()+'.';}
-document.getElementById('go').onclick=()=>{const n=Math.min(20,Math.max(1,parseInt(document.getElementById('n').value)||1));let t='';for(let p=0;p<n;p++){let para='';for(let i=0;i<5;i++)para+=sentence()+' ';t+=para.trim()+'\n\n';}document.getElementById('out').value=t.trim();};
-document.getElementById('copy').onclick=()=>{const o=document.getElementById('out');o.select();document.execCommand('copy');};
+const ara=document.getElementById('ara'),rom=document.getElementById('rom'),res=document.getElementById('res');
+const MAP=[[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+function toRom(n){if(!n||n<1||n>3999)return '仅支持 1-3999';let s='';for(const[v,sym]of MAP){while(n>=v){s+=sym;n-=v;}}return s;}
+function toAra(s){s=(s||'').trim().toUpperCase();if(!/^[IVXLCDM]+$/.test(s))return '请输入合法罗马数字';let total=0,prev=0;const V={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};for(let i=s.length-1;i>=0;i--){const cur=V[s[i]];total+=cur<prev?-cur:cur;prev=cur;}return total;}
+document.getElementById('atoR').onclick=()=>{res.innerHTML='罗马数字：<b>'+toRom(parseInt(ara.value))+'</b>';};
+document.getElementById('Rtoa').onclick=()=>{res.innerHTML='阿拉伯数字：<b>'+toAra(rom.value)+'</b>';};
 </script>
 </body>
 </html>

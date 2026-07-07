@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>零成本工具箱</title>
 <id>https://ckstc.github.io/zero-cost-tools/</id>
-<updated>2026-07-07T21:54:30Z</updated>
+<updated>2026-07-07T22:09:00Z</updated>
 <link rel="self" href="https://ckstc.github.io/zero-cost-tools/atom.xml"/>
 <entry><title>图片压缩工具</title><id>https://ckstc.github.io/zero-cost-tools/compress/</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/compress/"/><summary>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</summary></entry>
 <entry><title>JSON 格式化工具</title><id>https://ckstc.github.io/zero-cost-tools/jsonfmt/</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/jsonfmt/"/><summary>在线 JSON 美化/压缩/校验，本地运行，保护隐私</summary></entry>
@@ -28,6 +28,9 @@
 <entry><title>占位文本生成器</title><id>https://ckstc.github.io/zero-cost-tools/lorem/</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/lorem/"/><summary>一键生成 Lorem Ipsum 段落，可调数量</summary></entry>
 <entry><title>词频统计工具</title><id>https://ckstc.github.io/zero-cost-tools/wordfreq/</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/wordfreq/"/><summary>统计文本中词语出现频率，导出结果</summary></entry>
 <entry><title>随机数生成器</title><id>https://ckstc.github.io/zero-cost-tools/randnum/</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/randnum/"/><summary>生成指定范围与数量的随机整数，可去重</summary></entry>
+<entry><title>罗马数字转换</title><id>https://ckstc.github.io/zero-cost-tools/roman-numeral/</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/roman-numeral/"/><summary>阿拉伯数字与罗马数字互转，支持 1-3999</summary></entry>
+<entry><title>百分比计算器</title><id>https://ckstc.github.io/zero-cost-tools/percent-calc/</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/percent-calc/"/><summary>求百分比、百分比数值、增减百分比</summary></entry>
+<entry><title>金额大写转换</title><id>https://ckstc.github.io/zero-cost-tools/rmb-upper/</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/rmb-upper/"/><summary>数字金额转中文大写，财务开票常用</summary></entry>
 <entry><title>Base64 编解码使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/base64-codec-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/base64-codec-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>大小写转换工具使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/case-converter-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/case-converter-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>颜色值转换使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/color-hex-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/color-hex-guide.html"/><summary>使用教程</summary></entry>
@@ -43,10 +46,13 @@
 <entry><title>进制转换器使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/number-base-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/number-base-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>密码生成器使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/password-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/password-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>PDF 工具箱使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/pdf-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/pdf-guide.html"/><summary>使用教程</summary></entry>
+<entry><title>Percent Calc Guide</title><id>https://ckstc.github.io/zero-cost-tools/blog/percent-calc-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/percent-calc-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>如何安全使用在线工具保护隐私</title><id>https://ckstc.github.io/zero-cost-tools/blog/privacy-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/privacy-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>二维码生成器使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/qrcode-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/qrcode-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>随机数生成器使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/randnum-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/randnum-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>正则表达式测试使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/regex-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/regex-guide.html"/><summary>使用教程</summary></entry>
+<entry><title>Rmb Upper Guide</title><id>https://ckstc.github.io/zero-cost-tools/blog/rmb-upper-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/rmb-upper-guide.html"/><summary>使用教程</summary></entry>
+<entry><title>Roman Numeral Guide</title><id>https://ckstc.github.io/zero-cost-tools/blog/roman-numeral-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/roman-numeral-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>URL 别名生成使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/slug-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/slug-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>文本对比工具使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/text-diff-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/text-diff-guide.html"/><summary>使用教程</summary></entry>
 <entry><title>时间戳转换工具使用指南</title><id>https://ckstc.github.io/zero-cost-tools/blog/timestamp-guide.html</id><updated>2026-07-07T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/blog/timestamp-guide.html"/><summary>使用教程</summary></entry>
