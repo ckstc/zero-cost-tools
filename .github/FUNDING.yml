@@ -1,0 +1,5 @@
+# GitHub Sponsors 入口配置
+# 在 https://github.com/sponsors/ckstc/settings 开启 Sponsors 后，
+# 仓库会自动显示「Sponsor」按钮，访客可直接用 GitHub 绑定信用卡打赏。
+github: [ckstc]
+ko_fi: ckstc

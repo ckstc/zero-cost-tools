@@ -8,6 +8,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Privacy](https://img.shields.io/badge/privacy-本地运行-important)
 ![Tools](https://img.shields.io/badge/tools-24-orange)
+![Sponsor](https://img.shields.io/badge/sponsor-%E2%98%95%20Ko--fi%20%2F%20GitHub%20Sponsors-pink)
 
 ## 工具列表（24 款，全部免费、本地运行）
 
@@ -63,6 +64,16 @@
   自检（无需浏览器）：`python scripts/collect_resources.py --selftest`
   实跑（需先 `pip install playwright && playwright install chromium`）：
   `python scripts/collect_resources.py --all --out results/collected.json`
+
+## ☕ 赞助作者 / Sponsor
+
+如果这个工具箱帮到了你，欢迎请作者喝杯咖啡 ☕：
+
+- **GitHub Sponsors**：点仓库右上角「Sponsor」按钮，用 GitHub 绑定信用卡直接打赏（仓库已配置 `.github/FUNDING.yml`）。开启 Sponsors 需本人绑定 Stripe 收款（一次性）。
+- **Ko-fi**：https://ko-fi.com/ckstc
+- **微信扫码**：见任意工具页底部的收款码。
+
+所有赞助都用于维持站点与持续开发，感谢支持 ❤️
 
 ## 许可证
 

@@ -66,6 +66,10 @@ def all_urls():
     # 信息产品策展（由 build.py 在 results/recommended_for_resale.json 存在时动态上架）
     if CURATION_SLUG:
         urls.append(BASE + "store/" + CURATION_SLUG + "/")
+    # 法律/信任页（AdSense 必需，也利于收录）
+    urls.append(BASE + "privacy/")
+    urls.append(BASE + "about/")
+    urls.append(BASE + "contact/")
     return urls
 
 def get(url, timeout=20):

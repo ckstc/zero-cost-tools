@@ -26,6 +26,17 @@ AFF_LINKS = {
     # "jd-union": "https://u.jd.com/你的推广位链接",
     # "aliyun-promo": "https://www.aliyun.com/你的推广链接",
     # "walubee": "https://walubee.com/?ref=你的ID",
+    # "googiehost": "https://googiehost.com/affiliates?ref=你的ID",
+}
+
+# AdSense（填好并 rerun build.py 即自动注入广告代码；留空则不显示广告）
+ADSENSE_CLIENT = ""   # 待填：你的 AdSense 发布商 ID，形如 "ca-pub-1234567890"
+ADSENSE_SLOT = ""     # 待填（可选）：展示广告单元 slot，形如 "1234567890"
+
+# 联盟/返利注册自动填表用（仅用于 automation/affiliate_signup.py 填表，不外泄）
+ACCOUNT_INFO = {
+    "name": "",       # 待填：你的昵称/姓名
+    "email": "",      # 待填：你的邮箱（注册验证码会发到这里）
 }
 
 # ---------------------------------------------------------------------------

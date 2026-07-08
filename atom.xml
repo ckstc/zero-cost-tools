@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>零成本工具箱</title>
 <id>https://ckstc.github.io/zero-cost-tools/</id>
-<updated>2026-07-08T01:13:58Z</updated>
+<updated>2026-07-08T01:28:15Z</updated>
 <link rel="self" href="https://ckstc.github.io/zero-cost-tools/atom.xml"/>
 <entry><title>图片压缩工具</title><id>https://ckstc.github.io/zero-cost-tools/compress/</id><updated>2026-07-08T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/compress/"/><summary>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</summary></entry>
 <entry><title>JSON 格式化工具</title><id>https://ckstc.github.io/zero-cost-tools/jsonfmt/</id><updated>2026-07-08T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/jsonfmt/"/><summary>在线 JSON 美化/压缩/校验，本地运行，保护隐私</summary></entry>
@@ -64,4 +64,7 @@
 <entry><title>联盟精选</title><id>https://ckstc.github.io/zero-cost-tools/deals/</id><updated>2026-07-08T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/deals/"/><summary>高佣返利计划精选，含推广链接披露</summary></entry>
 <entry><title>线索·合作落地页</title><id>https://ckstc.github.io/zero-cost-tools/leads/</id><updated>2026-07-08T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/leads/"/><summary>垂直落地页收集意向线索，合规对接商家</summary></entry>
 <entry><title>升级 Pro · 增值包</title><id>https://ckstc.github.io/zero-cost-tools/pro/</id><updated>2026-07-08T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/pro/"/><summary>免费工具永久免费，Pro 为离线版+批量+去广告增值包</summary></entry>
+<entry><title>隐私政策</title><id>https://ckstc.github.io/zero-cost-tools/privacy/</id><updated>2026-07-08T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/privacy/"/><summary>法律与信任页面</summary></entry>
+<entry><title>关于本站</title><id>https://ckstc.github.io/zero-cost-tools/about/</id><updated>2026-07-08T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/about/"/><summary>法律与信任页面</summary></entry>
+<entry><title>联系 / 合作</title><id>https://ckstc.github.io/zero-cost-tools/contact/</id><updated>2026-07-08T00:00:00Z</updated><link href="https://ckstc.github.io/zero-cost-tools/contact/"/><summary>法律与信任页面</summary></entry>
 </feed>
