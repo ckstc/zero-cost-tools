@@ -51,6 +51,21 @@ def all_urls():
     for p in PRODUCTS:
         urls.append(BASE + "store/" + p["slug"] + "/")
     urls.append(BASE + "store/order.html")
+    # 四条变现通道：deals / leads / pro（含二级页，由 monetization_content 驱动）
+    try:
+        from monetization_content import AFFILIATE_OFFERS, LEAD_NICHES, CURATION_SLUG
+    except Exception:
+        AFFILIATE_OFFERS, LEAD_NICHES, CURATION_SLUG = [], [], ""
+    urls.append(BASE + "deals/")
+    for o in AFFILIATE_OFFERS:
+        urls.append(BASE + "deals/" + o["slug"] + "/")
+    urls.append(BASE + "leads/")
+    for n in LEAD_NICHES:
+        urls.append(BASE + "leads/" + n["slug"] + "/")
+    urls.append(BASE + "pro/")
+    # 信息产品策展（由 build.py 在 results/recommended_for_resale.json 存在时动态上架）
+    if CURATION_SLUG:
+        urls.append(BASE + "store/" + CURATION_SLUG + "/")
     return urls
 
 def get(url, timeout=20):

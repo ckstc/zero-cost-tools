@@ -17,6 +17,27 @@ try:
 except Exception:
     PRODUCTS, GUIDES = [], {}
 
+# 四条「激进但合法」变现通道的内容与配置槽（缺失时回退为空，保证构建不崩）
+try:
+    from monetization_content import (
+        AFFILIATE_OFFERS, AFF_LINKS, LEAD_NICHES, PRO_TIER,
+        CURATION_SLUG, CURATION_TITLE, CURATION_DESC, CURATION_PRICE,
+        CONTACT_EMAIL, LEAD_FORM_ENDPOINT,
+    )
+except Exception:
+    AFFILIATE_OFFERS, AFF_LINKS, LEAD_NICHES, PRO_TIER = [], {}, [], None
+    CURATION_SLUG, CURATION_TITLE, CURATION_DESC, CURATION_PRICE = "", "", "", ""
+    CONTACT_EMAIL, LEAD_FORM_ENDPOINT = "", ""
+
+# 全站统一导航（根相对路径，适配各深度页面）
+NAV_HTML = (
+    '<a href="/zero-cost-tools/">全部工具</a>'
+    '<a href="/zero-cost-tools/store/">数字商店</a>'
+    '<a href="/zero-cost-tools/deals/">联盟精选</a>'
+    '<a href="/zero-cost-tools/leads/">线索·合作</a>'
+    '<a href="/zero-cost-tools/pro/">升级Pro</a>'
+)
+
 # 全站工具清单（用于 Hub / sitemap / atom）
 ALL_TOOLS = [
     ("compress",      "图片压缩工具",        "在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印", "图片压缩,压缩jpg,压缩png,图片减肥"),
@@ -673,8 +694,8 @@ TPL = """<!DOCTYPE html>
 </head>
 <body>
 <header>
-  <a class="logo" href="../">零成本工具箱</a>
-  <nav><a href="../">全部工具</a></nav>
+  <a class="logo" href="/zero-cost-tools/">零成本工具箱</a>
+  <nav>%%NAV%%</nav>
 </header>
 <main>
 <h1>%%H1%%</h1>
@@ -718,6 +739,7 @@ def gen_tool(slug, title, desc, keywords, h1, lead, body, js):
             .replace("%%RELATED%%", related)
             .replace("%%OGIMG%%", "../og.png")
             .replace("%%ATOM%%", "../atom.xml")
+            .replace("%%NAV%%", NAV_HTML)
             .replace("%%CSS%%", SHARED_CSS))
     d = os.path.join(ROOT, slug)
     os.makedirs(d, exist_ok=True)
@@ -767,8 +789,8 @@ def gen_store():
 </head>
 <body>
 <header>
-  <a class="logo" href="../">零成本工具箱</a>
-  <nav><a href="../">全部工具</a><a href="./">数字商店</a></nav>
+  <a class="logo" href="/zero-cost-tools/">零成本工具箱</a>
+  <nav>{NAV_HTML}</nav>
 </header>
 <main>
 <h1>数字产品商店</h1>
@@ -884,8 +906,8 @@ def gen_order():
 </head>
 <body>
 <header>
-  <a class="logo" href="../">零成本工具箱</a>
-  <nav><a href="../">全部工具</a><a href="./">数字商店</a></nav>
+  <a class="logo" href="/zero-cost-tools/">零成本工具箱</a>
+  <nav>{NAV_HTML}</nav>
 </header>
 <main style="max-width:680px">
 <h1>下单 / 支持</h1>
@@ -908,6 +930,208 @@ def gen_order():
     with open(os.path.join(d, "order.html"), "w", encoding="utf-8") as f:
         f.write(html)
     print("generated store/order.html")
+
+# ===================== 四条「激进但合法」变现通道 =====================
+PAGE_CSS = """
+.badge{display:inline-block;font-size:12px;padding:2px 8px;border-radius:8px;margin:0 6px 10px 0}
+.badge.cat{background:#eef2ff;color:var(--brand)}
+.badge.promo{background:#fff4e5;color:#c2410c}
+.badge.wait{background:#f1f3f7;color:var(--muted)}
+.disc{margin:18px 0;padding:12px 14px;background:#fff8f1;border:1px solid #ffe2c2;border-radius:10px;font-size:13px;color:#9a3412}
+.card p{color:var(--muted);font-size:14px}
+.privacy{margin-top:14px;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;font-size:13px;color:#166534}
+form label{display:block;font-size:14px;margin:12px 0 4px;color:var(--ink)}
+form input,form textarea{margin-bottom:6px}
+.note{margin-top:26px;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
+ul.lic{margin:10px 0;padding-left:20px;list-style:none}
+ul.lic li{margin:8px 0;font-size:14px}
+"""
+
+SUB_TPL = """<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>%%TITLE%%</title>
+<meta name="description" content="%%DESC%%">
+<meta property="og:title" content="%%TITLE%%">
+<meta property="og:description" content="%%DESC%%">
+<meta property="og:type" content="website">
+<meta property="og:image" content="%%OGIMG%%">
+<link rel="canonical" href="%%CANON%%">
+<style>%%CSS%%</style>
+</head>
+<body>
+<header><a class="logo" href="/zero-cost-tools/">零成本工具箱</a><nav>%%NAV%%</nav></header>
+<main>
+<h1>%%H1%%</h1>
+<p class="lead">%%LEAD%%</p>
+%%BODY%%
+</main>
+<footer>© 零成本工具箱</footer>
+</body>
+</html>"""
+
+def _w(rel, html):
+    d = os.path.join(ROOT, os.path.dirname(rel))
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(ROOT, rel), "w", encoding="utf-8") as f:
+        f.write(html)
+
+# ----- 1) 联盟 / CPA 精选 -----
+def _aff_cta(o):
+    link = AFF_LINKS.get(o["slug"], "")
+    if link:
+        return ('<a class="btn" href="%s" target="_blank" rel="sponsored noopener">前往领取（推广链接）</a>'
+                ' <span class="badge promo">含推广链接</span>' % link)
+    return ('<a class="btn ghost" href="%s" target="_blank" rel="noopener">了解 / 注册（公开官网）</a>'
+            ' <span class="badge wait">待配置你的推广链接</span>' % o["official_url"])
+
+def gen_deals():
+    cards = "\n".join(
+        '''  <div class="card">
+    <span class="badge cat">%s</span>
+    <h3><a href="./%s/" style="color:inherit;text-decoration:none">%s</a></h3>
+    <p>%s</p>
+    <p><a class="btn ghost" href="./%s/">查看详情</a></p>
+  </div>''' % (o["category"], o["slug"], o["title"], o["blurb"], o["slug"])
+        for o in AFFILIATE_OFFERS)
+    body = ('''<div class="disc">⚠️ 披露：本页及下一级页面包含<strong>联盟 / 推广链接</strong>。若你通过这里的链接注册或购买，本站可能获得佣金，<strong>不会影响你支付的价格</strong>。我们只在你配置好你自己的推广 ID 后才展示返利链接；配置前仅展示平台公开官网。</div>
+<div class="cards">
+%s
+</div>
+<div class="note">如何启用你自己的返利：编辑 <code>monetization_content.py</code> 里的 <code>AFF_LINKS</code>，把各 slug 对应的值换成你在对应平台申请的推广链接，重跑 <code>build.py</code> 即可。未配置时本页不展示任何返利链接，仅作信息展示，合法合规。</div>''' % cards)
+    html = (SUB_TPL
+            .replace("%%NAV%%", NAV_HTML).replace("%%CSS%%", PAGE_CSS)
+            .replace("%%TITLE%%", "联盟精选 · 高佣返利")
+            .replace("%%DESC%%", "精选可合规返利的联盟计划（京东联盟 / 阿里云推广 / walubee 等），页面已做推广链接披露。")
+            .replace("%%H1%%", "联盟精选 · 高佣返利")
+            .replace("%%LEAD%%", "把高佣返利计划变成「躺着赚佣金」的合法通道。")
+            .replace("%%OGIMG%%", "../og.png")
+            .replace("%%CANON%%", BASE + "deals/")
+            .replace("%%BODY%%", body))
+    _w("deals/index.html", html); print("generated deals/index.html")
+    for o in AFFILIATE_OFFERS:
+        cta = _aff_cta(o)
+        dbody = ('''<div class="disc">⚠️ 披露：本页含联盟 / 推广链接。通过链接注册或购买，本站可能获得佣金，不影响你的价格。</div>
+<p class="lead">%s</p>
+<p>%s</p>
+<div class="note">这是「%s」类目下的一个返利位。配置你自己的推广链接后，上方按钮会变成带你 ID 的返利链接；在此之前点击会跳到该平台<strong>公开官网 / 注册页</strong>（非返利）。</div>'''
+                 % (o["blurb"], cta, o["category"]))
+        dhtml = (SUB_TPL
+                 .replace("%%NAV%%", NAV_HTML).replace("%%CSS%%", PAGE_CSS)
+                 .replace("%%TITLE%%", o["title"] + " — 联盟精选")
+                 .replace("%%DESC%%", o["blurb"])
+                 .replace("%%H1%%", o["title"])
+                 .replace("%%LEAD%%", o["blurb"])
+                 .replace("%%OGIMG%%", "../../og.png")
+                 .replace("%%CANON%%", BASE + "deals/" + o["slug"] + "/")
+                 .replace("%%BODY%%", dbody))
+        _w("deals/%s/index.html" % o["slug"], dhtml)
+        print("generated deals/%s/index.html" % o["slug"])
+
+# ----- 2) 落地页线索（合法 lead-gen） -----
+def _lead_form(niche):
+    if LEAD_FORM_ENDPOINT:
+        action, extra = LEAD_FORM_ENDPOINT, ""
+    elif CONTACT_EMAIL:
+        action = "mailto:%s?subject=%s" % (CONTACT_EMAIL, "线索合作：" + niche["title"])
+        extra = '<p class="privacy">未配置表单端点，提交会唤起你的邮件客户端发往 <b>%s</b>；也可直接邮件联系。</p>' % CONTACT_EMAIL
+    else:
+        action, extra = "", '<p class="privacy">⚠️ 表单端点待配置：在 <code>monetization_content.py</code> 填 <code>LEAD_FORM_ENDPOINT</code>（如 Formspree）或 <code>CONTACT_EMAIL</code> 后，本表单即可接收线索。</p>'
+    return ('''<form method="POST" action="%s">
+  <label>邮箱（用于发送你订阅的周报）</label>
+  <input type="email" name="email" placeholder="you@example.com" required>
+  <label>你的需求 / 想对接的资源</label>
+  <textarea name="msg" placeholder="例如：想要 XX 类工具、想商务合作…"></textarea>
+  <button class="btn" type="submit">提交</button>
+</form>%s
+<p class="privacy">我们仅将你填写的信息用于发送你订阅的周报 / 商务对接，<strong>不会出售你的隐私数据</strong>；你可随时退订。</p>''' % (action, extra))
+
+def gen_leads():
+    cards = "\n".join(
+        '''  <div class="card">
+    <h3><a href="./%s/" style="color:inherit;text-decoration:none">%s</a></h3>
+    <p>%s</p>
+    <p><a class="btn ghost" href="./%s/">查看落地页</a></p>
+  </div>''' % (n["slug"], n["title"], n["pitch"], n["slug"])
+        for n in LEAD_NICHES)
+    body = ('''<p class="lead">垂直落地页收集意向线索（免费周报订阅 / 商务合作），合规对接合作商家。所有页面明确隐私用途，不碰「出售用户数据」的灰色操作。</p>
+<div class="cards">
+%s
+</div>''' % cards)
+    html = (SUB_TPL
+            .replace("%%NAV%%", NAV_HTML).replace("%%CSS%%", PAGE_CSS)
+            .replace("%%TITLE%%", "线索 · 合作落地页")
+            .replace("%%DESC%%", "垂直落地页收集意向线索，合规对接合作商家。")
+            .replace("%%H1%%", "线索 · 合作落地页")
+            .replace("%%LEAD%%", "把流量变成可对接商家的意向线索。")
+            .replace("%%OGIMG%%", "../og.png")
+            .replace("%%CANON%%", BASE + "leads/")
+            .replace("%%BODY%%", body))
+    _w("leads/index.html", html); print("generated leads/index.html")
+    for n in LEAD_NICHES:
+        frm = _lead_form(n)
+        dbody = ('''<p class="lead">%s</p>
+<h2 style="margin-top:22px">留下信息，领取 / 对接</h2>
+%s''' % (n["pitch"], frm))
+        dhtml = (SUB_TPL
+                 .replace("%%NAV%%", NAV_HTML).replace("%%CSS%%", PAGE_CSS)
+                 .replace("%%TITLE%%", n["title"] + " — 线索合作")
+                 .replace("%%DESC%%", n["pitch"])
+                 .replace("%%H1%%", n["title"])
+                 .replace("%%LEAD%%", n["pitch"])
+                 .replace("%%OGIMG%%", "../../og.png")
+                 .replace("%%CANON%%", BASE + "leads/" + n["slug"] + "/")
+                 .replace("%%BODY%%", dbody))
+        _w("leads/%s/index.html" % n["slug"], dhtml)
+        print("generated leads/%s/index.html" % n["slug"])
+
+# ----- 3) 微 SaaS 付费墙（软付费） -----
+def gen_pro():
+    pts = "\n".join("<li>%s</li>" % p for p in PRO_TIER["points"])
+    body = ('''<p class="lead">%s</p>
+<div class="cards"><div class="card" style="grid-column:1/-1">
+<span class="badge cat">一次性付费 · 无订阅</span>
+<h3>%s</h3>
+<ul class="lic">%s</ul>
+<div class="price" style="color:var(--ok);font-weight:700;font-size:20px">¥%s</div>
+<p><a class="btn" href="/zero-cost-tools/store/order.html">微信 / Ko-fi 付款获取</a></p>
+</div></div>
+<div class="note">软付费说明：<strong>全部 27 个在线工具永久免费、无广告强制</strong>。Pro 是「离线版 + 批量 + 去广告」的增值包，属于附加付费，不绑架免费用户。付款走微信 / Ko-fi，零平台抽成。</div>'''
+            % (PRO_TIER["note"], PRO_TIER["title"], pts, PRO_TIER["price"]))
+    html = (SUB_TPL
+            .replace("%%NAV%%", NAV_HTML).replace("%%CSS%%", PAGE_CSS)
+            .replace("%%TITLE%%", PRO_TIER["title"])
+            .replace("%%DESC%%", "免费工具永久免费；Pro 是离线版 + 批量 + 去广告的增值包，微信 / Ko-fi 一次性付款。")
+            .replace("%%H1%%", "升级 Pro · 增值包")
+            .replace("%%LEAD%%", PRO_TIER["note"])
+            .replace("%%OGIMG%%", "../og.png")
+            .replace("%%CANON%%", BASE + "pro/")
+            .replace("%%BODY%%", body))
+    _w("pro/index.html", html); print("generated pro/index.html")
+
+# ----- 4) 信息产品策展：把 low-risk 资源包成第 5 件商店产品 -----
+CURATION_ITEMS = []
+_cpath = os.path.join(ROOT, "results", "recommended_for_resale.json")
+if os.path.isfile(_cpath):
+    try:
+        CURATION_ITEMS = json.load(open(_cpath, encoding="utf-8"))
+    except Exception:
+        CURATION_ITEMS = []
+if CURATION_ITEMS:
+    PRODUCTS.append(dict(slug=CURATION_SLUG, title=CURATION_TITLE, desc=CURATION_DESC,
+                         price=CURATION_PRICE, checkout="order.html", license="策展索引 / 付费支持"))
+    rows = "\n".join(
+        '<li><a href="%s" target="_blank" rel="noopener">%s</a> — 授权：%s，⭐%s<br><span style="color:var(--muted);font-size:13px">%s</span></li>'
+        % (it.get("url", ""), it.get("title", ""), it.get("license", ""), it.get("stars", 0), it.get("description", ""))
+        for it in CURATION_ITEMS)
+    GUIDES[CURATION_SLUG] = (
+        '<h2>一、这是什么</h2><p>一份<strong>策展索引</strong>：从 GitHub、PLR 站、公有领域书库筛选出的 low-risk 可授权资源清单。'
+        '你付费买到的是「筛选 + 整理 + 授权核对」的劳动成果，原始资源本身依然免费、链接公开，不存在任何搬运或盗版。</p>'
+        '<h2>二、资源清单（逐条标注授权）</h2><ul class="lic">%s</ul>'
+        '<h2>三、怎么用</h2><p>挑 CC0 / PLR / MIT 的项目，按其授权页原文二次开发或打包成你自己的产品；凡是「禁止商用 / 保留所有权利」的一律排除。'
+        '本清单本身就是按这套方法原创整理的，可放心参考。</p>' % rows)
 
 # 生成新工具页
 for slug, t in NEW_TOOLS.items():
@@ -938,7 +1162,7 @@ hub_html = f"""<!DOCTYPE html>
 <style>{SHARED_CSS}</style>
 </head>
 <body>
-<header><a class="logo" href="./">零成本工具箱</a><nav><a href="./">全部工具</a><a href="./store/">数字商店</a></nav></header>
+<header><a class="logo" href="/zero-cost-tools/">零成本工具箱</a><nav>{NAV_HTML}</nav></header>
 <main>
 <h1>零成本工具箱</h1>
 <p class="lead">{len(ALL_TOOLS)} 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
@@ -968,12 +1192,21 @@ gen_store()
 gen_store_details()
 gen_order()
 
+# 四条变现通道页面
+gen_deals()
+gen_leads()
+gen_pro()
+
 # sitemap.xml
 now = datetime.datetime.utcnow().strftime("%Y-%m-%d")
 store_urls = [BASE + "store/"]
 store_urls += [BASE + "store/" + p["slug"] + "/" for p in PRODUCTS]
 store_urls += [BASE + "store/order.html"]
-urls = [BASE] + store_urls + [BASE + s + "/" for s, *_ in ALL_TOOLS] + [BASE + "blog/" + f for f in blog_files]
+deal_urls = [BASE + "deals/"] + [BASE + "deals/" + o["slug"] + "/" for o in AFFILIATE_OFFERS]
+lead_urls = [BASE + "leads/"] + [BASE + "leads/" + n["slug"] + "/" for n in LEAD_NICHES]
+pro_urls = [BASE + "pro/"]
+urls = ([BASE] + store_urls + deal_urls + lead_urls + pro_urls
+        + [BASE + s + "/" for s, *_ in ALL_TOOLS] + [BASE + "blog/" + f for f in blog_files])
 sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
     sitemap += f"  <url><loc>{u}</loc><lastmod>{now}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n"
@@ -998,6 +1231,11 @@ for f in blog_files:
     atom += f'''<entry><title>{bt}</title><id>{BASE}blog/{f}</id><updated>{now}T00:00:00Z</updated><link href="{BASE}blog/{f}"/><summary>使用教程</summary></entry>
 '''
 atom += f'''<entry><title>数字产品商店</title><id>{BASE}store/</id><updated>{now}T00:00:00Z</updated><link href="{BASE}store/"/><summary>可合规转售的数字产品（PLR / CC0 / 公有领域 / MIT）</summary></entry>
+'''
+for _t, _u, _s in (("联盟精选", BASE + "deals/", "高佣返利计划精选，含推广链接披露"),
+                   ("线索·合作落地页", BASE + "leads/", "垂直落地页收集意向线索，合规对接商家"),
+                   ("升级 Pro · 增值包", BASE + "pro/", "免费工具永久免费，Pro 为离线版+批量+去广告增值包")):
+    atom += f'''<entry><title>{_t}</title><id>{_u}</id><updated>{now}T00:00:00Z</updated><link href="{_u}"/><summary>{_s}</summary></entry>
 '''
 atom += "</feed>\n"
 with open(os.path.join(ROOT, "atom.xml"), "w", encoding="utf-8") as f:

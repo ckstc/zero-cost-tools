@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>联盟精选 · 高佣返利</title>
+<meta name="description" content="精选可合规返利的联盟计划（京东联盟 / 阿里云推广 / walubee 等），页面已做推广链接披露。">
+<meta property="og:title" content="联盟精选 · 高佣返利">
+<meta property="og:description" content="精选可合规返利的联盟计划（京东联盟 / 阿里云推广 / walubee 等），页面已做推广链接披露。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/deals/">
+<style>
+.badge{display:inline-block;font-size:12px;padding:2px 8px;border-radius:8px;margin:0 6px 10px 0}
+.badge.cat{background:#eef2ff;color:var(--brand)}
+.badge.promo{background:#fff4e5;color:#c2410c}
+.badge.wait{background:#f1f3f7;color:var(--muted)}
+.disc{margin:18px 0;padding:12px 14px;background:#fff8f1;border:1px solid #ffe2c2;border-radius:10px;font-size:13px;color:#9a3412}
+.card p{color:var(--muted);font-size:14px}
+.privacy{margin-top:14px;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;font-size:13px;color:#166534}
+form label{display:block;font-size:14px;margin:12px 0 4px;color:var(--ink)}
+form input,form textarea{margin-bottom:6px}
+.note{margin-top:26px;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
+ul.lic{margin:10px 0;padding-left:20px;list-style:none}
+ul.lic li{margin:8px 0;font-size:14px}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/zero-cost-tools/">零成本工具箱</a><nav><a href="/zero-cost-tools/">全部工具</a><a href="/zero-cost-tools/store/">数字商店</a><a href="/zero-cost-tools/deals/">联盟精选</a><a href="/zero-cost-tools/leads/">线索·合作</a><a href="/zero-cost-tools/pro/">升级Pro</a></nav></header>
+<main>
+<h1>联盟精选 · 高佣返利</h1>
+<p class="lead">把高佣返利计划变成「躺着赚佣金」的合法通道。</p>
+<div class="disc">⚠️ 披露：本页及下一级页面包含<strong>联盟 / 推广链接</strong>。若你通过这里的链接注册或购买，本站可能获得佣金，<strong>不会影响你支付的价格</strong>。我们只在你配置好你自己的推广 ID 后才展示返利链接；配置前仅展示平台公开官网。</div>
+<div class="cards">
+  <div class="card">
+    <span class="badge cat">电商返利</span>
+    <h3><a href="./jd-union/" style="color:inherit;text-decoration:none">京东联盟 · 高佣选品</a></h3>
+    <p>京东官方 CPS 联盟，注册后生成带你自己 ID 的推广链接，有人通过链接下单你拿佣金。适合搭配「好物清单」内容做自动引流。</p>
+    <p><a class="btn ghost" href="./jd-union/">查看详情</a></p>
+  </div>
+  <div class="card">
+    <span class="badge cat">云服务返利</span>
+    <h3><a href="./aliyun-promo/" style="color:inherit;text-decoration:none">阿里云推广 · 服务器返佣</a></h3>
+    <p>阿里云官方推广计划，推荐他人购买云服务器 / 域名，按成交额返佣。对技术受众（本项目工具站用户）转化友好。</p>
+    <p><a class="btn ghost" href="./aliyun-promo/">查看详情</a></p>
+  </div>
+  <div class="card">
+    <span class="badge cat">数字产品联盟</span>
+    <h3><a href="./walubee/" style="color:inherit;text-decoration:none">walubee · 70% 分成联盟</a></h3>
+    <p>数字产品联盟平台，部分商品给推广者高达 70% 分成。注册后取你的推广链接挂到站上即可。</p>
+    <p><a class="btn ghost" href="./walubee/">查看详情</a></p>
+  </div>
+  <div class="card">
+    <span class="badge cat">主机推荐</span>
+    <h3><a href="./googiehost/" style="color:inherit;text-decoration:none">GoogieHost · $0.25 推荐奖</a></h3>
+    <p>免费/廉价主机商，推荐注册可得小额奖励。门槛极低，适合作为「零成本起步」内容里的推荐项。</p>
+    <p><a class="btn ghost" href="./googiehost/">查看详情</a></p>
+  </div>
+  <div class="card">
+    <span class="badge cat">域名返利</span>
+    <h3><a href="./namecheap/" style="color:inherit;text-decoration:none">Namecheap · 域名返利</a></h3>
+    <p>主流域名注册商官方 affiliate，推荐他人注册/续费域名拿返利。适合建站类内容自然植入。</p>
+    <p><a class="btn ghost" href="./namecheap/">查看详情</a></p>
+  </div>
+</div>
+<div class="note">如何启用你自己的返利：编辑 <code>monetization_content.py</code> 里的 <code>AFF_LINKS</code>，把各 slug 对应的值换成你在对应平台申请的推广链接，重跑 <code>build.py</code> 即可。未配置时本页不展示任何返利链接，仅作信息展示，合法合规。</div>
+</main>
+<footer>© 零成本工具箱</footer>
+</body>
+</html>
