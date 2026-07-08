@@ -98,7 +98,7 @@ function rmbUpper(num){
   let decStr='';if(jiao>0)decStr+=d[jiao]+'角';if(fen>0)decStr+=d[fen]+'分';if(!decStr)decStr='整';
   return (neg?'负':'')+s+'元'+decStr;
 }
-g('go').onclick=()=>{res.innerHTML='中文大写：<b>'+rmbUpper(parseFloat(g('amt').value))+'</b>';};
+    g('go').onclick=()=>{res.innerHTML='中文大写：<b>'+rmbUpper(parseFloat(g('amt').value))+'</b>';};
 </script>
 </body>
 </html>

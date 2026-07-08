@@ -11,6 +11,12 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 
 WECHAT_IMG = "wechat-qr.png"
 
+# 原创数字产品（由 products_content.py 驱动；缺失时回退为空，保证构建不崩）
+try:
+    from products_content import PRODUCTS, GUIDES
+except Exception:
+    PRODUCTS, GUIDES = [], {}
+
 # 全站工具清单（用于 Hub / sitemap / atom）
 ALL_TOOLS = [
     ("compress",      "图片压缩工具",        "在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印", "图片压缩,压缩jpg,压缩png,图片减肥"),
@@ -537,9 +543,13 @@ function rmbUpper(num){
   let decStr='';if(jiao>0)decStr+=d[jiao]+'角';if(fen>0)decStr+=d[fen]+'分';if(!decStr)decStr='整';
   return (neg?'负':'')+s+'元'+decStr;
 }
-g('go').onclick=()=>{res.innerHTML='中文大写：<b>'+rmbUpper(parseFloat(g('amt').value))+'</b>';};
+    g('go').onclick=()=>{res.innerHTML='中文大写：<b>'+rmbUpper(parseFloat(g('amt').value))+'</b>';};
 '''),
 }
+
+# 数字产品由 products_content.py 驱动（原创内容，零成本、可合规销售）。
+# 每个产品有可读详情页 store/<slug>/index.html（同时作 SEO 长尾页），
+# 结账统一走 store/order.html（微信扫码下单/支持）。
 
 BLOG_TITLES = {
     "compress-guide.html": "图片压缩工具使用指南",
@@ -715,6 +725,190 @@ def gen_tool(slug, title, desc, keywords, h1, lead, body, js):
         f.write(html)
     print("generated", slug)
 
+# 数字商店（数据驱动，从 PRODUCTS 生成）
+STORE_CSS = """
+.lic{display:inline-block;font-size:12px;background:#eef2ff;color:var(--brand);padding:2px 8px;border-radius:8px;margin:0 0 10px}
+.card{display:flex;flex-direction:column}
+.card .price{color:var(--ok);font-weight:700;font-size:17px;margin:auto 0 12px}
+.note{margin-top:30px;padding:16px;background:#fff;border:1px dashed var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
+code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.article{max-width:760px}
+.article h2{margin-top:26px;font-size:20px}
+.article ul,.article ol{margin:8px 0 8px 22px}
+.article li{margin:4px 0}
+"""
+
+def gen_store():
+    cards = "\n".join(
+        f'''  <div class="card">
+    <h3><a href="./{p["slug"]}/" style="color:inherit;text-decoration:none">{p["title"]}</a></h3>
+    <p>{p["desc"]}</p>
+    <span class="lic">授权：{p["license"]}</span>
+    <div class="price">¥{p["price"]}</div>
+    <a class="btn" href="./{p["slug"]}/" rel="noopener">查看详情 / 获取</a>
+  </div>''' for p in PRODUCTS)
+    html = f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数字产品商店 — 零成本工具箱</title>
+<meta name="description" content="原创数字产品：零成本变现实操手册、免费可商用资源清单、工具站 SEO 打法、二手平台合规避坑。每一件都由本项目原创撰写，可合规付费支持。">
+<meta property="og:title" content="数字产品商店">
+<meta property="og:description" content="原创可售数字产品，零成本、合规">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/store/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
+<style>
+{SHARED_CSS}
+{STORE_CSS}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../">零成本工具箱</a>
+  <nav><a href="../">全部工具</a><a href="./">数字商店</a></nav>
+</header>
+<main>
+<h1>数字产品商店</h1>
+<p class="lead">全部为<strong>本项目原创撰写</strong>的数字产品（指南 / 清单 / 实操手册）。内容零成本生成、版权清晰，可合规付费支持，也可免费阅读后自愿打赏。</p>
+
+<div class="cards">
+{cards}
+</div>
+
+<div class="note">
+  📌 本商店为零成本静态页面。结账走微信扫码（见每个商品详情页的「下单 / 支持」）。
+  所有商品均为原创内容，授权清晰；我们<strong>不售卖任何无授权搬运或盗版资源</strong>。
+  想自建类似商店，资源筛选请用项目内的 <code>scripts/collect_resources.py</code>（许可感知，只收明确可转售来源）。
+</div>
+</main>
+<footer>© 零成本工具箱 · 数字产品均为原创内容</footer>
+</body>
+</html>'''
+    d = os.path.join(ROOT, "store")
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+    print("generated store/index.html")
+
+
+# 单个产品详情页（同时作为 SEO 长尾可读页）
+def gen_store_details():
+    for p in PRODUCTS:
+        slug = p["slug"]
+        body = GUIDES.get(slug, "<p>（内容整理中）</p>")
+        art_jsonld = json.dumps({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": p["title"],
+            "description": p["desc"],
+            "author": {"@type": "Organization", "name": "零成本工具箱"},
+            "publisher": {"@type": "Organization", "name": "零成本工具箱"},
+        }, ensure_ascii=False)
+        html = f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{p["title"]} — 数字产品商店</title>
+<meta name="description" content="{p["desc"]}">
+<meta property="og:title" content="{p["title"]}">
+<meta property="og:description" content="{p["desc"]}">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/store/{slug}/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../../atom.xml">
+<script type="application/ld+json">{art_jsonld}</script>
+<style>
+{SHARED_CSS}
+{STORE_CSS}
+.article img.qr{{width:200px;height:200px;border:1px solid var(--line);border-radius:10px}}
+.support-links{{margin-top:30px;padding-top:20px;border-top:1px dashed var(--line);text-align:center}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../../">零成本工具箱</a>
+  <nav><a href="../../">全部工具</a><a href="../">数字商店</a></nav>
+</header>
+<main class="article">
+<h1>{p["title"]}</h1>
+<p class="lead">{p["desc"]}</p>
+<div style="margin:14px 0">
+  <span class="lic">授权：{p["license"]}</span>
+  <span class="lic">价格：¥{p["price"]}</span>
+</div>
+{body}
+<div class="support-links">
+  <div class="wechat-qr-wrap">
+    <span class="qr-label">💚 微信扫一扫，付费支持 / 获取资料</span>
+    <img src="../../wechat-qr.png" alt="微信收款码" class="qr-img">
+  </div>
+  <p style="color:var(--muted);font-size:13px;margin-top:10px">
+    扫码付款时备注「{slug}」，付款后加微信即发你对应资料（内容也已在本页免费公开，付费是对作者的支持）。
+  </p>
+  <p><a class="btn" href="../order.html">📦 去下单 / 支持页</a></p>
+</div>
+<p style="margin-top:24px"><a href="../">← 返回数字商店</a> · <a href="../../">返回全部工具</a></p>
+</main>
+<footer>© 零成本工具箱 · 本文为原创内容</footer>
+</body>
+</html>'''
+        d = os.path.join(ROOT, "store", slug)
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+            f.write(html)
+        print("generated store/%s/index.html" % slug)
+
+
+# 统一的微信下单 / 支持页
+def gen_order():
+    items = "\n".join(
+        f'  <li><b>{p["title"]}</b> — ¥{p["price"]}（备注「{p["slug"]}」）</li>' for p in PRODUCTS)
+    html = f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>下单 / 支持 — 零成本工具箱</title>
+<meta name="description" content="微信扫码付费支持零成本工具箱的数字产品与原作者。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/store/order.html">
+<style>
+{SHARED_CSS}
+{STORE_CSS}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../">零成本工具箱</a>
+  <nav><a href="../">全部工具</a><a href="./">数字商店</a></nav>
+</header>
+<main style="max-width:680px">
+<h1>下单 / 支持</h1>
+<p class="lead">微信扫码付款，备注你想购买的产品编号，付款后加微信即可获取对应资料。所有产品均为原创内容，也可在对应详情页免费阅读后自愿打赏。</p>
+<div class="support-links" style="border:1px solid var(--line);border-radius:12px;padding:20px">
+  <span class="qr-label">💚 微信收款码</span>
+  <img src="../wechat-qr.png" alt="微信收款码" class="qr-img">
+</div>
+<h2 style="margin-top:26px">可选项目</h2>
+<ul>{items}
+</ul>
+<p style="color:var(--muted);font-size:13px">说明：本商店为零成本静态页面，无后台自动发货。采用「扫码付款 + 备注编号 + 加微信发资料」的人肉交接，确保合规且零平台抽成。内容已尽量在详情页免费公开，付费是对持续创作的实质支持。</p>
+<p style="margin-top:20px"><a href="./">← 返回数字商店</a></p>
+</main>
+<footer>© 零成本工具箱</footer>
+</body>
+</html>'''
+    d = os.path.join(ROOT, "store")
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "order.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+    print("generated store/order.html")
+
 # 生成新工具页
 for slug, t in NEW_TOOLS.items():
     meta = next(x for x in ALL_TOOLS if x[0] == slug)
@@ -744,7 +938,7 @@ hub_html = f"""<!DOCTYPE html>
 <style>{SHARED_CSS}</style>
 </head>
 <body>
-<header><a class="logo" href="./">零成本工具箱</a><nav><a href="./">全部工具</a></nav></header>
+<header><a class="logo" href="./">零成本工具箱</a><nav><a href="./">全部工具</a><a href="./store/">数字商店</a></nav></header>
 <main>
 <h1>零成本工具箱</h1>
 <p class="lead">{len(ALL_TOOLS)} 个免费在线工具，全部在你的浏览器本地运行，不上传数据、无水印、无广告骚扰。</p>
@@ -769,9 +963,17 @@ with open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8") as f:
     f.write(hub_html)
 print("generated index.html (hub)")
 
+# 数字商店（数据驱动，从 PRODUCTS）
+gen_store()
+gen_store_details()
+gen_order()
+
 # sitemap.xml
 now = datetime.datetime.utcnow().strftime("%Y-%m-%d")
-urls = [BASE] + [BASE + s + "/" for s, *_ in ALL_TOOLS] + [BASE + "blog/" + f for f in blog_files]
+store_urls = [BASE + "store/"]
+store_urls += [BASE + "store/" + p["slug"] + "/" for p in PRODUCTS]
+store_urls += [BASE + "store/order.html"]
+urls = [BASE] + store_urls + [BASE + s + "/" for s, *_ in ALL_TOOLS] + [BASE + "blog/" + f for f in blog_files]
 sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
     sitemap += f"  <url><loc>{u}</loc><lastmod>{now}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n"
@@ -794,6 +996,8 @@ for s, t, d, k in ALL_TOOLS:
 for f in blog_files:
     bt = BLOG_TITLES.get(f, f.replace(".html", "").replace("-", " ").title())
     atom += f'''<entry><title>{bt}</title><id>{BASE}blog/{f}</id><updated>{now}T00:00:00Z</updated><link href="{BASE}blog/{f}"/><summary>使用教程</summary></entry>
+'''
+atom += f'''<entry><title>数字产品商店</title><id>{BASE}store/</id><updated>{now}T00:00:00Z</updated><link href="{BASE}store/"/><summary>可合规转售的数字产品（PLR / CC0 / 公有领域 / MIT）</summary></entry>
 '''
 atom += "</feed>\n"
 with open(os.path.join(ROOT, "atom.xml"), "w", encoding="utf-8") as f:

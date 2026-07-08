@@ -50,6 +50,20 @@
 
 直接用浏览器打开仓库内对应 `index.html` 即可，无需任何依赖或构建步骤。
 
+## 数字商店 & 资源采集（变现路径）
+
+本项目在“免费工具站 + 广告/打赏”之外，额外提供一条**合规转售数字产品**的路径：
+
+- **`store/` 数字商店**：纯静态店面，由 `build.py` 的 `PRODUCTS` 列表数据驱动生成。
+  上架方式：在 `build.py` 的 `PRODUCTS` 里加一条 `dict(slug, title, desc, price, checkout, license)`，
+  把 `checkout` 填成你的 Ko-fi 商店 / Stripe Payment Link / 自有收款页，重跑 `python build.py` 即可。
+  ⚠️ 仅上架**明确可转售授权**的资源（PLR / CC0 / 公有领域 / MIT）。
+- **`scripts/collect_resources.py` 资源采集器**：用 Playwright 批量搜索“免费分享”的网络资源，
+  并做**许可感知分级**（low 可直接转售 / medium 待人工复核 / high 明确禁止→排除）。
+  自检（无需浏览器）：`python scripts/collect_resources.py --selftest`
+  实跑（需先 `pip install playwright && playwright install chromium`）：
+  `python scripts/collect_resources.py --all --out results/collected.json`
+
 ## 许可证
 
 MIT — 自由使用、修改、分发。

@@ -1,0 +1,83 @@
+[2026-07-08 06:12:34] 推广开始，共 60 个 URL
+  IndexNow -> HTTP 200
+  Sitemap Ping：
+    [404] Google sitemap ping
+    [410] Bing sitemap ping
+    [200] Yandex sitemap ping
+  Ping-O-Matic：
+    [200] pingomatic (https)
+  开放提交端点：
+    [404] Mojeek
+    [404] Seznam
+    [-1] Gigablast
+    [404] Entireweb
+  Wayback 存档：
+    [200] https://ckstc.github.io/zero-cost-tools/
+    [200] https://ckstc.github.io/zero-cost-tools/sitemap.xml
+    [200] https://ckstc.github.io/zero-cost-tools/atom.xml
+    [-1] https://ckstc.github.io/zero-cost-tools/blog/
+    [200] https://ckstc.github.io/zero-cost-tools/compress/
+    [200] https://ckstc.github.io/zero-cost-tools/jsonfmt/
+    [200] https://ckstc.github.io/zero-cost-tools/pdf/
+    [200] https://ckstc.github.io/zero-cost-tools/qrcode/
+    [200] https://ckstc.github.io/zero-cost-tools/convert/
+    [200] https://ckstc.github.io/zero-cost-tools/password/
+    [200] https://ckstc.github.io/zero-cost-tools/word-counter/
+    [200] https://ckstc.github.io/zero-cost-tools/case-converter/
+    [200] https://ckstc.github.io/zero-cost-tools/url-codec/
+    [200] https://ckstc.github.io/zero-cost-tools/base64-codec/
+    [200] https://ckstc.github.io/zero-cost-tools/timestamp/
+    [200] https://ckstc.github.io/zero-cost-tools/markdown/
+    [200] https://ckstc.github.io/zero-cost-tools/text-diff/
+    [-1] https://ckstc.github.io/zero-cost-tools/csv-json/
+    [200] https://ckstc.github.io/zero-cost-tools/uuid/
+    [200] https://ckstc.github.io/zero-cost-tools/color-hex/
+    [200] https://ckstc.github.io/zero-cost-tools/number-base/
+    [200] https://ckstc.github.io/zero-cost-tools/hash/
+    [200] https://ckstc.github.io/zero-cost-tools/regex/
+    [200] https://ckstc.github.io/zero-cost-tools/dedup/
+    [200] https://ckstc.github.io/zero-cost-tools/slug/
+    [200] https://ckstc.github.io/zero-cost-tools/lorem/
+    [200] https://ckstc.github.io/zero-cost-tools/wordfreq/
+    [200] https://ckstc.github.io/zero-cost-tools/randnum/
+    [200] https://ckstc.github.io/zero-cost-tools/roman-numeral/
+    [-1] https://ckstc.github.io/zero-cost-tools/percent-calc/
+    [200] https://ckstc.github.io/zero-cost-tools/rmb-upper/
+    [200] https://ckstc.github.io/zero-cost-tools/blog/base64-codec-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/case-converter-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/color-hex-guide.html
+    [-1] https://ckstc.github.io/zero-cost-tools/blog/compress-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/convert-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/csv-json-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/dedup-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/free-tools-guide.html
+    [-1] https://ckstc.github.io/zero-cost-tools/blog/hash-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/jsonfmt-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/lorem-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/markdown-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/number-base-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/password-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/pdf-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/percent-calc-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/privacy-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/qrcode-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/randnum-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/regex-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/rmb-upper-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/roman-numeral-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/slug-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/text-diff-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/timestamp-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/url-codec-guide.html
+    [-1] https://ckstc.github.io/zero-cost-tools/blog/uuid-guide.html
+    [200] https://ckstc.github.io/zero-cost-tools/blog/word-counter-guide.html
+    [-1] https://ckstc.github.io/zero-cost-tools/blog/wordfreq-guide.html
+  Wayback 成功 53 / 失败 7
+  X 自动发帖：
+    X_CREDENTIALS_MISSING: xurl 未配置凭证，跳过自动发帖。
+    启用（一次性人工，之后全自动）：
+      1) X 开发者门户免费创建 App -> 拿 CLIENT_ID/CLIENT_SECRET
+      2) 写入 ~/.workbuddy/mcp.json 的 xurl.env
+      3) 运行 npx -y @xdevplatform/xurl auth oauth2 完成授权
+    授权后本脚本每日自动发帖引流，无需再操作。
+推广完成。

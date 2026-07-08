@@ -1,0 +1,42 @@
+[
+  {
+    "title": "SUSE-Cloud/automation",
+    "url": "https://github.com/SUSE-Cloud/automation",
+    "description": "Automation scripts for development, testing, and CI",
+    "source": "github",
+    "raw_license": "Apache-2.0",
+    "license": "Apache-2.0",
+    "resale_risk": "low",
+    "stars": 72
+  },
+  {
+    "title": "ariya/phantomjs",
+    "url": "https://github.com/ariya/phantomjs",
+    "description": "Scriptable Headless Browser",
+    "source": "github",
+    "raw_license": "BSD-3-Clause",
+    "license": "BSD",
+    "resale_risk": "low",
+    "stars": 29457
+  },
+  {
+    "title": "python-geeks/Automation-scripts",
+    "url": "https://github.com/python-geeks/Automation-scripts",
+    "description": "Repo for creating awesome automation scripts to make my panda lazier",
+    "source": "github",
+    "raw_license": "MIT",
+    "license": "MIT",
+    "resale_risk": "low",
+    "stars": 1228
+  },
+  {
+    "title": "community-scripts/ProxmoxVE",
+    "url": "https://github.com/community-scripts/ProxmoxVE",
+    "description": "Proxmox VE Helper-Scripts (Community Edition) ",
+    "source": "github",
+    "raw_license": "MIT",
+    "license": "MIT",
+    "resale_risk": "low",
+    "stars": 28854
+  }
+]

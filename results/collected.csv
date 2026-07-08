@@ -1,0 +1,6 @@
+title,url,source,license,resale_risk,description
+thepycoach/automation,https://github.com/thepycoach/automation,github,未知（待人工复核）,medium,"Automation with Python (Excel, scripts, etc)"
+SUSE-Cloud/automation,https://github.com/SUSE-Cloud/automation,github,Apache-2.0,low,"Automation scripts for development, testing, and CI"
+ariya/phantomjs,https://github.com/ariya/phantomjs,github,BSD,low,Scriptable Headless Browser
+python-geeks/Automation-scripts,https://github.com/python-geeks/Automation-scripts,github,MIT,low,Repo for creating awesome automation scripts to make my panda lazier
+community-scripts/ProxmoxVE,https://github.com/community-scripts/ProxmoxVE,github,MIT,low,Proxmox VE Helper-Scripts (Community Edition) 

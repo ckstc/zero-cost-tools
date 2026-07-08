@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>二手平台合规副业避坑指南 — 数字产品商店</title>
+<meta name="description" content="讲清闲鱼等平台的自动回复/爬虫机器人为什么违规、法律边界在哪，以及不踩坑的合规替代方案（人工闲置、信息差选品、引流自有站）。">
+<meta property="og:title" content="二手平台合规副业避坑指南">
+<meta property="og:description" content="讲清闲鱼等平台的自动回复/爬虫机器人为什么违规、法律边界在哪，以及不踩坑的合规替代方案（人工闲置、信息差选品、引流自有站）。">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/store/secondhand-compliance/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../../atom.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "二手平台合规副业避坑指南", "description": "讲清闲鱼等平台的自动回复/爬虫机器人为什么违规、法律边界在哪，以及不踩坑的合规替代方案（人工闲置、信息差选品、引流自有站）。", "author": {"@type": "Organization", "name": "零成本工具箱"}, "publisher": {"@type": "Organization", "name": "零成本工具箱"}}</script>
+<style>
+
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header .logo{font-weight:700;color:var(--brand);text-decoration:none;font-size:18px}
+header nav a{color:var(--muted);text-decoration:none;font-size:14px}
+header nav a:hover{color:var(--brand)}
+main{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 22px}
+textarea,input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:150px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#eef2ff;color:var(--brand)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
+.stat .lbl{font-size:13px;color:var(--muted)}
+.result{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:15px}
+.md-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.md-preview{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;overflow:auto;min-height:200px}
+.md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
+.md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.wechat-qr-wrap{display:inline-block}
+.qr-label{display:block;font-weight:600;margin-bottom:8px}
+.qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.md-wrap{grid-template-columns:1fr}}
+
+
+.lic{display:inline-block;font-size:12px;background:#eef2ff;color:var(--brand);padding:2px 8px;border-radius:8px;margin:0 0 10px}
+.card{display:flex;flex-direction:column}
+.card .price{color:var(--ok);font-weight:700;font-size:17px;margin:auto 0 12px}
+.note{margin-top:30px;padding:16px;background:#fff;border:1px dashed var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
+code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.article{max-width:760px}
+.article h2{margin-top:26px;font-size:20px}
+.article ul,.article ol{margin:8px 0 8px 22px}
+.article li{margin:4px 0}
+
+.article img.qr{width:200px;height:200px;border:1px solid var(--line);border-radius:10px}
+.support-links{margin-top:30px;padding-top:20px;border-top:1px dashed var(--line);text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../../">零成本工具箱</a>
+  <nav><a href="../../">全部工具</a><a href="../">数字商店</a></nav>
+</header>
+<main class="article">
+<h1>二手平台合规副业避坑指南</h1>
+<p class="lead">讲清闲鱼等平台的自动回复/爬虫机器人为什么违规、法律边界在哪，以及不踩坑的合规替代方案（人工闲置、信息差选品、引流自有站）。</p>
+<div style="margin:14px 0">
+  <span class="lic">授权：原创内容 / 付费支持</span>
+  <span class="lic">价格：¥6.9</span>
+</div>
+
+<h2>一、闲鱼机器人为什么不能用来赚钱</h2>
+<ul>
+  <li><b>违反平台规则</b>：闲鱼服务条款禁止自动化访问、机器人、自动回复，使用必遭封号，且牵连你的实名账号。</li>
+  <li><b>需要你的身份</b>：这类工具都依赖你本人的账号 + Cookie（= 实名身份），违规后果自负。</li>
+  <li><b>作者自带免责</b>：多个开源仓库明确写「仅供学习研究」「数据不得商用」——商用即违背作者意愿与平台规则。</li>
+  <li><b>法律边界</b>：规模化爬取 / 自动化可能触及《网络安全法》关于未经授权干扰网络服务的规定。</li>
+</ul>
+<p>结论：<b>不把闲鱼机器人用于变现</b>。想做二手 / 信息差生意，走下面合规路径。</p>
+
+<h2>二、合规替代方案</h2>
+<ol>
+  <li><b>人工卖自有闲置</b>：自己用不上的东西拍照上架，最稳，不碰自动化。</li>
+  <li><b>信息差选品</b>：用监控工具<em>仅作自用比价 / 捡漏提醒</em>，发现低价后自己手动下单转卖，不爬商用数据。</li>
+  <li><b>内容引流到自有站</b>：在闲鱼 / 转转发「实用干货」帖，把人引到你的工具站 / 公众号，最终在自有阵地用微信 / 广告变现——规则风险最低。</li>
+  <li><b>原创数字产品</b>：像本站 store/ 那样卖你自己的指南 / 清单，不依赖任何平台账号，零封号风险。</li>
+</ol>
+<p>本指南帮你把「想赚快钱」的冲动，落到不踩坑的长期做法上。</p>
+
+<div class="support-links">
+  <div class="wechat-qr-wrap">
+    <span class="qr-label">💚 微信扫一扫，付费支持 / 获取资料</span>
+    <img src="../../wechat-qr.png" alt="微信收款码" class="qr-img">
+  </div>
+  <p style="color:var(--muted);font-size:13px;margin-top:10px">
+    扫码付款时备注「secondhand-compliance」，付款后加微信即发你对应资料（内容也已在本页免费公开，付费是对作者的支持）。
+  </p>
+  <p><a class="btn" href="../order.html">📦 去下单 / 支持页</a></p>
+</div>
+<p style="margin-top:24px"><a href="../">← 返回数字商店</a> · <a href="../../">返回全部工具</a></p>
+</main>
+<footer>© 零成本工具箱 · 本文为原创内容</footer>
+</body>
+</html>

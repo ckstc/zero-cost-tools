@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>零成本数字产品变现实操手册 — 数字产品商店</title>
+<meta name="description" content="手把手讲清 CC0 / 公有领域 / PLR / MIT 的区别，4 步把免费可授权资源变成可售商品，并列出必须避开的侵权与违规红线。">
+<meta property="og:title" content="零成本数字产品变现实操手册">
+<meta property="og:description" content="手把手讲清 CC0 / 公有领域 / PLR / MIT 的区别，4 步把免费可授权资源变成可售商品，并列出必须避开的侵权与违规红线。">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/store/zero-cost-earn-handbook/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../../atom.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "零成本数字产品变现实操手册", "description": "手把手讲清 CC0 / 公有领域 / PLR / MIT 的区别，4 步把免费可授权资源变成可售商品，并列出必须避开的侵权与违规红线。", "author": {"@type": "Organization", "name": "零成本工具箱"}, "publisher": {"@type": "Organization", "name": "零成本工具箱"}}</script>
+<style>
+
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header .logo{font-weight:700;color:var(--brand);text-decoration:none;font-size:18px}
+header nav a{color:var(--muted);text-decoration:none;font-size:14px}
+header nav a:hover{color:var(--brand)}
+main{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 22px}
+textarea,input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:150px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#eef2ff;color:var(--brand)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
+.stat .lbl{font-size:13px;color:var(--muted)}
+.result{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:15px}
+.md-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.md-preview{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;overflow:auto;min-height:200px}
+.md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
+.md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.wechat-qr-wrap{display:inline-block}
+.qr-label{display:block;font-weight:600;margin-bottom:8px}
+.qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.md-wrap{grid-template-columns:1fr}}
+
+
+.lic{display:inline-block;font-size:12px;background:#eef2ff;color:var(--brand);padding:2px 8px;border-radius:8px;margin:0 0 10px}
+.card{display:flex;flex-direction:column}
+.card .price{color:var(--ok);font-weight:700;font-size:17px;margin:auto 0 12px}
+.note{margin-top:30px;padding:16px;background:#fff;border:1px dashed var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
+code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.article{max-width:760px}
+.article h2{margin-top:26px;font-size:20px}
+.article ul,.article ol{margin:8px 0 8px 22px}
+.article li{margin:4px 0}
+
+.article img.qr{width:200px;height:200px;border:1px solid var(--line);border-radius:10px}
+.support-links{margin-top:30px;padding-top:20px;border-top:1px dashed var(--line);text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../../">零成本工具箱</a>
+  <nav><a href="../../">全部工具</a><a href="../">数字商店</a></nav>
+</header>
+<main class="article">
+<h1>零成本数字产品变现实操手册</h1>
+<p class="lead">手把手讲清 CC0 / 公有领域 / PLR / MIT 的区别，4 步把免费可授权资源变成可售商品，并列出必须避开的侵权与违规红线。</p>
+<div style="margin:14px 0">
+  <span class="lic">授权：原创内容 / 付费支持</span>
+  <span class="lic">价格：¥9.9</span>
+</div>
+
+<h2>一、先分清四种「免费」的本质</h2>
+<p>不是所有「免费」都能拿去卖。按授权从松到紧：</p>
+<ul>
+  <li><b>CC0 / 公有领域</b>：作者放弃一切权利，可任意复制、改作、商用、转售。最安全。</li>
+  <li><b>PLR（Private Label Rights，私有标签权）</b>：明确授权你改品牌、打包、转售。注意看清是否含「二级转售权（MRR）」。</li>
+  <li><b>MIT / Apache / BSD 等开源协议</b>：可自由使用、修改、再分发，但「原样转卖一个 GitHub 仓库」价值很低且对买家不公平——更好的做法是把它作为你产品的<em>组成部分</em>，加上你自己的说明与服务。</li>
+  <li><b>「免费分享但未声明授权」</b>：默认是「保留所有权利」，<b>不能</b>转售。这类一律排除。</li>
+</ul>
+
+<h2>二、把免费可授权资源变成商品的 4 步</h2>
+<ol>
+  <li><b>找</b>：用许可感知采集器（本项目 <code>scripts/collect_resources.py</code>）只收 low 风险（CC0/PLR/明确可商用）来源。</li>
+  <li><b>筛</b>：逐条核对授权页原文，凡是「禁止商用 / 仅个人使用 / 保留所有权利」直接丢弃。</li>
+  <li><b>改品牌 + 增值</b>：重排版、配原创说明、做成「精选包 / 实操指南」，让买家为「筛选 + 整理 + 讲解」付费，而不是为原本免费的文件付费。</li>
+  <li><b>上架</b>：挂到自有商店（如本站 store/），结账走微信 / Stripe Payment Link / Ko-fi，零平台抽成。</li>
+</ol>
+
+<h2>三、必须避开的红线</h2>
+<ul>
+  <li>不卖盗版电子书、破解课程、付费软件——这是侵权，不是「信息差」。</li>
+  <li>不用闲鱼 / 转转的自动回复、爬虫机器人变现（违反平台规则、牵连实名账号，作者也声明「仅供学习」）。</li>
+  <li>不把「免费但无授权」的资源标成可售。</li>
+  <li>永远在商品页写清授权来源，让买家买得明白。</li>
+</ul>
+<p>守住院子，长期才能稳定收款。本手册就是按这套方法原创写成的，可放心转售。</p>
+
+<div class="support-links">
+  <div class="wechat-qr-wrap">
+    <span class="qr-label">💚 微信扫一扫，付费支持 / 获取资料</span>
+    <img src="../../wechat-qr.png" alt="微信收款码" class="qr-img">
+  </div>
+  <p style="color:var(--muted);font-size:13px;margin-top:10px">
+    扫码付款时备注「zero-cost-earn-handbook」，付款后加微信即发你对应资料（内容也已在本页免费公开，付费是对作者的支持）。
+  </p>
+  <p><a class="btn" href="../order.html">📦 去下单 / 支持页</a></p>
+</div>
+<p style="margin-top:24px"><a href="../">← 返回数字商店</a> · <a href="../../">返回全部工具</a></p>
+</main>
+<footer>© 零成本工具箱 · 本文为原创内容</footer>
+</body>
+</html>

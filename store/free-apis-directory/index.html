@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>100+ 免费可商用 API 与素材清单 — 数字产品商店</title>
+<meta name="description" content="按「无 Key API / CC0 图库 / 公有领域书库 / 免费字体图标 / PLR 站」分类整理的可用资源目录，每条标注授权，拿来即做产品。">
+<meta property="og:title" content="100+ 免费可商用 API 与素材清单">
+<meta property="og:description" content="按「无 Key API / CC0 图库 / 公有领域书库 / 免费字体图标 / PLR 站」分类整理的可用资源目录，每条标注授权，拿来即做产品。">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/store/free-apis-directory/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../../atom.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "100+ 免费可商用 API 与素材清单", "description": "按「无 Key API / CC0 图库 / 公有领域书库 / 免费字体图标 / PLR 站」分类整理的可用资源目录，每条标注授权，拿来即做产品。", "author": {"@type": "Organization", "name": "零成本工具箱"}, "publisher": {"@type": "Organization", "name": "零成本工具箱"}}</script>
+<style>
+
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header .logo{font-weight:700;color:var(--brand);text-decoration:none;font-size:18px}
+header nav a{color:var(--muted);text-decoration:none;font-size:14px}
+header nav a:hover{color:var(--brand)}
+main{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 22px}
+textarea,input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:150px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#eef2ff;color:var(--brand)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
+.stat .lbl{font-size:13px;color:var(--muted)}
+.result{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:15px}
+.md-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.md-preview{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;overflow:auto;min-height:200px}
+.md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
+.md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.wechat-qr-wrap{display:inline-block}
+.qr-label{display:block;font-weight:600;margin-bottom:8px}
+.qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.md-wrap{grid-template-columns:1fr}}
+
+
+.lic{display:inline-block;font-size:12px;background:#eef2ff;color:var(--brand);padding:2px 8px;border-radius:8px;margin:0 0 10px}
+.card{display:flex;flex-direction:column}
+.card .price{color:var(--ok);font-weight:700;font-size:17px;margin:auto 0 12px}
+.note{margin-top:30px;padding:16px;background:#fff;border:1px dashed var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
+code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.article{max-width:760px}
+.article h2{margin-top:26px;font-size:20px}
+.article ul,.article ol{margin:8px 0 8px 22px}
+.article li{margin:4px 0}
+
+.article img.qr{width:200px;height:200px;border:1px solid var(--line);border-radius:10px}
+.support-links{margin-top:30px;padding-top:20px;border-top:1px dashed var(--line);text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../../">零成本工具箱</a>
+  <nav><a href="../../">全部工具</a><a href="../">数字商店</a></nav>
+</header>
+<main class="article">
+<h1>100+ 免费可商用 API 与素材清单</h1>
+<p class="lead">按「无 Key API / CC0 图库 / 公有领域书库 / 免费字体图标 / PLR 站」分类整理的可用资源目录，每条标注授权，拿来即做产品。</p>
+<div style="margin:14px 0">
+  <span class="lic">授权：原创内容 / 付费支持</span>
+  <span class="lic">价格：¥12.9</span>
+</div>
+
+<h2>一、免费无 Key API（可直接调用、可商用）</h2>
+<ul>
+  <li><b>ExchangeRate-API</b>（open endpoint）：实时汇率，免 key，需署名，可缓存。</li>
+  <li><b>FreeAPI</b>（freeapi.app，MIT）：auth / e-commerce / social 等真实端点，免 key 免配额。</li>
+  <li><b>public-apis</b>（GitHub 清单）：聚合大量免费 API，挑标注「No Auth / MIT」的用。</li>
+  <li><b>aisense-free-public-rest-apis</b>：无 key / 无限额 REST API 合集。</li>
+</ul>
+
+<h2>二、CC0 / 可商用图库与素材</h2>
+<ul>
+  <li><b>Unsplash / Pexels / Pixabay</b>：海量可商用图片与视频，无需署名（建议仍署名）。</li>
+  <li><b>Lucide / Heroicons / Tabler</b>：MIT 图标，可打包进你的产品。</li>
+  <li><b>Google Fonts / OFL 字体</b>：可商用，可随产品分发。</li>
+</ul>
+
+<h2>三、公有领域内容（可合法转售）</h2>
+<ul>
+  <li><b>Project Gutenberg</b>：超过 7 万本进入公有领域的电子书，可打包成主题书单出售。</li>
+  <li><b>Wikimedia Commons（公有领域类）</b>：筛选 License=Public Domain 的文件。</li>
+  <li>注意：只选真正进入公有领域的作品（通常 1928 年前），《Atomic Habits》等现代书仍受版权。</li>
+</ul>
+
+<h2>四、PLR 资源站（明确可转售）</h2>
+<ul>
+  <li><b>PLR Database</b>（plrdatabase.net）：2 万+ 可再品牌产品，含免费样品。</li>
+  <li><b>Entrepedia</b>（entrepedia.co）：免费 PLR 电子书 / 课程 / 模板。</li>
+  <li>上架前务必打开授权页确认含「resell rights」，并看清是否允许二级转售。</li>
+</ul>
+<p>完整清单（含每个条目的授权备注与直接用法的 100+ 条）已整理在本站对应产品页，持此清单即可零成本启动你自己的数字产品。</p>
+
+<div class="support-links">
+  <div class="wechat-qr-wrap">
+    <span class="qr-label">💚 微信扫一扫，付费支持 / 获取资料</span>
+    <img src="../../wechat-qr.png" alt="微信收款码" class="qr-img">
+  </div>
+  <p style="color:var(--muted);font-size:13px;margin-top:10px">
+    扫码付款时备注「free-apis-directory」，付款后加微信即发你对应资料（内容也已在本页免费公开，付费是对作者的支持）。
+  </p>
+  <p><a class="btn" href="../order.html">📦 去下单 / 支持页</a></p>
+</div>
+<p style="margin-top:24px"><a href="../">← 返回数字商店</a> · <a href="../../">返回全部工具</a></p>
+</main>
+<footer>© 零成本工具箱 · 本文为原创内容</footer>
+</body>
+</html>

@@ -35,7 +35,7 @@ SLUGS = discover_slugs()
 UA = {"User-Agent": "Mozilla/5.0 (compatible; zero-cost-tools/1.0)"}
 
 def all_urls():
-    urls = [BASE, BASE + "sitemap.xml", BASE + "atom.xml", BASE + "blog/"]
+    urls = [BASE, BASE + "sitemap.xml", BASE + "atom.xml", BASE + "blog/", BASE + "store/"]
     for s in SLUGS:
         urls.append(BASE + s + "/")
     blog_dir = os.path.join(ROOT, "blog")
@@ -43,6 +43,14 @@ def all_urls():
         for fn in os.listdir(blog_dir):
             if fn.endswith(".html"):
                 urls.append(BASE + "blog/" + fn)
+    # 数字商店：详情页 + 下单页（由 build.py 的 PRODUCTS 驱动）
+    try:
+        from products_content import PRODUCTS
+    except Exception:
+        PRODUCTS = []
+    for p in PRODUCTS:
+        urls.append(BASE + "store/" + p["slug"] + "/")
+    urls.append(BASE + "store/order.html")
     return urls
 
 def get(url, timeout=20):

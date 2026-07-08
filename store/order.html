@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>下单 / 支持 — 零成本工具箱</title>
+<meta name="description" content="微信扫码付费支持零成本工具箱的数字产品与原作者。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/store/order.html">
+<style>
+
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header .logo{font-weight:700;color:var(--brand);text-decoration:none;font-size:18px}
+header nav a{color:var(--muted);text-decoration:none;font-size:14px}
+header nav a:hover{color:var(--brand)}
+main{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 22px}
+textarea,input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:150px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#eef2ff;color:var(--brand)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
+.stat .lbl{font-size:13px;color:var(--muted)}
+.result{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:15px}
+.md-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.md-preview{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;overflow:auto;min-height:200px}
+.md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
+.md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.wechat-qr-wrap{display:inline-block}
+.qr-label{display:block;font-weight:600;margin-bottom:8px}
+.qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.md-wrap{grid-template-columns:1fr}}
+
+
+.lic{display:inline-block;font-size:12px;background:#eef2ff;color:var(--brand);padding:2px 8px;border-radius:8px;margin:0 0 10px}
+.card{display:flex;flex-direction:column}
+.card .price{color:var(--ok);font-weight:700;font-size:17px;margin:auto 0 12px}
+.note{margin-top:30px;padding:16px;background:#fff;border:1px dashed var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
+code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.article{max-width:760px}
+.article h2{margin-top:26px;font-size:20px}
+.article ul,.article ol{margin:8px 0 8px 22px}
+.article li{margin:4px 0}
+
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../">零成本工具箱</a>
+  <nav><a href="../">全部工具</a><a href="./">数字商店</a></nav>
+</header>
+<main style="max-width:680px">
+<h1>下单 / 支持</h1>
+<p class="lead">微信扫码付款，备注你想购买的产品编号，付款后加微信即可获取对应资料。所有产品均为原创内容，也可在对应详情页免费阅读后自愿打赏。</p>
+<div class="support-links" style="border:1px solid var(--line);border-radius:12px;padding:20px">
+  <span class="qr-label">💚 微信收款码</span>
+  <img src="../wechat-qr.png" alt="微信收款码" class="qr-img">
+</div>
+<h2 style="margin-top:26px">可选项目</h2>
+<ul>  <li><b>零成本数字产品变现实操手册</b> — ¥9.9（备注「zero-cost-earn-handbook」）</li>
+  <li><b>100+ 免费可商用 API 与素材清单</b> — ¥12.9（备注「free-apis-directory」）</li>
+  <li><b>用 AI 零成本做工具站挣广告费</b> — ¥9.9（备注「tool-site-seo-playbook」）</li>
+  <li><b>二手平台合规副业避坑指南</b> — ¥6.9（备注「secondhand-compliance」）</li>
+</ul>
+<p style="color:var(--muted);font-size:13px">说明：本商店为零成本静态页面，无后台自动发货。采用「扫码付款 + 备注编号 + 加微信发资料」的人肉交接，确保合规且零平台抽成。内容已尽量在详情页免费公开，付费是对持续创作的实质支持。</p>
+<p style="margin-top:20px"><a href="./">← 返回数字商店</a></p>
+</main>
+<footer>© 零成本工具箱</footer>
+</body>
+</html>
