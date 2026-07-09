@@ -69,6 +69,7 @@ ALL_TOOLS = [
     ("roman-numeral", "罗马数字转换",         "阿拉伯数字与罗马数字互转，支持 1-3999", "罗马数字,阿拉伯数字,数字转换"),
     ("percent-calc",  "百分比计算器",         "求百分比、百分比数值、增减百分比", "百分比计算,百分比,增减百分比"),
     ("rmb-upper",     "金额大写转换",         "数字金额转中文大写，财务开票常用", "金额大写,人民币大写,数字转中文"),
+    ("passphrase",    "密码短语生成器",       "用常见单词+分隔符生成好记又高强度的密码短语", "密码短语,passphrase,好记密码,助记密码,随机短语"),
 ]
 
 # 新工具：需生成完整页面（body + js）
@@ -567,6 +568,34 @@ function rmbUpper(num){
   return (neg?'负':'')+s+'元'+decStr;
 }
     g('go').onclick=()=>{res.innerHTML='中文大写：<b>'+rmbUpper(parseFloat(g('amt').value))+'</b>';};
+'''),
+    "passphrase": dict(
+        h1="密码短语生成器",
+        lead="用语词典中的常见单词拼接成好记又高强度的密码短语（如 correct-horse-battery-staple），比随机字符更易记忆。本地生成，不上传任何数据。",
+        body=r'''
+<div class="row">
+  <input type="number" id="nwords" value="4" min="2" max="12" style="max-width:110px" title="单词数量">
+  <select id="sep"><option value="-">分隔符: -</option><option value=" ">空格</option><option value=".">.</option><option value="_">_</option><option value="/">/</option></select>
+  <label><input type="checkbox" id="cap"> 首字母大写</label>
+  <label><input type="checkbox" id="digit"> 末尾加数字</label>
+  <button class="btn" id="go">生成</button>
+</div>
+<textarea id="out" readonly spellcheck="false" style="min-height:100px"></textarea>
+<div class="row"><button class="btn ghost" id="copy">复制</button></div>
+''',
+        js=r'''
+const WORDS=("apple amber anchor angel autumn baby balance ball band bank barn bear beam bean beach bell bird blue boat book boot boss bowl brick bridge brown brush cabin cake calm camel candy candle canoe canvas carpet cat cave cedar cherry chest chief circle clay cliff cloud clover coal coast cobra comet coral crane creek crowd crown crystal cup curve daisy dawn deer diamond dock dollar dolphin dome door dove dragon dream drum duck eagle earth ember echo edge engine fairy feather field fire fish flame flood flower forest fox frost fruit galaxy garden gate ghost glass globe gold grass gravity green hammer harbor hawk heart hill honey horse island ivory jet jewel jungle kernel key kite knight lake lamp leaf lemon light lion lock lotus luck magnet maple marble meadow metal mill moon mountain mouse music nail needle nest nickel noble north ocean olive onion orange owl ox panda paper pearl pencil piano pilot pine planet plaza plume polar pond portal potato prince pumpkin quarter queen rabbit radar rainbow raven river road robot rocket rose ruby sail salt sand scale scorpion shadow shark shell silver sky slate smoke snow soap solar soldier song spark sphere spider spirit spring star statue steel stone storm stream sugar sun sword table tiger token tower town tree triangle tunnel turtle valley violet volcano wagon water wave web whale wheel willow wind window witch wolf wood worm zebra zone").split(' ');
+function gen(){
+  const n=Math.min(12,Math.max(2,parseInt(document.getElementById('nwords').value)||4));
+  let words=[];for(let i=0;i<n;i++){words.push(WORDS[Math.floor(Math.random()*WORDS.length)]);}
+  if(document.getElementById('cap').checked){words=words.map(w=>w.charAt(0).toUpperCase()+w.slice(1));}
+  let s=words.join(document.getElementById('sep').value);
+  if(document.getElementById('digit').checked){s+=Math.floor(Math.random()*100);}
+  document.getElementById('out').value=s;
+}
+document.getElementById('go').onclick=gen;
+document.getElementById('copy').onclick=()=>{const o=document.getElementById('out');o.select();document.execCommand('copy');};
+gen();
 '''),
 }
 
