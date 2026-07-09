@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>密码短语生成器</title>
+<meta name="description" content="用常见单词+分隔符生成好记又高强度的密码短语">
+<meta name="keywords" content="密码短语,passphrase,好记密码,助记密码,随机短语">
+<meta property="og:title" content="密码短语生成器">
+<meta property="og:description" content="用常见单词+分隔符生成好记又高强度的密码短语">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/passphrase/">
+<meta property="og:image" content="../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/passphrase/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "密码短语生成器", "description": "用常见单词+分隔符生成好记又高强度的密码短语", "url": "https://ckstc.github.io/zero-cost-tools/passphrase/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "密码短语生成器", "item": "https://ckstc.github.io/zero-cost-tools/passphrase/"}]}</script>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header .logo{font-weight:700;color:var(--brand);text-decoration:none;font-size:18px}
+header nav a{color:var(--muted);text-decoration:none;font-size:14px}
+header nav a:hover{color:var(--brand)}
+main{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 22px}
+textarea,input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:150px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#eef2ff;color:var(--brand)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
+.stat .lbl{font-size:13px;color:var(--muted)}
+.result{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:15px}
+.md-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.md-preview{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;overflow:auto;min-height:200px}
+.md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
+.md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.wechat-qr-wrap{display:inline-block}
+.qr-label{display:block;font-weight:600;margin-bottom:8px}
+.qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.md-wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/zero-cost-tools/">零成本工具箱</a>
+  <nav><a href="/zero-cost-tools/">全部工具</a><a href="/zero-cost-tools/store/">数字商店</a><a href="/zero-cost-tools/deals/">联盟精选</a><a href="/zero-cost-tools/leads/">线索·合作</a><a href="/zero-cost-tools/pro/">升级Pro</a></nav>
+</header>
+<main>
+<h1>密码短语生成器</h1>
+<p class="lead">用语词典中的常见单词拼接成好记又高强度的密码短语（如 correct-horse-battery-staple），比随机字符更易记忆。本地生成，不上传任何数据。</p>
+
+<div class="row">
+  <input type="number" id="nwords" value="4" min="2" max="12" style="max-width:110px" title="单词数量">
+  <select id="sep"><option value="-">分隔符: -</option><option value=" ">空格</option><option value=".">.</option><option value="_">_</option><option value="/">/</option></select>
+  <label><input type="checkbox" id="cap"> 首字母大写</label>
+  <label><input type="checkbox" id="digit"> 末尾加数字</label>
+  <button class="btn" id="go">生成</button>
+</div>
+<textarea id="out" readonly spellcheck="false" style="min-height:100px"></textarea>
+<div class="row"><button class="btn ghost" id="copy">复制</button></div>
+
+<div class="related"><h2>相关工具</h2><div class="cards">
+  <a class="card" href="../compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>  <a class="card" href="../jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>  <a class="card" href="../pdf/"><h3>PDF 工具箱</h3><p>在线压缩 PDF、PDF 转图片，纯前端处理不泄露文件</p></a>  <a class="card" href="../qrcode/"><h3>二维码生成器</h3><p>免费生成网址/文本/ WiFi 二维码，可下载 PNG</p></a>
+</div></div>
+<div class="support-links">
+  <div class="wechat-qr-wrap">
+    <span class="qr-label">💚 微信扫一扫，支持作者</span>
+    <img src="../wechat-qr.png" alt="微信收款码" class="qr-img">
+  </div>
+</div>
+
+</main>
+<footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
+<script>
+const WORDS=("apple amber anchor angel autumn baby balance ball band bank barn bear beam bean beach bell bird blue boat book boot boss bowl brick bridge brown brush cabin cake calm camel candy candle canoe canvas carpet cat cave cedar cherry chest chief circle clay cliff cloud clover coal coast cobra comet coral crane creek crowd crown crystal cup curve daisy dawn deer diamond dock dollar dolphin dome door dove dragon dream drum duck eagle earth ember echo edge engine fairy feather field fire fish flame flood flower forest fox frost fruit galaxy garden gate ghost glass globe gold grass gravity green hammer harbor hawk heart hill honey horse island ivory jet jewel jungle kernel key kite knight lake lamp leaf lemon light lion lock lotus luck magnet maple marble meadow metal mill moon mountain mouse music nail needle nest nickel noble north ocean olive onion orange owl ox panda paper pearl pencil piano pilot pine planet plaza plume polar pond portal potato prince pumpkin quarter queen rabbit radar rainbow raven river road robot rocket rose ruby sail salt sand scale scorpion shadow shark shell silver sky slate smoke snow soap solar soldier song spark sphere spider spirit spring star statue steel stone storm stream sugar sun sword table tiger token tower town tree triangle tunnel turtle valley violet volcano wagon water wave web whale wheel willow wind window witch wolf wood worm zebra zone").split(' ');
+function gen(){
+  const n=Math.min(12,Math.max(2,parseInt(document.getElementById('nwords').value)||4));
+  let words=[];for(let i=0;i<n;i++){words.push(WORDS[Math.floor(Math.random()*WORDS.length)]);}
+  if(document.getElementById('cap').checked){words=words.map(w=>w.charAt(0).toUpperCase()+w.slice(1));}
+  let s=words.join(document.getElementById('sep').value);
+  if(document.getElementById('digit').checked){s+=Math.floor(Math.random()*100);}
+  document.getElementById('out').value=s;
+}
+document.getElementById('go').onclick=gen;
+document.getElementById('copy').onclick=()=>{const o=document.getElementById('out');o.select();document.execCommand('copy');};
+gen();
+</script>
+</body>
+</html>

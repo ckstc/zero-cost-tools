@@ -774,6 +774,11 @@ def gen_tool(slug, title, desc, keywords, h1, lead, body, js):
             .replace("%%NAV%%", NAV_HTML)
             .replace("%%ADSENSE%%", adsense_code())
             .replace("%%CSS%%", SHARED_CSS))
+    d = os.path.join(ROOT, slug)
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+    print("generated %s/index.html" % slug)
 
 
 def adsense_code():
