@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>日期差与倒计时工具</title>
+<meta name="description" content="计算两个日期相差多少天，或实时倒计时到目标时间，纯前端本地运行">
+<meta name="keywords" content="日期差,天数计算,倒计时,日期计算,相差天数">
+<meta property="og:title" content="日期差与倒计时工具">
+<meta property="og:description" content="计算两个日期相差多少天，或实时倒计时到目标时间，纯前端本地运行">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/date-diff/">
+<meta property="og:image" content="../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/date-diff/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "日期差与倒计时工具", "description": "计算两个日期相差多少天，或实时倒计时到目标时间，纯前端本地运行", "url": "https://ckstc.github.io/zero-cost-tools/date-diff/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "日期差与倒计时工具", "item": "https://ckstc.github.io/zero-cost-tools/date-diff/"}]}</script>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header .logo{font-weight:700;color:var(--brand);text-decoration:none;font-size:18px}
+header nav a{color:var(--muted);text-decoration:none;font-size:14px}
+header nav a:hover{color:var(--brand)}
+main{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 22px}
+textarea,input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:150px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#eef2ff;color:var(--brand)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
+.stat .lbl{font-size:13px;color:var(--muted)}
+.result{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:15px}
+.md-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.md-preview{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;overflow:auto;min-height:200px}
+.md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
+.md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.wechat-qr-wrap{display:inline-block}
+.qr-label{display:block;font-weight:600;margin-bottom:8px}
+.qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.md-wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/zero-cost-tools/">零成本工具箱</a>
+  <nav><a href="/zero-cost-tools/">全部工具</a><a href="/zero-cost-tools/store/">数字商店</a><a href="/zero-cost-tools/deals/">联盟精选</a><a href="/zero-cost-tools/leads/">线索·合作</a><a href="/zero-cost-tools/pro/">升级Pro</a></nav>
+</header>
+<main>
+<h1>日期差与倒计时工具</h1>
+<p class="lead">计算任意两个日期相差多少天，或实时倒计时到某个目标日期时间。全部在浏览器本地运行，不上传数据。</p>
+
+<div class="row">
+  <div style="flex:1;min-width:200px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">开始日期</label>
+    <input type="date" id="d1">
+  </div>
+  <div style="flex:1;min-width:200px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">结束日期</label>
+    <input type="date" id="d2">
+  </div>
+  <div style="display:flex;align-items:flex-end">
+    <button class="btn" id="calc">计算相差天数</button>
+  </div>
+</div>
+<div id="res" class="result"></div>
+<hr style="margin:26px 0;border:none;border-top:1px dashed var(--line)">
+<h2 style="font-size:18px;margin:0 0 12px">⏳ 实时倒计时到目标时间</h2>
+<div class="row">
+  <div style="flex:1;min-width:220px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">目标日期时间</label>
+    <input type="datetime-local" id="target">
+  </div>
+  <div style="display:flex;gap:10px;align-items:flex-end">
+    <button class="btn" id="startcd">开始倒计时</button>
+    <button class="btn ghost" id="stopcd">停止</button>
+  </div>
+</div>
+<div id="cd" class="result"></div>
+
+<div class="related"><h2>相关工具</h2><div class="cards">
+  <a class="card" href="../compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>  <a class="card" href="../jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>  <a class="card" href="../pdf/"><h3>PDF 工具箱</h3><p>在线压缩 PDF、PDF 转图片，纯前端处理不泄露文件</p></a>  <a class="card" href="../qrcode/"><h3>二维码生成器</h3><p>免费生成网址/文本/ WiFi 二维码，可下载 PNG</p></a>
+</div></div>
+<div class="support-links">
+  <div class="wechat-qr-wrap">
+    <span class="qr-label">💚 微信扫一扫，支持作者</span>
+    <img src="../wechat-qr.png" alt="微信收款码" class="qr-img">
+  </div>
+</div>
+
+</main>
+<footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
+<script>
+const d1=document.getElementById('d1'),d2=document.getElementById('d2'),res=document.getElementById('res');
+const g=id=>document.getElementById(id);
+function parseDay(v){return new Date(v+'T00:00:00');}
+g('calc').onclick=()=>{
+  if(!d1.value||!d2.value){res.textContent='请选择两个日期';return;}
+  const days=Math.round((parseDay(d2.value)-parseDay(d1.value))/86400000);
+  const abs=Math.abs(days);
+  let note = days===0?'两个日期相同。'
+    : (days>0?('「结束」比「开始」晚 '+days+' 天。')
+             :('「结束」比「开始」早 '+abs+' 天。'));
+  res.innerHTML='相差 <b>'+abs+'</b> 天<br><span style="color:var(--muted);font-size:13px">'+note+'</span>';
+};
+let timer=null;
+const target=g('target'),cd=g('cd');
+function pad(n){return String(n).padStart(2,'0');}
+function tick(){
+  if(!target.value){cd.textContent='请选择目标日期时间';return;}
+  const ms=new Date(target.value).getTime()-Date.now();
+  if(ms<=0){cd.innerHTML='<b style="color:var(--ok)">时间到！🎉</b>';stop();return;}
+  const s=Math.floor(ms/1000);
+  const D=Math.floor(s/86400),H=Math.floor(s%86400/3600),M=Math.floor(s%3600/60),S=s%60;
+  cd.innerHTML='剩余 <b>'+D+'</b> 天 <b>'+pad(H)+'</b> 时 <b>'+pad(M)+'</b> 分 <b>'+pad(S)+'</b> 秒';
+}
+function stop(){if(timer){clearInterval(timer);timer=null;}}
+g('startcd').onclick=()=>{stop();tick();timer=setInterval(tick,1000);};
+g('stopcd').onclick=stop;
+</script>
+</body>
+</html>

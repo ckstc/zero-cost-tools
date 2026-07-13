@@ -70,6 +70,7 @@ ALL_TOOLS = [
     ("percent-calc",  "百分比计算器",         "求百分比、百分比数值、增减百分比", "百分比计算,百分比,增减百分比"),
     ("rmb-upper",     "金额大写转换",         "数字金额转中文大写，财务开票常用", "金额大写,人民币大写,数字转中文"),
     ("passphrase",    "密码短语生成器",       "用常见单词+分隔符生成好记又高强度的密码短语", "密码短语,passphrase,好记密码,助记密码,随机短语"),
+    ("date-diff",     "日期差与倒计时工具",   "计算两个日期相差多少天，或实时倒计时到目标时间，纯前端本地运行", "日期差,天数计算,倒计时,日期计算,相差天数"),
 ]
 
 # 新工具：需生成完整页面（body + js）
@@ -597,6 +598,66 @@ document.getElementById('go').onclick=gen;
 document.getElementById('copy').onclick=()=>{const o=document.getElementById('out');o.select();document.execCommand('copy');};
 gen();
 '''),
+    "date-diff": dict(
+        h1="日期差与倒计时工具",
+        lead="计算任意两个日期相差多少天，或实时倒计时到某个目标日期时间。全部在浏览器本地运行，不上传数据。",
+        body=r'''
+<div class="row">
+  <div style="flex:1;min-width:200px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">开始日期</label>
+    <input type="date" id="d1">
+  </div>
+  <div style="flex:1;min-width:200px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">结束日期</label>
+    <input type="date" id="d2">
+  </div>
+  <div style="display:flex;align-items:flex-end">
+    <button class="btn" id="calc">计算相差天数</button>
+  </div>
+</div>
+<div id="res" class="result"></div>
+<hr style="margin:26px 0;border:none;border-top:1px dashed var(--line)">
+<h2 style="font-size:18px;margin:0 0 12px">⏳ 实时倒计时到目标时间</h2>
+<div class="row">
+  <div style="flex:1;min-width:220px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">目标日期时间</label>
+    <input type="datetime-local" id="target">
+  </div>
+  <div style="display:flex;gap:10px;align-items:flex-end">
+    <button class="btn" id="startcd">开始倒计时</button>
+    <button class="btn ghost" id="stopcd">停止</button>
+  </div>
+</div>
+<div id="cd" class="result"></div>
+''',
+        js=r'''
+const d1=document.getElementById('d1'),d2=document.getElementById('d2'),res=document.getElementById('res');
+const g=id=>document.getElementById(id);
+function parseDay(v){return new Date(v+'T00:00:00');}
+g('calc').onclick=()=>{
+  if(!d1.value||!d2.value){res.textContent='请选择两个日期';return;}
+  const days=Math.round((parseDay(d2.value)-parseDay(d1.value))/86400000);
+  const abs=Math.abs(days);
+  let note = days===0?'两个日期相同。'
+    : (days>0?('「结束」比「开始」晚 '+days+' 天。')
+             :('「结束」比「开始」早 '+abs+' 天。'));
+  res.innerHTML='相差 <b>'+abs+'</b> 天<br><span style="color:var(--muted);font-size:13px">'+note+'</span>';
+};
+let timer=null;
+const target=g('target'),cd=g('cd');
+function pad(n){return String(n).padStart(2,'0');}
+function tick(){
+  if(!target.value){cd.textContent='请选择目标日期时间';return;}
+  const ms=new Date(target.value).getTime()-Date.now();
+  if(ms<=0){cd.innerHTML='<b style="color:var(--ok)">时间到！🎉</b>';stop();return;}
+  const s=Math.floor(ms/1000);
+  const D=Math.floor(s/86400),H=Math.floor(s%86400/3600),M=Math.floor(s%3600/60),S=s%60;
+  cd.innerHTML='剩余 <b>'+D+'</b> 天 <b>'+pad(H)+'</b> 时 <b>'+pad(M)+'</b> 分 <b>'+pad(S)+'</b> 秒';
+}
+function stop(){if(timer){clearInterval(timer);timer=null;}}
+g('startcd').onclick=()=>{stop();tick();timer=setInterval(tick,1000);};
+g('stopcd').onclick=stop;
+'''),
 }
 
 # 数字产品由 products_content.py 驱动（原创内容，零成本、可合规销售）。
@@ -628,6 +689,8 @@ BLOG_TITLES = {
     "lorem-guide.html": "占位文本生成器使用指南",
     "wordfreq-guide.html": "词频统计工具使用指南",
     "randnum-guide.html": "随机数生成器使用指南",
+    "passphrase-guide.html": "密码短语生成器使用指南",
+    "date-diff-guide.html": "日期差与倒计时使用指南",
     "free-tools-guide.html": "免费在线工具推荐合集",
     "privacy-guide.html": "如何安全使用在线工具保护隐私",
 }
