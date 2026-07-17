@@ -149,3 +149,10 @@ https://mrrscout.com/blog/saas-launch-platforms-monetization-2026
 - Bilibili 搜索 API 需带 `Referer: https://www.bilibili.com`，且结果分多类型块
   （video/upuser…），需跨块扁平化收集。
 - Jina Reader 匿名端点在本机（数据中心 IP）被 401 拦截 → 本环境不可用，改靠 Exa。
+
+---
+
+## 选题监听日志
+
+### 2026-07-13（Agent-Reach Exa ×3：免费工具选题 + 联盟/推广机会）
+本周三路检索全部成功（各 6 条，无失败）。值得新建的工具品类：①「纯本地/零上传/离线」工具需求强——尤其 PDF 合并拆分、Markdown→PDF/DOCX（含 Mermaid）、笔记转结构化任务（Reddit r/homelab、r/indiehackers 实证）。新的联盟/推广机会：多款「免费加入 + 30% recurring」的 AI 工具计划（ClickGrow、Canvora、Clipia.ai）及「秒过审、无审核」网络（The Public Network），比上次 walubee/GoogieHost 更轻、佣金更高，可作为第二收入流补充。

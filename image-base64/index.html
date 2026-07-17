@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>文本对比工具</title>
-<meta name="description" content="逐行对比两段文本差异，新增删除高亮">
-<meta name="keywords" content="文本对比,diff,代码对比">
-<meta property="og:title" content="文本对比工具">
-<meta property="og:description" content="逐行对比两段文本差异，新增删除高亮">
+<title>图片转 Base64</title>
+<meta name="description" content="选图即出 DataURL，纯前端本地把图片转为 Base64 编码，不上传图片">
+<meta name="keywords" content="图片转base64,图片base64,图片转dataurl,base64图片,图片编码">
+<meta property="og:title" content="图片转 Base64">
+<meta property="og:description" content="选图即出 DataURL，纯前端本地把图片转为 Base64 编码，不上传图片">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/text-diff/">
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/image-base64/">
 <meta property="og:image" content="../og.png">
-<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/text-diff/">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/image-base64/">
 <link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "文本对比工具", "description": "逐行对比两段文本差异，新增删除高亮", "url": "https://ckstc.github.io/zero-cost-tools/text-diff/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "文本对比工具", "item": "https://ckstc.github.io/zero-cost-tools/text-diff/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "图片转 Base64", "description": "选图即出 DataURL，纯前端本地把图片转为 Base64 编码，不上传图片", "url": "https://ckstc.github.io/zero-cost-tools/image-base64/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "图片转 Base64", "item": "https://ckstc.github.io/zero-cost-tools/image-base64/"}]}</script>
 <style>
 :root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
 *{box-sizing:border-box}
@@ -63,18 +63,22 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
   <nav><a href="/zero-cost-tools/">全部工具</a><a href="/zero-cost-tools/store/">数字商店</a><a href="/zero-cost-tools/deals/">联盟精选</a><a href="/zero-cost-tools/leads/">线索·合作</a><a href="/zero-cost-tools/pro/">升级Pro</a></nav>
 </header>
 <main>
-<h1>文本对比工具</h1>
-<p class="lead">粘贴两段文本，逐行对比差异，新增以绿、删除以红高亮。完全本地运行。</p>
+<h1>图片转 Base64 工具</h1>
+<p class="lead">选择本地图片，立刻得到它的 Base64 DataURL（data:image/...;base64,...）。全程在浏览器本地完成，图片不会上传到任何服务器，可复制或下载。</p>
 
-<div class="row">
-  <textarea id="a" placeholder="原始文本…" spellcheck="false"></textarea>
-  <textarea id="b" placeholder="修改后文本…" spellcheck="false"></textarea>
+<label class="upbtn" for="file">📂 选择图片</label>
+<input type="file" id="file" accept="image/*" hidden>
+<div class="row" style="align-items:center">
+  <span id="meta" class="lbl" style="color:var(--muted);font-size:13px">未选择文件</span>
+  <button class="btn" id="copy">复制 DataURL</button>
+  <button class="btn ghost" id="dl">下载文本</button>
+  <button class="btn ghost" id="clear">清空</button>
 </div>
-<button class="btn" id="go">对比差异</button>
-<div id="res" class="result" style="white-space:pre-wrap;font-family:monospace;line-height:1.5"></div>
+<img id="preview" alt="预览" style="display:none;max-width:100%;border:1px solid var(--line);border-radius:10px;margin:10px 0">
+<textarea id="out" readonly spellcheck="false" style="min-height:160px" placeholder="选择图片后，这里会显示其 Base64 DataURL…"></textarea>
 
 <div class="related"><h2>相关工具</h2><div class="cards">
-  <a class="card" href="../csv-json/"><h3>CSV JSON 互转</h3><p>CSV 与 JSON 在线互转，首行作表头</p></a>  <a class="card" href="../uuid/"><h3>UUID 生成器</h3><p>生成 RFC4122 v4 UUID，支持批量</p></a>  <a class="card" href="../color-hex/"><h3>颜色值转换</h3><p>HEX/RGB/HSL 互转，取色器</p></a>  <a class="card" href="../number-base/"><h3>进制转换器</h3><p>二进制/八进制/十进制/十六进制在线互转</p></a>
+  <a class="card" href="../compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>  <a class="card" href="../jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>  <a class="card" href="../pdf/"><h3>PDF 工具箱</h3><p>在线压缩 PDF、PDF 转图片，纯前端处理不泄露文件</p></a>  <a class="card" href="../qrcode/"><h3>二维码生成器</h3><p>免费生成网址/文本/ WiFi 二维码，可下载 PNG</p></a>
 </div></div>
 <div class="support-links">
   <div class="wechat-qr-wrap">
@@ -86,17 +90,29 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
 </main>
 <footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
 <script>
-function diffLines(a,b){const A=a.split('\n'),B=b.split('\n');const n=A.length,m=B.length;
-const dp=Array.from({length:n+1},()=>new Int32Array(m+1));
-for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)dp[i][j]=A[i]===B[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
-let i=0,j=0,out=[];while(i<n&&j<m){if(A[i]===B[j]){out.push(['=',A[i]]);i++;j++;}else if(dp[i+1][j]>=dp[i][j+1]){out.push(['-',A[i]]);i++;}else{out.push(['+',B[j]]);j++;}}
-while(i<n){out.push(['-',A[i]]);i++;}while(j<m){out.push(['+',B[j]]);j++;}return out;}
-document.getElementById('go').onclick=()=>{
-  const R=diffLines(document.getElementById('a').value,document.getElementById('b').value);
-  const res=document.getElementById('res');res.innerHTML='';
-  R.forEach(([t,line])=>{const s=document.createElement('div');s.textContent=(t==='='?'  ':(t==='+'?'+ ':'- '))+line;
-    s.style.background=t==='+'?'#e7f7ec':t==='-'?'#fdeaea':'transparent';res.appendChild(s);});
+const fileInput=document.getElementById('file');
+const out=document.getElementById('out');
+const meta=document.getElementById('meta');
+const preview=document.getElementById('preview');
+let lastUrl='';
+fileInput.onchange=()=>{
+  const f=fileInput.files[0];
+  if(!f){return;}
+  if(!f.type.startsWith('image/')){meta.textContent='请选择图片文件';return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    lastUrl=e.target.result;
+    out.value=lastUrl;
+    meta.textContent=f.name+' · '+f.size+' 字节 · '+f.type;
+    preview.src=lastUrl;
+    preview.style.display='block';
+  };
+  reader.onerror=()=>{meta.textContent='读取失败，请重试';};
+  reader.readAsDataURL(f);
 };
+document.getElementById('copy').onclick=()=>{if(!out.value){meta.textContent='请先选择图片';return;}out.focus();out.select();document.execCommand('copy');meta.textContent='已复制 DataURL';};
+document.getElementById('dl').onclick=()=>{if(!out.value){meta.textContent='请先选择图片';return;}const b=new Blob([out.value],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='image-base64.txt';a.click();};
+document.getElementById('clear').onclick=()=>{fileInput.value='';out.value='';lastUrl='';meta.textContent='未选择文件';preview.src='';preview.style.display='none';};
 </script>
 </body>
 </html>

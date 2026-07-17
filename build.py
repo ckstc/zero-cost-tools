@@ -71,6 +71,7 @@ ALL_TOOLS = [
     ("rmb-upper",     "金额大写转换",         "数字金额转中文大写，财务开票常用", "金额大写,人民币大写,数字转中文"),
     ("passphrase",    "密码短语生成器",       "用常见单词+分隔符生成好记又高强度的密码短语", "密码短语,passphrase,好记密码,助记密码,随机短语"),
     ("date-diff",     "日期差与倒计时工具",   "计算两个日期相差多少天，或实时倒计时到目标时间，纯前端本地运行", "日期差,天数计算,倒计时,日期计算,相差天数"),
+    ("image-base64",  "图片转 Base64",        "选图即出 DataURL，纯前端本地把图片转为 Base64 编码，不上传图片", "图片转base64,图片base64,图片转dataurl,base64图片,图片编码"),
 ]
 
 # 新工具：需生成完整页面（body + js）
@@ -658,6 +659,46 @@ function stop(){if(timer){clearInterval(timer);timer=null;}}
 g('startcd').onclick=()=>{stop();tick();timer=setInterval(tick,1000);};
 g('stopcd').onclick=stop;
 '''),
+    "image-base64": dict(
+        h1="图片转 Base64 工具",
+        lead="选择本地图片，立刻得到它的 Base64 DataURL（data:image/...;base64,...）。全程在浏览器本地完成，图片不会上传到任何服务器，可复制或下载。",
+        body=r'''
+<label class="upbtn" for="file">📂 选择图片</label>
+<input type="file" id="file" accept="image/*" hidden>
+<div class="row" style="align-items:center">
+  <span id="meta" class="lbl" style="color:var(--muted);font-size:13px">未选择文件</span>
+  <button class="btn" id="copy">复制 DataURL</button>
+  <button class="btn ghost" id="dl">下载文本</button>
+  <button class="btn ghost" id="clear">清空</button>
+</div>
+<img id="preview" alt="预览" style="display:none;max-width:100%;border:1px solid var(--line);border-radius:10px;margin:10px 0">
+<textarea id="out" readonly spellcheck="false" style="min-height:160px" placeholder="选择图片后，这里会显示其 Base64 DataURL…"></textarea>
+''',
+        js=r'''
+const fileInput=document.getElementById('file');
+const out=document.getElementById('out');
+const meta=document.getElementById('meta');
+const preview=document.getElementById('preview');
+let lastUrl='';
+fileInput.onchange=()=>{
+  const f=fileInput.files[0];
+  if(!f){return;}
+  if(!f.type.startsWith('image/')){meta.textContent='请选择图片文件';return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    lastUrl=e.target.result;
+    out.value=lastUrl;
+    meta.textContent=f.name+' · '+f.size+' 字节 · '+f.type;
+    preview.src=lastUrl;
+    preview.style.display='block';
+  };
+  reader.onerror=()=>{meta.textContent='读取失败，请重试';};
+  reader.readAsDataURL(f);
+};
+document.getElementById('copy').onclick=()=>{if(!out.value){meta.textContent='请先选择图片';return;}out.focus();out.select();document.execCommand('copy');meta.textContent='已复制 DataURL';};
+document.getElementById('dl').onclick=()=>{if(!out.value){meta.textContent='请先选择图片';return;}const b=new Blob([out.value],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='image-base64.txt';a.click();};
+document.getElementById('clear').onclick=()=>{fileInput.value='';out.value='';lastUrl='';meta.textContent='未选择文件';preview.src='';preview.style.display='none';};
+'''),
 }
 
 # 数字产品由 products_content.py 驱动（原创内容，零成本、可合规销售）。
@@ -712,6 +753,8 @@ textarea{min-height:150px}
 .btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
 .btn:hover{background:var(--brand-d)}
 .btn.ghost{background:#eef2ff;color:var(--brand)}
+.upbtn{display:inline-block;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer}
+.upbtn:hover{background:var(--brand-d)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
 .stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
