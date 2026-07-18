@@ -3,3 +3,4 @@
 2026-07-09 - passphrase - 密码短语生成器
 2026-07-13 - date-diff - 日期差与倒计时工具
 2026-07-18 - image-base64 - 图片转 Base64
+2026-07-18 - html-entity - HTML 实体编解码

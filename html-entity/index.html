@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>金额大写转换</title>
-<meta name="description" content="数字金额转中文大写，财务开票常用">
-<meta name="keywords" content="金额大写,人民币大写,数字转中文">
-<meta property="og:title" content="金额大写转换">
-<meta property="og:description" content="数字金额转中文大写，财务开票常用">
+<title>HTML 实体编解码</title>
+<meta name="description" content="在线 HTML 实体编码与解码，处理 & < > 等特殊字符与中文转义，纯前端本地运行">
+<meta name="keywords" content="html实体,html实体编码,html实体解码,html编码解码,字符转义,实体编码">
+<meta property="og:title" content="HTML 实体编解码">
+<meta property="og:description" content="在线 HTML 实体编码与解码，处理 & < > 等特殊字符与中文转义，纯前端本地运行">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/rmb-upper/">
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/html-entity/">
 <meta property="og:image" content="../og.png">
-<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/rmb-upper/">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/html-entity/">
 <link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "金额大写转换", "description": "数字金额转中文大写，财务开票常用", "url": "https://ckstc.github.io/zero-cost-tools/rmb-upper/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "金额大写转换", "item": "https://ckstc.github.io/zero-cost-tools/rmb-upper/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "HTML 实体编解码", "description": "在线 HTML 实体编码与解码，处理 & < > 等特殊字符与中文转义，纯前端本地运行", "url": "https://ckstc.github.io/zero-cost-tools/html-entity/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "HTML 实体编解码", "item": "https://ckstc.github.io/zero-cost-tools/html-entity/"}]}</script>
 <style>
 :root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
 *{box-sizing:border-box}
@@ -63,15 +63,21 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
   <nav><a href="/zero-cost-tools/">全部工具</a><a href="/zero-cost-tools/store/">数字商店</a><a href="/zero-cost-tools/deals/">联盟精选</a><a href="/zero-cost-tools/leads/">线索·合作</a><a href="/zero-cost-tools/pro/">升级Pro</a></nav>
 </header>
 <main>
-<h1>金额大写转换</h1>
-<p class="lead">把数字金额转换为中文大写（壹贰叁…），开票、填支票、写合同常用，自动处理角分。</p>
+<h1>HTML 实体编解码</h1>
+<p class="lead">对文本进行 HTML 实体编码（把 & < > 等特殊字符与中文转为 &#数字; 或 &amp; 等）或反向解码。完全在浏览器本地运行，不上传数据。</p>
 
-<input id="amt" type="number" placeholder="输入金额，如 1234.56" style="max-width:240px">
-<button class="btn" id="go">转中文大写</button>
-<div id="res" class="result"></div>
+<textarea id="in" placeholder="输入要编码或解码的文本…" spellcheck="false"></textarea>
+<div class="row">
+  <button class="btn" data-mode="min">编码（特殊字符）</button>
+  <button class="btn" data-mode="all">编码（非 ASCII）</button>
+  <button class="btn" id="dec">解码</button>
+  <button class="btn ghost" id="swap">↑ 结果填入输入框</button>
+</div>
+<textarea id="out" placeholder="结果…" readonly spellcheck="false"></textarea>
+<button class="btn ghost" id="copy">复制结果</button>
 
 <div class="related"><h2>相关工具</h2><div class="cards">
-  <a class="card" href="../passphrase/"><h3>密码短语生成器</h3><p>用常见单词+分隔符生成好记又高强度的密码短语</p></a>  <a class="card" href="../date-diff/"><h3>日期差与倒计时工具</h3><p>计算两个日期相差多少天，或实时倒计时到目标时间，纯前端本地运行</p></a>  <a class="card" href="../image-base64/"><h3>图片转 Base64</h3><p>选图即出 DataURL，纯前端本地把图片转为 Base64 编码，不上传图片</p></a>  <a class="card" href="../html-entity/"><h3>HTML 实体编解码</h3><p>在线 HTML 实体编码与解码，处理 & < > 等特殊字符与中文转义，纯前端本地运行</p></a>
+  <a class="card" href="../compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>  <a class="card" href="../jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>  <a class="card" href="../pdf/"><h3>PDF 工具箱</h3><p>在线压缩 PDF、PDF 转图片，纯前端处理不泄露文件</p></a>  <a class="card" href="../qrcode/"><h3>二维码生成器</h3><p>免费生成网址/文本/ WiFi 二维码，可下载 PNG</p></a>
 </div></div>
 <div class="support-links">
   <div class="wechat-qr-wrap">
@@ -83,25 +89,16 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
 </main>
 <footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
 <script>
-const g=id=>document.getElementById(id),res=g('res');
-function rmbUpper(num){
-  if(isNaN(num))return '请输入有效数字';
-  if(num===0)return '零元整';
-  const neg=num<0;num=Math.abs(num);
-  const d=['零','壹','贰','叁','肆','伍','陆','柒','捌','玖'];
-  const ints=['','拾','佰','仟'];const units=['','万','亿'];
-  let str=Math.floor(num).toString();const groups=[];
-  while(str.length>0){groups.unshift(str.slice(-4));str=str.slice(0,-4);}
-  let s='';
-  groups.forEach((grp,gi)=>{let part='';let zero=false;const len=grp.length;
-    for(let i=0;i<len;i++){const v=+grp[i];const pos=len-1-i;
-      if(v===0){zero=true;}else{part+=(zero&&part?'零':'')+d[v]+ints[pos];zero=false;}}
-    if(part)s+=part+units[groups.length-1-gi];});
-  let dec=Math.round((num-Math.floor(num))*100);const jiao=Math.floor(dec/10),fen=dec%10;
-  let decStr='';if(jiao>0)decStr+=d[jiao]+'角';if(fen>0)decStr+=d[fen]+'分';if(!decStr)decStr='整';
-  return (neg?'负':'')+s+'元'+decStr;
+const inp=document.getElementById('in'),out=document.getElementById('out');
+const MAP={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+function enc(str,mode){
+  if(mode==='all'){return str.replace(/[^\x00-\x7F]/g,c=>'&#'+c.codePointAt(0)+';');}
+  return str.replace(/[&<>"']/g,c=>MAP[c]||c);
 }
-    g('go').onclick=()=>{res.innerHTML='中文大写：<b>'+rmbUpper(parseFloat(g('amt').value))+'</b>';};
+document.querySelectorAll('.btn[data-mode]').forEach(b=>b.onclick=()=>{try{out.value=enc(inp.value,b.dataset.mode);}catch(e){out.value='编码失败';}});
+document.getElementById('dec').onclick=()=>{try{const t=document.createElement('textarea');t.innerHTML=inp.value;out.value=t.value;}catch(e){out.value='解码失败';}};
+document.getElementById('swap').onclick=()=>{inp.value=out.value;};
+document.getElementById('copy').onclick=()=>{out.select();document.execCommand('copy');};
 </script>
 </body>
 </html>
