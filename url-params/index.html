@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>URL 查询参数解析器</title>
+<meta name="description" content="在线解析与重组 URL 查询参数(query string)，自动 URL 编码/解码，本地运行不上传">
+<meta name="keywords" content="url查询参数,query string 解析,url参数,query参数解析,查询串,url参数解析器">
+<meta property="og:title" content="URL 查询参数解析器">
+<meta property="og:description" content="在线解析与重组 URL 查询参数(query string)，自动 URL 编码/解码，本地运行不上传">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/url-params/">
+<meta property="og:image" content="../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/url-params/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "URL 查询参数解析器", "description": "在线解析与重组 URL 查询参数(query string)，自动 URL 编码/解码，本地运行不上传", "url": "https://ckstc.github.io/zero-cost-tools/url-params/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "URL 查询参数解析器", "item": "https://ckstc.github.io/zero-cost-tools/url-params/"}]}</script>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header .logo{font-weight:700;color:var(--brand);text-decoration:none;font-size:18px}
+header nav a{color:var(--muted);text-decoration:none;font-size:14px}
+header nav a:hover{color:var(--brand)}
+main{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 22px}
+textarea,input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:150px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#eef2ff;color:var(--brand)}
+.upbtn{display:inline-block;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer}
+.upbtn:hover{background:var(--brand-d)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
+.stat .lbl{font-size:13px;color:var(--muted)}
+.result{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:15px}
+.md-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.md-preview{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;overflow:auto;min-height:200px}
+.md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
+.md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.wechat-qr-wrap{display:inline-block}
+.qr-label{display:block;font-weight:600;margin-bottom:8px}
+.qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.md-wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/zero-cost-tools/">零成本工具箱</a>
+  <nav><a href="/zero-cost-tools/">全部工具</a><a href="/zero-cost-tools/store/">数字商店</a><a href="/zero-cost-tools/deals/">联盟精选</a><a href="/zero-cost-tools/leads/">线索·合作</a><a href="/zero-cost-tools/pro/">升级Pro</a></nav>
+</header>
+<main>
+<h1>URL 查询参数解析器</h1>
+<p class="lead">粘贴完整网址或原始 query string，一键解析成可读的参数名/值列表；编辑后可重新拼回 URL 编码后的查询串。全程浏览器本地运行，不上传任何数据。</p>
+
+<textarea id="in" placeholder="粘贴完整 URL（含 ?）或原始查询串，如 a=1&amp;b=hello%20world&amp;c" spellcheck="false"></textarea>
+<div class="row">
+  <button class="btn" id="parse">解析</button>
+  <button class="btn ghost" id="clear">清空</button>
+</div>
+<div id="editor"></div>
+<div class="row" id="editorBtns" style="display:none">
+  <button class="btn" id="add">+ 添加参数</button>
+  <button class="btn" id="build">重组查询串</button>
+  <button class="btn ghost" id="copy">复制结果</button>
+</div>
+<textarea id="out" placeholder="重组后的查询串（自动 URL 编码）…" readonly spellcheck="false"></textarea>
+
+<div class="related"><h2>相关工具</h2><div class="cards">
+  <a class="card" href="../compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>  <a class="card" href="../jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>  <a class="card" href="../pdf/"><h3>PDF 工具箱</h3><p>在线压缩 PDF、PDF 转图片，纯前端处理不泄露文件</p></a>  <a class="card" href="../qrcode/"><h3>二维码生成器</h3><p>免费生成网址/文本/ WiFi 二维码，可下载 PNG</p></a>
+</div></div>
+<div class="support-links">
+  <div class="wechat-qr-wrap">
+    <span class="qr-label">💚 微信扫一扫，支持作者</span>
+    <img src="../wechat-qr.png" alt="微信收款码" class="qr-img">
+  </div>
+</div>
+
+</main>
+<footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
+<script>
+const inp=document.getElementById('in'),out=document.getElementById('out');
+const editor=document.getElementById('editor'),eb=document.getElementById('editorBtns');
+let cur=[],base='';
+function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+document.getElementById('parse').onclick=()=>{
+  let s=inp.value.trim();
+  base='';
+  if(!s){editor.innerHTML='';eb.style.display='none';out.value='';return;}
+  const h=s.indexOf('#');if(h>=0)s=s.slice(0,h);
+  const q=s.indexOf('?');if(q>=0){base=s.slice(0,q);s=s.slice(q+1);}
+  cur=[];
+  s.split('&').forEach(pair=>{
+    if(pair==='')return;
+    const eq=pair.indexOf('=');let k,v;
+    if(eq<0){k=pair;v='';}else{k=pair.slice(0,eq);v=pair.slice(eq+1);}
+    try{k=decodeURIComponent(k.replace(/\+/g,' '));}catch(e){}
+    try{v=decodeURIComponent(v.replace(/\+/g,' '));}catch(e){}
+    cur.push([k,v]);
+  });
+  render();
+};
+function render(){
+  if(!cur.length){editor.innerHTML='<p style="color:var(--muted)">未解析到参数。</p>';eb.style.display='none';return;}
+  eb.style.display='flex';
+  editor.innerHTML=cur.map((r,i)=>
+    '<div class="row" style="align-items:center">'
+    +'<input data-k="'+i+'" value="'+escAttr(r[0])+'" placeholder="参数名" style="flex:1">'
+    +'<input data-v="'+i+'" value="'+escAttr(r[1])+'" placeholder="参数值" style="flex:1">'
+    +'<button class="btn ghost" data-del="'+i+'">删除</button></div>'
+  ).join('');
+  editor.querySelectorAll('input[data-k]').forEach(el=>el.oninput=()=>{cur[+el.dataset.k][0]=el.value;});
+  editor.querySelectorAll('input[data-v]').forEach(el=>el.oninput=()=>{cur[+el.dataset.v][1]=el.value;});
+  editor.querySelectorAll('button[data-del]').forEach(b=>b.onclick=()=>{cur.splice(+b.dataset.del,1);render();});
+}
+document.getElementById('add').onclick=()=>{cur.push(['','']);render();};
+document.getElementById('build').onclick=()=>{
+  const parts=cur.filter(r=>r[0].trim()!=='').map(r=>encodeURIComponent(r[0])+'='+encodeURIComponent(r[1]));
+  out.value=(base?base+'?':'')+parts.join('&');
+};
+document.getElementById('copy').onclick=()=>{if(!out.value){out.value='';return;}out.select();document.execCommand('copy');};
+document.getElementById('clear').onclick=()=>{inp.value='';out.value='';editor.innerHTML='';eb.style.display='none';cur=[];};
+</script>
+</body>
+</html>

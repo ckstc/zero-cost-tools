@@ -16,3 +16,11 @@
 - 推广：两次 promote.py 的 IndexNow 均返回 **HTTP 200**（第一次 92 URL、第二次 94 URL，已纳入新工具）。Sitemap Ping 中 Google 404 / Bing 410、Wayback 部分 -1 属正常网络差异，无需重试。
 - 抽查：image-base64/、首页、image-base64-guide.html 均返回 **HTTP 200**。
 - 无异常、无回滚。backlog 剩余 6 条（HTML 实体编解码、URL 查询解析、时区转换、BMI、质数因数分解、文本打乱）。
+
+## 2026-07-18 (运行 · 第 2 次)
+- 新增工具：**html-entity（HTML 实体编解码）**——纯前端。两种编码模式（特殊字符 &<>'" 最小编码 / 非 ASCII 转 &#数字; 实体）+ 解码（textarea.innerHTML 反解全部命名/数字实体），含「结果填入输入框」「复制」。加入 build.py 的 ALL_TOOLS + NEW_TOOLS。
+- 顺手修复：上轮漏加的 `image-base64-guide.html` 正式补入 BLOG_TITLES（此前 gen_guides 用兜底标题生成）。
+- 流程：gen_guides.py 生成 33 篇教程（含 html-entity-guide.html + 修正后的 image-base64-guide.html）→ build.py 重建全站 → grep 校验无 `%%` 残留 → 从 backlog 删除该点子、done.txt 追加 `2026-07-18 - html-entity - HTML 实体编解码` → git commit & push（7ba30b4）。
+- 推广：两次 promote.py 的 IndexNow 均 **HTTP 200**（第一次 94 URL、第二次 96 URL，已纳入新工具+新教程）。Google 404 / Bing 410、Wayback 部分 -1 属正常网络差异。
+- 抽查：html-entity/、首页、blog/html-entity-guide.html 均 **HTTP 200**（首页首次 000 为瞬时网络抖动，重试即 200）。
+- 无异常、无回滚。backlog 剩余 5 条（URL 查询解析、时区转换、BMI、质数因数分解、文本打乱）。

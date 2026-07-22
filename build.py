@@ -73,6 +73,7 @@ ALL_TOOLS = [
     ("date-diff",     "日期差与倒计时工具",   "计算两个日期相差多少天，或实时倒计时到目标时间，纯前端本地运行", "日期差,天数计算,倒计时,日期计算,相差天数"),
     ("image-base64",  "图片转 Base64",        "选图即出 DataURL，纯前端本地把图片转为 Base64 编码，不上传图片", "图片转base64,图片base64,图片转dataurl,base64图片,图片编码"),
     ("html-entity",   "HTML 实体编解码",      "在线 HTML 实体编码与解码，处理 & < > 等特殊字符与中文转义，纯前端本地运行", "html实体,html实体编码,html实体解码,html编码解码,字符转义,实体编码"),
+    ("url-params",    "URL 查询参数解析器",   "在线解析与重组 URL 查询参数(query string)，自动 URL 编码/解码，本地运行不上传", "url查询参数,query string 解析,url参数,query参数解析,查询串,url参数解析器"),
 ]
 
 # 新工具：需生成完整页面（body + js）
@@ -726,6 +727,66 @@ document.getElementById('dec').onclick=()=>{try{const t=document.createElement('
 document.getElementById('swap').onclick=()=>{inp.value=out.value;};
 document.getElementById('copy').onclick=()=>{out.select();document.execCommand('copy');};
 '''),
+    "url-params": dict(
+        h1="URL 查询参数解析器",
+        lead="粘贴完整网址或原始 query string，一键解析成可读的参数名/值列表；编辑后可重新拼回 URL 编码后的查询串。全程浏览器本地运行，不上传任何数据。",
+        body=r'''
+<textarea id="in" placeholder="粘贴完整 URL（含 ?）或原始查询串，如 a=1&amp;b=hello%20world&amp;c" spellcheck="false"></textarea>
+<div class="row">
+  <button class="btn" id="parse">解析</button>
+  <button class="btn ghost" id="clear">清空</button>
+</div>
+<div id="editor"></div>
+<div class="row" id="editorBtns" style="display:none">
+  <button class="btn" id="add">+ 添加参数</button>
+  <button class="btn" id="build">重组查询串</button>
+  <button class="btn ghost" id="copy">复制结果</button>
+</div>
+<textarea id="out" placeholder="重组后的查询串（自动 URL 编码）…" readonly spellcheck="false"></textarea>
+''',
+        js=r'''
+const inp=document.getElementById('in'),out=document.getElementById('out');
+const editor=document.getElementById('editor'),eb=document.getElementById('editorBtns');
+let cur=[],base='';
+function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+document.getElementById('parse').onclick=()=>{
+  let s=inp.value.trim();
+  base='';
+  if(!s){editor.innerHTML='';eb.style.display='none';out.value='';return;}
+  const h=s.indexOf('#');if(h>=0)s=s.slice(0,h);
+  const q=s.indexOf('?');if(q>=0){base=s.slice(0,q);s=s.slice(q+1);}
+  cur=[];
+  s.split('&').forEach(pair=>{
+    if(pair==='')return;
+    const eq=pair.indexOf('=');let k,v;
+    if(eq<0){k=pair;v='';}else{k=pair.slice(0,eq);v=pair.slice(eq+1);}
+    try{k=decodeURIComponent(k.replace(/\+/g,' '));}catch(e){}
+    try{v=decodeURIComponent(v.replace(/\+/g,' '));}catch(e){}
+    cur.push([k,v]);
+  });
+  render();
+};
+function render(){
+  if(!cur.length){editor.innerHTML='<p style="color:var(--muted)">未解析到参数。</p>';eb.style.display='none';return;}
+  eb.style.display='flex';
+  editor.innerHTML=cur.map((r,i)=>
+    '<div class="row" style="align-items:center">'
+    +'<input data-k="'+i+'" value="'+escAttr(r[0])+'" placeholder="参数名" style="flex:1">'
+    +'<input data-v="'+i+'" value="'+escAttr(r[1])+'" placeholder="参数值" style="flex:1">'
+    +'<button class="btn ghost" data-del="'+i+'">删除</button></div>'
+  ).join('');
+  editor.querySelectorAll('input[data-k]').forEach(el=>el.oninput=()=>{cur[+el.dataset.k][0]=el.value;});
+  editor.querySelectorAll('input[data-v]').forEach(el=>el.oninput=()=>{cur[+el.dataset.v][1]=el.value;});
+  editor.querySelectorAll('button[data-del]').forEach(b=>b.onclick=()=>{cur.splice(+b.dataset.del,1);render();});
+}
+document.getElementById('add').onclick=()=>{cur.push(['','']);render();};
+document.getElementById('build').onclick=()=>{
+  const parts=cur.filter(r=>r[0].trim()!=='').map(r=>encodeURIComponent(r[0])+'='+encodeURIComponent(r[1]));
+  out.value=(base?base+'?':'')+parts.join('&');
+};
+document.getElementById('copy').onclick=()=>{if(!out.value){out.value='';return;}out.select();document.execCommand('copy');};
+document.getElementById('clear').onclick=()=>{inp.value='';out.value='';editor.innerHTML='';eb.style.display='none';cur=[];};
+'''),
 }
 
 # 数字产品由 products_content.py 驱动（原创内容，零成本、可合规销售）。
@@ -761,6 +822,7 @@ BLOG_TITLES = {
     "date-diff-guide.html": "日期差与倒计时使用指南",
     "image-base64-guide.html": "图片转 Base64使用指南",
     "html-entity-guide.html": "HTML 实体编解码使用指南",
+    "url-params-guide.html": "URL 查询参数解析器使用指南",
     "free-tools-guide.html": "免费在线工具推荐合集",
     "privacy-guide.html": "如何安全使用在线工具保护隐私",
 }
