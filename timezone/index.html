@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>时区时间转换器</title>
+<meta name="description" content="在任意时区之间转换日期时间，基于浏览器 Intl 时区数据库自动处理夏令时，纯前端本地运行不上传">
+<meta name="keywords" content="时区转换,时区时间转换,时差计算,timezone,世界时间,utc转换,夏令时">
+<meta property="og:title" content="时区时间转换器">
+<meta property="og:description" content="在任意时区之间转换日期时间，基于浏览器 Intl 时区数据库自动处理夏令时，纯前端本地运行不上传">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ckstc.github.io/zero-cost-tools/timezone/">
+<meta property="og:image" content="../og.png">
+<link rel="canonical" href="https://ckstc.github.io/zero-cost-tools/timezone/">
+<link rel="alternate" type="application/atom+xml" title="零成本工具箱" href="../atom.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "时区时间转换器", "description": "在任意时区之间转换日期时间，基于浏览器 Intl 时区数据库自动处理夏令时，纯前端本地运行不上传", "url": "https://ckstc.github.io/zero-cost-tools/timezone/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "零成本工具箱", "item": "https://ckstc.github.io/zero-cost-tools/"}, {"@type": "ListItem", "position": 2, "name": "时区时间转换器", "item": "https://ckstc.github.io/zero-cost-tools/timezone/"}]}</script>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2430;--muted:#6b7280;--brand:#2f6df6;--brand-d:#1f4fc4;--line:#e6e8ec;--ok:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header .logo{font-weight:700;color:var(--brand);text-decoration:none;font-size:18px}
+header nav a{color:var(--muted);text-decoration:none;font-size:14px}
+header nav a:hover{color:var(--brand)}
+main{max-width:880px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 22px}
+textarea,input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:150px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.btn{border:none;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:#eef2ff;color:var(--brand)}
+.upbtn{display:inline-block;background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer}
+.upbtn:hover{background:var(--brand-d)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.stat .num{display:block;font-size:24px;font-weight:700;color:var(--brand)}
+.stat .lbl{font-size:13px;color:var(--muted)}
+.result{margin-top:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:15px}
+.md-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.md-preview{border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff;overflow:auto;min-height:200px}
+.md-preview h1,.md-preview h2,.md-preview h3{margin:.4em 0}
+.md-preview code{background:#f1f3f7;padding:2px 5px;border-radius:4px}
+.support-links{margin-top:34px;padding-top:22px;border-top:1px dashed var(--line);text-align:center}
+.related{margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.wechat-qr-wrap{display:inline-block}
+.qr-label{display:block;font-weight:600;margin-bottom:8px}
+.qr-img{width:180px;height:180px;border:1px solid var(--line);border-radius:10px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.md-wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/zero-cost-tools/">零成本工具箱</a>
+  <nav><a href="/zero-cost-tools/">全部工具</a><a href="/zero-cost-tools/store/">数字商店</a><a href="/zero-cost-tools/deals/">联盟精选</a><a href="/zero-cost-tools/leads/">线索·合作</a><a href="/zero-cost-tools/pro/">升级Pro</a></nav>
+</header>
+<main>
+<h1>时区时间转换器</h1>
+<p class="lead">选择一个日期时间与源时区，即可换算到目标时区（或一次查看全球主要时区）。基于浏览器内置的 Intl 时区数据库，自动处理夏令时（DST），全程本地运行，不上传任何数据。</p>
+
+<div class="row">
+  <input type="datetime-local" id="dt" style="flex:1;min-width:220px">
+  <button class="btn ghost" id="now">当前时间</button>
+</div>
+<div class="row">
+  <div style="flex:1;min-width:200px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">源时区</label>
+    <select id="from"></select>
+  </div>
+  <div style="flex:1;min-width:200px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">目标时区</label>
+    <select id="to"></select>
+  </div>
+</div>
+<div class="row">
+  <button class="btn" id="conv">转换</button>
+  <button class="btn ghost" id="all">查看全球主要时区</button>
+</div>
+<div id="res" class="result"></div>
+
+<div class="related"><h2>相关工具</h2><div class="cards">
+  <a class="card" href="../compress/"><h3>图片压缩工具</h3><p>在线压缩 JPG/PNG/WebP，本地处理不上传，免费无水印</p></a>  <a class="card" href="../jsonfmt/"><h3>JSON 格式化工具</h3><p>在线 JSON 美化/压缩/校验，本地运行，保护隐私</p></a>  <a class="card" href="../pdf/"><h3>PDF 工具箱</h3><p>在线压缩 PDF、PDF 转图片，纯前端处理不泄露文件</p></a>  <a class="card" href="../qrcode/"><h3>二维码生成器</h3><p>免费生成网址/文本/ WiFi 二维码，可下载 PNG</p></a>
+</div></div>
+<div class="support-links">
+  <div class="wechat-qr-wrap">
+    <span class="qr-label">💚 微信扫一扫，支持作者</span>
+    <img src="../wechat-qr.png" alt="微信收款码" class="qr-img">
+  </div>
+</div>
+
+</main>
+<footer>© 零成本工具箱 · 全部工具本地运行，免费无水印</footer>
+<script>
+const ZONES=[
+  ['Asia/Shanghai','北京 / 上海（中国标准时间）'],
+  ['Asia/Hong_Kong','中国香港'],
+  ['Asia/Taipei','中国台湾'],
+  ['Asia/Tokyo','东京（日本）'],
+  ['Asia/Seoul','首尔（韩国）'],
+  ['Asia/Singapore','新加坡'],
+  ['Asia/Bangkok','曼谷（泰国）'],
+  ['Asia/Kolkata','新德里（印度）'],
+  ['Asia/Dubai','迪拜（阿联酋）'],
+  ['Europe/Moscow','莫斯科（俄罗斯）'],
+  ['Europe/London','伦敦（英国）'],
+  ['Europe/Paris','巴黎 / 柏林（中欧）'],
+  ['America/Sao_Paulo','圣保罗（巴西）'],
+  ['America/New_York','纽约（美东）'],
+  ['America/Chicago','芝加哥（美中）'],
+  ['America/Denver','丹佛（美山区）'],
+  ['America/Los_Angeles','洛杉矶（美西）'],
+  ['Australia/Sydney','悉尼（澳大利亚）'],
+  ['Pacific/Auckland','奥克兰（新西兰）'],
+  ['UTC','UTC 协调世界时']
+];
+const dt=document.getElementById('dt'),from=document.getElementById('from'),to=document.getElementById('to'),res=document.getElementById('res');
+function fill(sel,def){ZONES.forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;if(v===def)o.selected=true;sel.appendChild(o);});}
+fill(from,'Asia/Shanghai');
+fill(to,'America/New_York');
+function pad(n){return String(n).padStart(2,'0');}
+function nowInput(){const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes());}
+function getParts(tz,date){const dtf=new Intl.DateTimeFormat('en-US',{timeZone:tz,hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});const m={};dtf.formatToParts(date).forEach(p=>m[p.type]=p.value);return m;}
+function getOffset(tz,date){const m=getParts(tz,date);let hh=m.hour==='24'?'00':m.hour;const asUTC=Date.UTC(+m.year,+m.month-1,+m.day,+hh,+m.minute,+m.second);return asUTC-date.getTime();}
+function toInstant(wallMs,tz){return wallMs-getOffset(tz,new Date(wallMs));}
+function fmtInZone(instant,tz){const d=new Date(instant),m=getParts(tz,d),off=getOffset(tz,d);const sign=off>=0?'+':'-',ao=Math.abs(off);const oh=Math.floor(ao/3600000),om=Math.floor(ao%3600000/60000);return m.year+'-'+m.month+'-'+m.day+' '+m.hour+':'+m.minute+':'+m.second+' (UTC'+sign+pad(oh)+':'+pad(om)+')';}
+function parseInput(){const v=dt.value;if(!v)return null;const p=v.split('T');const d=p[0].split('-').map(Number),t=p[1].split(':').map(Number);return Date.UTC(d[0],d[1]-1,d[2],t[0],t[1],0);}
+function label(tz){for(const z of ZONES){if(z[0]===tz)return z[1];}return tz;}
+function convert(single){
+  const wallMs=parseInput();
+  if(wallMs===null){res.textContent='请选择日期时间';return;}
+  const src=from.value,instant=toInstant(wallMs,src);
+  if(single){
+    res.innerHTML='<div>源时间（'+label(src)+'）：<b>'+fmtInZone(instant,src)+'</b></div>'
+      +'<div style="margin-top:10px">目标时间（'+label(to.value)+'）：<b style="color:var(--brand)">'+fmtInZone(instant,to.value)+'</b></div>';
+  }else{
+    res.innerHTML='<div style="margin-bottom:10px">源时间（'+label(src)+'）：<b>'+fmtInZone(instant,src)+'</b></div>'
+      +ZONES.map(z=>'<div style="padding:2px 0"><span style="color:var(--muted)">'+z[1]+'：</span><b>'+fmtInZone(instant,z[0])+'</b></div>').join('');
+  }
+}
+document.getElementById('now').onclick=()=>{dt.value=nowInput();convert(true);};
+document.getElementById('conv').onclick=()=>convert(true);
+document.getElementById('all').onclick=()=>convert(false);
+dt.value=nowInput();
+convert(true);
+</script>
+</body>
+</html>

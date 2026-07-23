@@ -74,6 +74,7 @@ ALL_TOOLS = [
     ("image-base64",  "图片转 Base64",        "选图即出 DataURL，纯前端本地把图片转为 Base64 编码，不上传图片", "图片转base64,图片base64,图片转dataurl,base64图片,图片编码"),
     ("html-entity",   "HTML 实体编解码",      "在线 HTML 实体编码与解码，处理 & < > 等特殊字符与中文转义，纯前端本地运行", "html实体,html实体编码,html实体解码,html编码解码,字符转义,实体编码"),
     ("url-params",    "URL 查询参数解析器",   "在线解析与重组 URL 查询参数(query string)，自动 URL 编码/解码，本地运行不上传", "url查询参数,query string 解析,url参数,query参数解析,查询串,url参数解析器"),
+    ("timezone",      "时区时间转换器",       "在任意时区之间转换日期时间，基于浏览器 Intl 时区数据库自动处理夏令时，纯前端本地运行不上传", "时区转换,时区时间转换,时差计算,timezone,世界时间,utc转换,夏令时"),
 ]
 
 # 新工具：需生成完整页面（body + js）
@@ -787,6 +788,83 @@ document.getElementById('build').onclick=()=>{
 document.getElementById('copy').onclick=()=>{if(!out.value){out.value='';return;}out.select();document.execCommand('copy');};
 document.getElementById('clear').onclick=()=>{inp.value='';out.value='';editor.innerHTML='';eb.style.display='none';cur=[];};
 '''),
+    "timezone": dict(
+        h1="时区时间转换器",
+        lead="选择一个日期时间与源时区，即可换算到目标时区（或一次查看全球主要时区）。基于浏览器内置的 Intl 时区数据库，自动处理夏令时（DST），全程本地运行，不上传任何数据。",
+        body=r'''
+<div class="row">
+  <input type="datetime-local" id="dt" style="flex:1;min-width:220px">
+  <button class="btn ghost" id="now">当前时间</button>
+</div>
+<div class="row">
+  <div style="flex:1;min-width:200px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">源时区</label>
+    <select id="from"></select>
+  </div>
+  <div style="flex:1;min-width:200px">
+    <label style="display:block;font-size:14px;color:var(--muted);margin-bottom:6px">目标时区</label>
+    <select id="to"></select>
+  </div>
+</div>
+<div class="row">
+  <button class="btn" id="conv">转换</button>
+  <button class="btn ghost" id="all">查看全球主要时区</button>
+</div>
+<div id="res" class="result"></div>
+''',
+        js=r'''
+const ZONES=[
+  ['Asia/Shanghai','北京 / 上海（中国标准时间）'],
+  ['Asia/Hong_Kong','中国香港'],
+  ['Asia/Taipei','中国台湾'],
+  ['Asia/Tokyo','东京（日本）'],
+  ['Asia/Seoul','首尔（韩国）'],
+  ['Asia/Singapore','新加坡'],
+  ['Asia/Bangkok','曼谷（泰国）'],
+  ['Asia/Kolkata','新德里（印度）'],
+  ['Asia/Dubai','迪拜（阿联酋）'],
+  ['Europe/Moscow','莫斯科（俄罗斯）'],
+  ['Europe/London','伦敦（英国）'],
+  ['Europe/Paris','巴黎 / 柏林（中欧）'],
+  ['America/Sao_Paulo','圣保罗（巴西）'],
+  ['America/New_York','纽约（美东）'],
+  ['America/Chicago','芝加哥（美中）'],
+  ['America/Denver','丹佛（美山区）'],
+  ['America/Los_Angeles','洛杉矶（美西）'],
+  ['Australia/Sydney','悉尼（澳大利亚）'],
+  ['Pacific/Auckland','奥克兰（新西兰）'],
+  ['UTC','UTC 协调世界时']
+];
+const dt=document.getElementById('dt'),from=document.getElementById('from'),to=document.getElementById('to'),res=document.getElementById('res');
+function fill(sel,def){ZONES.forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;if(v===def)o.selected=true;sel.appendChild(o);});}
+fill(from,'Asia/Shanghai');
+fill(to,'America/New_York');
+function pad(n){return String(n).padStart(2,'0');}
+function nowInput(){const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes());}
+function getParts(tz,date){const dtf=new Intl.DateTimeFormat('en-US',{timeZone:tz,hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});const m={};dtf.formatToParts(date).forEach(p=>m[p.type]=p.value);return m;}
+function getOffset(tz,date){const m=getParts(tz,date);let hh=m.hour==='24'?'00':m.hour;const asUTC=Date.UTC(+m.year,+m.month-1,+m.day,+hh,+m.minute,+m.second);return asUTC-date.getTime();}
+function toInstant(wallMs,tz){return wallMs-getOffset(tz,new Date(wallMs));}
+function fmtInZone(instant,tz){const d=new Date(instant),m=getParts(tz,d),off=getOffset(tz,d);const sign=off>=0?'+':'-',ao=Math.abs(off);const oh=Math.floor(ao/3600000),om=Math.floor(ao%3600000/60000);return m.year+'-'+m.month+'-'+m.day+' '+m.hour+':'+m.minute+':'+m.second+' (UTC'+sign+pad(oh)+':'+pad(om)+')';}
+function parseInput(){const v=dt.value;if(!v)return null;const p=v.split('T');const d=p[0].split('-').map(Number),t=p[1].split(':').map(Number);return Date.UTC(d[0],d[1]-1,d[2],t[0],t[1],0);}
+function label(tz){for(const z of ZONES){if(z[0]===tz)return z[1];}return tz;}
+function convert(single){
+  const wallMs=parseInput();
+  if(wallMs===null){res.textContent='请选择日期时间';return;}
+  const src=from.value,instant=toInstant(wallMs,src);
+  if(single){
+    res.innerHTML='<div>源时间（'+label(src)+'）：<b>'+fmtInZone(instant,src)+'</b></div>'
+      +'<div style="margin-top:10px">目标时间（'+label(to.value)+'）：<b style="color:var(--brand)">'+fmtInZone(instant,to.value)+'</b></div>';
+  }else{
+    res.innerHTML='<div style="margin-bottom:10px">源时间（'+label(src)+'）：<b>'+fmtInZone(instant,src)+'</b></div>'
+      +ZONES.map(z=>'<div style="padding:2px 0"><span style="color:var(--muted)">'+z[1]+'：</span><b>'+fmtInZone(instant,z[0])+'</b></div>').join('');
+  }
+}
+document.getElementById('now').onclick=()=>{dt.value=nowInput();convert(true);};
+document.getElementById('conv').onclick=()=>convert(true);
+document.getElementById('all').onclick=()=>convert(false);
+dt.value=nowInput();
+convert(true);
+'''),
 }
 
 # 数字产品由 products_content.py 驱动（原创内容，零成本、可合规销售）。
@@ -823,6 +901,7 @@ BLOG_TITLES = {
     "image-base64-guide.html": "图片转 Base64使用指南",
     "html-entity-guide.html": "HTML 实体编解码使用指南",
     "url-params-guide.html": "URL 查询参数解析器使用指南",
+    "timezone-guide.html": "时区时间转换器使用指南",
     "free-tools-guide.html": "免费在线工具推荐合集",
     "privacy-guide.html": "如何安全使用在线工具保护隐私",
 }
